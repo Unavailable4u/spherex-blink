@@ -1,0 +1,16 @@
+{
+  "regions": [
+    {
+      "id": "synthetic",
+      "frames": 16,
+      "bands": [
+        "D2",
+        "D4"
+      ],
+      "epochs": [
+        1,
+        2
+      ]
+    }
+  ]
+}
