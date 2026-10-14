@@ -1,6 +1,19 @@
 {
   "regions": [
     {
+      "id": "pallas",
+      "frames": 13,
+      "bands": [
+        "D1",
+        "D2",
+        "D4",
+        "D5"
+      ],
+      "epochs": [
+        1
+      ]
+    },
+    {
       "id": "synthetic",
       "frames": 16,
       "bands": [
