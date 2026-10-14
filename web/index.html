@@ -1,14 +1,67 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SPHEREx Blink Comparator</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SPHEREx Blink Comparator</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<header>
   <h1>SPHEREx Blink Comparator</h1>
-  <canvas id="viewer" width="512" height="512"></canvas>
-  <script src="js/renderer.js"></script>
+  <p id="hint">Drag the time bar or press <kbd>Blink</kbd> &mdash; anything that jumps between frames is moving. Click the sky to read its coordinates and flag it.</p>
+</header>
+<main>
+  <section id="viewer">
+    <div id="stage">
+      <canvas id="sky"></canvas>
+      <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div id="loading" hidden>Loading&hellip;</div>
+    <div id="viewtools"><button id="zoomReset" title="Reset zoom">Reset view</button><span>scroll = zoom &middot; drag = pan</span></div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <label>Region <select id="region"></select></label>
+      <div class="lbl">Spectral band</div>
+      <div id="bands" class="row"></div>
+    </div>
+
+    <div class="card">
+      <div class="lbl">Time <span id="frameLabel"></span></div>
+      <input id="time" type="range" min="0" max="0" value="0" step="1">
+      <div class="row">
+        <button id="prev" title="Previous (&larr;)">&larr;</button>
+        <button id="next" title="Next (&rarr;)">&rarr;</button>
+        <button id="blink" class="primary" title="Space">Blink</button>
+        <button id="setRef" title="Use the current frame as the frame to blink against">Set B = current</button>
+      </div>
+      <div id="blinkInfo" class="small"></div>
+    </div>
+
+    <div class="card">
+      <div class="lbl">Selected point</div>
+      <dl id="meta"><dt>Click the sky</dt><dd></dd></dl>
+    </div>
+
+    <div class="card">
+      <div class="lbl">Flag this <span id="flagCount" class="small"></span></div>
+      <div class="row">
+        <select id="category"><option>asteroid</option><option>comet</option><option>other</option></select>
+        <input id="note" type="text" placeholder="note (optional)" maxlength="200">
+      </div>
+      <button id="submitFlag" class="primary" disabled>Flag it</button>
+      <div id="flagStatus" class="small"></div>
+    </div>
+  </aside>
+</main>
+<footer>SPHEREx data via NASA/IPAC IRSA. See README for the official acknowledgement.</footer>
+
+<script src="js/config.js"></script>
+<script src="js/wcs.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/flagging.js"></script>
+<script src="js/controls.js"></script>
 </body>
 </html>
