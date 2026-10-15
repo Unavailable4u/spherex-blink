@@ -5,7 +5,8 @@ const SkyMap = (() => {
   const COL = { sun: "#ffd23f", mercury: "#b8b8b8", venus: "#f0e0a0", mars: "#ee6a4f", jupiter: "#e0a468", saturn: "#ead58f", uranus: "#7fd8e6", neptune: "#6b88ff" };
   const NAME = (s) => s[0].toUpperCase() + s.slice(1);
   const $ = (id) => document.getElementById(id);
-  let cv, ctx, data = null, last = null, token = 0;
+  const DPR = Math.max(2, window.devicePixelRatio || 1);
+  let cv, ctx, data = null, last = null, token = 0, mw = null;
 
   function proj(ra, dec) {                       // Hammer; RA increases to the left, centre = 12h
     const lam = (180 - ra) * D, phi = dec * D, k = Math.sqrt(1 + Math.cos(phi) * Math.cos(lam / 2));
@@ -34,9 +35,37 @@ const SkyMap = (() => {
     if (label) { ctx.fillStyle = "#cfd5e3"; const w = ctx.measureText(label).width; let lx = x + 6; if (lx + w > W - 3) lx = x - w - 6; if (lx < 3) lx = 3; ctx.fillText(label, lx, y - 5); }
   }
 
+
+  // Real Milky Way: re-project the ESO panorama (galactic, equirectangular) into this Hammer map once.
+  function loadMilkyWay() {
+    const im = new Image();
+    im.onload = () => {
+      const sw = 2048, sh = 1024, src = document.createElement("canvas"); src.width = sw; src.height = sh;
+      const sc = src.getContext("2d", { willReadFrequently: true }); sc.drawImage(im, 0, 0, sw, sh);
+      const sd = sc.getImageData(0, 0, sw, sh).data;
+      const ow = Math.round(W * DPR), oh = Math.round(H * DPR), out = document.createElement("canvas"); out.width = ow; out.height = oh;
+      const oc = out.getContext("2d"), od = oc.createImageData(ow, oh), o = od.data;
+      for (let py = 0; py < oh; py++) for (let px = 0; px < ow; px++) {
+        const X = (px + 0.5) / ow * 2 - 1, Y = 1 - (py + 0.5) / oh * 2, q = X * X + Y * Y;
+        if (q > 1) continue;
+        const x = 2 * Math.SQRT2 * X, y = Math.SQRT2 * Y, z = Math.sqrt(1 - q / 2);          // inverse Hammer
+        const lam = 2 * Math.atan2(z * x, 2 * (2 * z * z - 1)), phi = Math.asin(z * y);
+        const eq = vec(180 - lam / D, phi / D);
+        const gx = GAL[0][0] * eq[0] + GAL[0][1] * eq[1] + GAL[0][2] * eq[2], gy = GAL[1][0] * eq[0] + GAL[1][1] * eq[1] + GAL[1][2] * eq[2], gz = GAL[2][0] * eq[0] + GAL[2][1] * eq[1] + GAL[2][2] * eq[2];
+        const l = Math.atan2(gy, gx) / D, b = Math.asin(Math.max(-1, Math.min(1, gz))) / D;
+        const u = ((0.5 - l / 360) % 1 + 1) % 1 * (sw - 1), v = (0.5 - b / 180) * (sh - 1), u0 = Math.floor(u), v0 = Math.floor(v), fu = u - u0, fv = v - v0;
+        const i00 = (v0 * sw + u0) * 4, i10 = (v0 * sw + Math.min(sw - 1, u0 + 1)) * 4, i01 = (Math.min(sh - 1, v0 + 1) * sw + u0) * 4, i11 = (Math.min(sh - 1, v0 + 1) * sw + Math.min(sw - 1, u0 + 1)) * 4, oi = (py * ow + px) * 4;
+        for (let k = 0; k < 3; k++) o[oi + k] = (sd[i00 + k] * (1 - fu) + sd[i10 + k] * fu) * (1 - fv) + (sd[i01 + k] * (1 - fu) + sd[i11 + k] * fu) * fv;
+        o[oi + 3] = 255;
+      }
+      oc.putImageData(od, 0, 0); mw = out; if (data) update(last);
+    };
+    im.src = "assets/milkyway.jpg";                      // missing file = vector fallback
+  }
+
   function init(canvas) {
-    cv = canvas; const r = window.devicePixelRatio || 1; cv.width = W * r; cv.height = H * r;
-    cv.style.width = "100%"; cv.style.aspectRatio = `${W} / ${H}`; ctx = cv.getContext("2d"); ctx.scale(r, r);
+    cv = canvas; const r = DPR; cv.width = W * r; cv.height = H * r;
+    cv.style.width = "100%"; cv.style.aspectRatio = `${W} / ${H}`; ctx = cv.getContext("2d"); ctx.scale(r, r); loadMilkyWay();
   }
 
   function setRegion(id) {
@@ -51,13 +80,13 @@ const SkyMap = (() => {
   function update(frameId) {
     last = frameId; if (!data || !ctx) return;
     const fr = data.frames[frameId] || Object.values(data.frames)[0]; if (!fr) return;
-    ctx.clearRect(0, 0, W, H); ctx.font = "9px system-ui,sans-serif";
+    ctx.clearRect(0, 0, W, H); ctx.font = "500 9px Inter,system-ui,sans-serif";
     ctx.beginPath(); ctx.ellipse(W / 2, H / 2, W / 2 - 1, H / 2 - 1, 0, 0, 7); ctx.fillStyle = "#06080d"; ctx.fill();
     ctx.save(); ctx.clip();
-    for (let d = -60; d <= 60; d += 30) line(Array.from({ length: 73 }, (_, i) => [i * 5, d]), "#1b2233", 0.6);
-    for (let r = 0; r < 360; r += 30) line(Array.from({ length: 37 }, (_, i) => [r, -90 + i * 5]), "#1b2233", 0.6);
-    const gal = Array.from({ length: 181 }, (_, i) => galToEq(i * 2, 0));
-    line(gal, "rgba(150,170,255,.22)", 9); line(gal, "rgba(190,205,255,.35)", 2);
+    for (let d = -60; d <= 60; d += 30) line(Array.from({ length: 73 }, (_, i) => [i * 5, d]), mw ? "rgba(255,255,255,.10)" : "#1b2233", 0.6);
+    for (let r = 0; r < 360; r += 30) line(Array.from({ length: 37 }, (_, i) => [r, -90 + i * 5]), mw ? "rgba(255,255,255,.10)" : "#1b2233", 0.6);
+    if (mw) { ctx.globalAlpha = 0.95; ctx.drawImage(mw, 0, 0, W, H); ctx.globalAlpha = 1; }
+    else { const gal = Array.from({ length: 181 }, (_, i) => galToEq(i * 2, 0)); line(gal, "rgba(150,170,255,.22)", 9); line(gal, "rgba(190,205,255,.35)", 2); }
     line(Array.from({ length: 181 }, (_, i) => eclToEq(i * 2)), "rgba(255,200,120,.5)", 1);
     const s = vec(...fr.pos.sun), u = unit(cross(s, [0, 0, 1])), v = cross(s, u);
     line(Array.from({ length: 121 }, (_, i) => toRaDec([0, 1, 2].map((k) => Math.cos(i * 3 * D) * u[k] + Math.sin(i * 3 * D) * v[k]))), "rgba(255,210,63,.6)", 1, [3, 3]);

@@ -1,0 +1,44 @@
+{
+ "planets": {
+  "sun": {
+   "credit": "NASA/SDO (AIA)",
+   "source": "The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA's_Solar_Dynamics_Observatory_-_20100819.jpg"
+  },
+  "mercury": {
+   "credit": "NASA/JHUAPL/Carnegie Institution (MESSENGER)",
+   "source": "Mercury_in_color_-_Prockter07-edit1.jpg"
+  },
+  "venus": {
+   "credit": "NASA/JPL (Mariner 10)",
+   "source": "Venus-real_color.jpg"
+  },
+  "earth": {
+   "credit": "NASA (Apollo 17 crew)",
+   "source": "The_Earth_seen_from_Apollo_17.jpg"
+  },
+  "mars": {
+   "credit": "ESA & MPS for the OSIRIS Team (Rosetta); CC BY-SA IGO 3.0",
+   "source": "OSIRIS_Mars_true_color.jpg"
+  },
+  "jupiter": {
+   "credit": "NASA, ESA, A. Simon (GSFC)",
+   "source": "Jupiter_and_its_shrunken_Great_Red_Spot.jpg"
+  },
+  "saturn": {
+   "credit": "NASA/JPL/Space Science Institute (Cassini)",
+   "source": "Saturn_during_Equinox.jpg"
+  },
+  "uranus": {
+   "credit": "NASA/JPL-Caltech (Voyager 2)",
+   "source": "Uranus2.jpg"
+  },
+  "neptune": {
+   "credit": "NASA/JPL (Voyager 2)",
+   "source": "Neptune_Full.jpg"
+  }
+ },
+ "milkyway": {
+  "credit": "ESO/S. Brunier, CC BY 4.0",
+  "source": "ESO_-_Milky_Way.jpg"
+ }
+}

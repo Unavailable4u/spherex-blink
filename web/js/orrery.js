@@ -8,7 +8,7 @@
   let cv, ctx, bcv, bctx, bsz = 0, big = false, data = null, t = 0, playing = false, last = 0, lon = null, tick = 0;
 
   let SZ = 316, R = 144, K = 1;
-  const rad = (au) => R * Math.sqrt(au / 31);
+  const rad = (au) => R * (0.1 + 0.9 * Math.sqrt(au / 31));
   const xy = (x, y) => { const r = Math.hypot(x, y); if (!r) return [SZ / 2, SZ / 2]; const k = rad(r) / r; return [SZ / 2 + x * k, SZ / 2 - y * k]; };
   const at = (n, tt) => { const p = data.bodies[n].pos, i = Math.max(0, Math.min(data.days - 2, Math.floor(tt))), f = tt - i; return p[i].map((v, k) => v + (p[i + 1][k] - v) * f); };
 
@@ -21,26 +21,54 @@
     if (big) $("bigDate").textContent = d.toISOString().slice(0, 10) + "  \u00b7  top-down view, square-root distance scale";
   }
 
-  function paint(c, size) {
-    SZ = size; R = size / 2 - size * 0.045; K = size / 316;
-    const ctx = c;
-    ctx.clearRect(0, 0, SZ, SZ); ctx.font = Math.max(9, SZ / 50) + "px system-ui,sans-serif";
-    for (const n of Object.keys(data.bodies)) {
-      ctx.beginPath(); data.bodies[n].orbit.forEach(([x, y], i) => { const p = xy(x, y); i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
-      ctx.strokeStyle = n === "earth" ? "rgba(77,163,255,.45)" : "#232b3d"; ctx.lineWidth = 1; ctx.stroke();
+  // ---- real planet photos (assets/planets/<name>.png, made by data-prep/fetch_planets.py); shaded spheres until they exist
+  const PX = { sun: 26, mercury: 9, venus: 12, earth: 13, mars: 10, jupiter: 28, saturn: 42, uranus: 20, neptune: 20 };
+  const sprites = {};
+  function sprite(n) {
+    if (!(n in sprites)) {
+      const im = new Image(); sprites[n] = null;
+      im.onload = () => { sprites[n] = im; draw(); }; im.onerror = () => { sprites[n] = false; };
+      im.src = `assets/planets/${n}.png`;
     }
-    ctx.beginPath(); ctx.arc(SZ / 2, SZ / 2, 4.5 * K, 0, 7); ctx.fillStyle = "#ffd23f"; ctx.fill();
+    return sprites[n] || null;
+  }
+  const stars = Array.from({ length: 170 }, (_, i) => { const a = Math.sin(i * 127.1) * 43758.5453, b = Math.sin(i * 311.7) * 12543.853; return [a - Math.floor(a), b - Math.floor(b), 0.15 + ((a * 7) % 1 + 1) % 1 * 0.5]; });
+  function sphere(c, x, y, r, col, n) {                       // fallback: lit sphere (+ rings for Saturn)
+    const g = c.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.1, x, y, r);
+    g.addColorStop(0, "#fff8"); g.addColorStop(0.18, col); g.addColorStop(1, "#05070b");
+    if (n === "saturn") { c.save(); c.translate(x, y); c.rotate(-0.4); c.beginPath(); c.ellipse(0, 0, r * 1.7, r * 0.55, 0, 0, 7); c.strokeStyle = "rgba(234,213,143,.7)"; c.lineWidth = Math.max(1, r * 0.22); c.stroke(); c.restore(); }
+    c.beginPath(); c.arc(x, y, r, 0, 7); c.fillStyle = g; c.fill();
+  }
+  function body(c, n, x, y) {
+    const s = PX[n] * K, im = sprite(n);
+    if (n === "sun") { const g = c.createRadialGradient(x, y, 0, x, y, s * 1.7); g.addColorStop(0, "rgba(255,190,80,.55)"); g.addColorStop(0.35, "rgba(255,150,40,.16)"); g.addColorStop(1, "rgba(255,150,40,0)"); c.fillStyle = g; c.fillRect(x - s * 2, y - s * 2, s * 4, s * 4); }
+    if (im) c.drawImage(im, x - s / 2, y - s / 2, s, s); else sphere(c, x, y, s / 2 * (n === "saturn" ? 0.55 : 1), COL[n] || "#ffd23f", n);
+    return s;
+  }
+
+  function paint(c, size) {
+    SZ = size; R = size / 2 - size * 0.05; K = size / 316;
+    c.clearRect(0, 0, SZ, SZ);
+    for (const [u, v, a] of stars) { c.fillStyle = `rgba(255,255,255,${a})`; c.fillRect(u * SZ, v * SZ, K > 1.5 ? 1.5 : 1, K > 1.5 ? 1.5 : 1); }
+    c.font = `500 ${Math.max(10, SZ / 46)}px Inter,system-ui,sans-serif`; c.textBaseline = "alphabetic";
+    for (const n of Object.keys(data.bodies)) {
+      c.beginPath(); data.bodies[n].orbit.forEach(([x, y], i) => { const p = xy(x, y); i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]); });
+      c.strokeStyle = n === "earth" ? "rgba(122,167,255,.5)" : "rgba(255,255,255,.09)"; c.lineWidth = 1; c.stroke();
+    }
+    body(c, "sun", SZ / 2, SZ / 2);
     const e = at("earth", t), ep = xy(e[0], e[1]);
     if (lon !== null) {                                    // where SPHEREx is looking from Earth (projected on the ecliptic)
-      ctx.beginPath(); ctx.moveTo(ep[0], ep[1]);
       const far = xy(e[0] + 60 * Math.cos(lon * D), e[1] + 60 * Math.sin(lon * D));
-      ctx.lineTo(far[0], far[1]); ctx.strokeStyle = "rgba(211,107,255,.8)"; ctx.setLineDash([4, 3]); ctx.stroke(); ctx.setLineDash([]);
-      ctx.fillStyle = "#d9a8ff"; ctx.fillText("field direction", Math.min(far[0], SZ - 62 * K), Math.max(far[1] + 10 * K, 10 * K));
+      c.beginPath(); c.moveTo(ep[0], ep[1]); c.lineTo(far[0], far[1]); c.strokeStyle = "rgba(217,168,255,.85)"; c.lineWidth = 1.2; c.setLineDash([5 * K, 4 * K]); c.stroke(); c.setLineDash([]);
+      c.fillStyle = "#d9a8ff"; c.fillText("direction of this field", Math.min(far[0], SZ - 112 * K), Math.max(far[1] + 12 * K, 12 * K));
     }
-    for (const n of Object.keys(data.bodies)) {
-      const p = at(n, t), q = xy(p[0], p[1]);
-      ctx.beginPath(); ctx.arc(q[0], q[1], (n === "earth" ? 4 : 3) * K, 0, 7); ctx.fillStyle = COL[n]; ctx.fill();
-      ctx.fillStyle = "#cfd5e3"; ctx.fillText(NAME(n), q[0] + 6 * K, q[1] - 4 * K);
+    const order = Object.keys(data.bodies).map((n) => [n, at(n, t)]).sort((p, q) => Math.hypot(q[1][0], q[1][1]) - Math.hypot(p[1][0], p[1][1]));
+    for (const [n, p] of order) {                          // far planets first so near ones sit on top
+      const q = xy(p[0], p[1]), s = body(c, n, q[0], q[1]);
+      if (n === "earth") { c.beginPath(); c.arc(q[0], q[1], s / 2 + 3 * K, 0, 7); c.strokeStyle = "rgba(122,167,255,.55)"; c.lineWidth = 1; c.stroke(); }
+      c.fillStyle = "rgba(220,226,238,.92)";
+      const tw = c.measureText(NAME(n)).width, right = q[0] + s / 2 + 5 * K + tw < SZ - 4;
+      c.fillText(NAME(n), right ? q[0] + s / 2 + 5 * K : q[0] - s / 2 - 5 * K - tw, q[1] + 4 * K);
     }
   }
 
@@ -79,7 +107,7 @@
   }
 
   async function init() {
-    cv = $("orrery"); const r = window.devicePixelRatio || 1; cv.width = cv.height = SZ * r;
+    cv = $("orrery"); const r = Math.max(2, window.devicePixelRatio || 1); cv.width = cv.height = SZ * r;
     cv.style.width = "100%"; cv.style.aspectRatio = "1"; ctx = cv.getContext("2d"); ctx.scale(r, r);
     try { const res = await fetch("tiles/orrery.json"); if (!res.ok) return; data = await res.json(); } catch (e) { return; }
     bcv = $("orBig"); bctx = bcv.getContext("2d"); $("viewtabs").hidden = false;

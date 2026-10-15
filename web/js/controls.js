@@ -93,7 +93,7 @@
     S.sel = { col, row, ...S.wcs.toSky(col, row) };
     svg.querySelectorAll(".xh").forEach((n) => n.remove());
     const g = document.createElementNS(NS, "g"); g.setAttribute("class", "xh");
-    const w = S.wcs.width, h = S.wcs.height, st = 'stroke="#ffb347" stroke-width="1" vector-effect="non-scaling-stroke"';
+    const w = S.wcs.width, h = S.wcs.height, st = 'stroke="#ffb347" stroke-opacity=".5" stroke-width="1" vector-effect="non-scaling-stroke"';
     g.innerHTML = `<line x1="${col}" y1="0" x2="${col}" y2="${row - 10}" ${st}/><line x1="${col}" y1="${row + 10}" x2="${col}" y2="${h}" ${st}/>` +
       `<line x1="0" y1="${row}" x2="${col - 10}" y2="${row}" ${st}/><line x1="${col + 10}" y1="${row}" x2="${w}" y2="${row}" ${st}/>` +
       `<circle cx="${col}" cy="${row}" r="10" fill="none" ${st}/>`;

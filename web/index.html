@@ -4,99 +4,138 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SPHEREx Blink Comparator</title>
+<meta name="description" content="Blink comparator for SPHEREx all-sky infrared images: flip between observations and anything that moves jumps out.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header>
-  <h1>SPHEREx Blink Comparator</h1>
-  <p id="hint">Drag the time bar or press <kbd>Blink</kbd> &mdash; anything that jumps between frames is moving. Click the sky to read its coordinates and flag it.</p>
+<header id="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-24 16 16)" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="16" r="3.2" fill="currentColor"/><circle cx="27.4" cy="10.5" r="1.9" fill="var(--accent)"/></svg>
+    <div><div class="name">SPHEREx <span>Blink Comparator</span></div><div class="tag">Hunting for moving worlds &middot; NASA Space Apps 2026</div></div>
+  </div>
+  <div class="hdr-right">
+    <label class="field"><span>Field</span><select id="region"></select></label>
+    <button id="helpBtn" class="ghost round" aria-label="How it works" title="How it works">?</button>
+  </div>
 </header>
+
 <main>
-  <section id="viewer">
-    <div id="stage">
-      <canvas id="sky"></canvas>
-      <img id="ref" alt="" draggable="false">
-      <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+  <section id="work">
+    <div id="viewer">
+      <div id="stage">
+        <canvas id="sky"></canvas>
+        <img id="ref" alt="" draggable="false">
+        <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <canvas id="orBig"></canvas>
+      <div id="viewtabs" class="seg glass" hidden><button id="viewSky" class="on">Sky</button><button id="viewSolar">Solar system</button></div>
+      <div id="bigDate" hidden></div>
+      <div id="loading" class="glass" hidden>Loading frames&hellip;</div>
+      <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; scroll to zoom &middot; click to inspect</div>
+      <div id="viewtools"><button id="zoomReset" class="glass">Reset view</button></div>
     </div>
-    <canvas id="orBig"></canvas>
-    <div id="viewtabs" hidden><button id="viewSky" class="on">Sky</button><button id="viewSolar">Solar system</button></div>
-    <div id="bigDate" class="small" hidden></div>
-    <div id="loading" hidden>Loading&hellip;</div>
-    <div id="viewtools"><button id="zoomReset" title="Reset zoom">Reset view</button><span>scroll = zoom &middot; drag = pan</span></div>
+
+    <div id="dock">
+      <div class="dock-top">
+        <div id="bands" class="seg"></div>
+        <div class="when"><span class="lbl">Frame</span> <span id="frameLabel"></span></div>
+      </div>
+      <div class="scrub">
+        <button id="prev" class="ghost icon" title="Previous (&larr;)" aria-label="Previous frame">&larr;</button>
+        <input id="time" type="range" min="0" max="0" value="0" step="1" aria-label="Time">
+        <button id="next" class="ghost icon" title="Next (&rarr;)" aria-label="Next frame">&rarr;</button>
+      </div>
+      <div class="blinkrow">
+        <button id="blink" class="primary" title="Space">Blink</button>
+        <button id="setRef" class="ghost" title="Use the current frame as the frame to blink against">Set B = current</button>
+        <div id="blinkInfo"></div>
+      </div>
+    </div>
   </section>
 
-  <aside>
-    <div class="card">
-      <label>Region <select id="region"></select></label>
-      <div class="lbl">Spectral band</div>
-      <div id="bands" class="row"></div>
-    </div>
+  <aside id="panel">
+    <nav id="tabs" role="tablist">
+      <button class="on" data-pane="inspect" role="tab">Inspect</button>
+      <button data-pane="context" role="tab">Context</button>
+      <button data-pane="planetx" role="tab">Planet&nbsp;X</button>
+    </nav>
 
-    <div class="card">
-      <div class="lbl">Time <span id="frameLabel"></span></div>
-      <input id="time" type="range" min="0" max="0" value="0" step="1">
-      <div class="row">
-        <button id="prev" title="Previous (&larr;)">&larr;</button>
-        <button id="next" title="Next (&rarr;)">&rarr;</button>
-        <button id="blink" class="primary" title="Space">Blink</button>
-        <button id="setRef" title="Use the current frame as the frame to blink against">Set B = current</button>
+    <div class="pane" id="pane-inspect">
+      <div class="card">
+        <div class="lbl">Selected point</div>
+        <dl id="meta"><dt class="empty">Click anywhere on the sky to read its position, band and brightness.</dt></dl>
       </div>
-      <div id="blinkInfo" class="small"></div>
-    </div>
-
-    <div class="card" id="skyCard" hidden>
-      <div class="lbl">Where are we looking?</div>
-      <canvas id="skymap"></canvas>
-      <div class="small">Sun &amp; planets on this frame's date &middot; Milky Way (blue band) &middot; ecliptic (orange) &middot; dotted yellow ring = 90&deg; from the Sun &middot; white box = this field &middot; orange line = known asteroid's track</div>
-      <div id="skyNote" class="small"></div>
-      <label class="chk"><input type="checkbox" id="showKnown" checked> Show known objects on the image <span class="small">(untick to hunt blind first)</span></label>
-    </div>
-
-    <div class="card" id="refCard" hidden>
-      <div class="lbl">Compare with other eyes</div>
-      <select id="refSel"></select>
-      <label class="small">Blend <input id="refMix" type="range" min="0" max="100" value="60"></label>
-      <div id="refCredit" class="small"></div>
-    </div>
-
-    <div class="card" id="orCard" hidden>
-      <div class="lbl">Solar system <span class="small" id="orDate"></span></div>
-      <canvas id="orrery"></canvas>
-      <input id="orT" type="range" min="0" max="1" step="0.01" value="0">
-      <div class="row"><button id="orPlay">Play</button><button id="orSync" title="Jump to the date of the frame you are viewing">Sync to frame</button>
-        <select id="orSpeed"><option value="2">2 days/s</option><option value="10" selected>10 days/s</option><option value="40">40 days/s</option></select></div>
-      <table id="orTable" class="small"></table>
-      <div class="small">Top-down view, square-root distance scale. Purple dashed line = direction of this field from Earth: a distant Planet X would lie somewhere along it.</div>
-    </div>
-
-    <div class="card">
-      <div class="lbl">Selected point</div>
-      <dl id="meta"><dt>Click the sky</dt><dd></dd></dl>
-    </div>
-
-    <div class="card" id="mvCard" hidden>
-      <div class="lbl">Planet X lab</div>
-      <div class="small">What would a distant planet look like here? Earth's own motion makes it drift slowly.</div>
-      <label>Distance <b id="pxDistVal">500 AU</b><input id="pxDist" type="range" min="30" max="1000" step="10" value="500"></label>
-      <label class="chk"><input type="checkbox" id="pxDraw" checked> Draw its track on the sky</label>
-      <div id="pxOut" class="small"></div>
-      <div class="lbl">Measure a mover</div>
-      <div class="row"><button id="markA" disabled>Mark A</button><button id="markB" disabled>Mark B</button><button id="clearMk">Clear</button></div>
-      <div id="mvOut" class="small"></div>
-    </div>
-
-    <div class="card">
-      <div class="lbl">Flag this <span id="flagCount" class="small"></span></div>
-      <div class="row">
-        <select id="category"><option>asteroid</option><option>comet</option><option>other</option></select>
-        <input id="note" type="text" placeholder="note (optional)" maxlength="200">
+      <div class="card">
+        <div class="lbl">Flag a mover <span id="flagCount" class="small"></span></div>
+        <div class="row">
+          <select id="category"><option>asteroid</option><option>comet</option><option>other</option></select>
+          <input id="note" type="text" placeholder="note (optional)" maxlength="200">
+        </div>
+        <button id="submitFlag" class="primary wide" disabled>Flag it</button>
+        <div id="flagStatus" class="small"></div>
       </div>
-      <button id="submitFlag" class="primary" disabled>Flag it</button>
-      <div id="flagStatus" class="small"></div>
     </div>
+
+    <div class="pane" id="pane-context" hidden>
+      <div class="card" id="refCard" hidden>
+        <div class="lbl">Compare with other eyes</div>
+        <select id="refSel"></select>
+        <label class="slider"><span class="small">Blend</span><input id="refMix" type="range" min="0" max="100" value="60"></label>
+        <div id="refCredit" class="small"></div>
+      </div>
+      <div class="card" id="skyCard" hidden>
+        <div class="lbl">Where are we looking?</div>
+        <canvas id="skymap"></canvas>
+        <div class="legend small">Sun and planets on this frame's date &middot; Milky Way &middot; ecliptic (orange) &middot; dotted ring = 90&deg; from the Sun &middot; white box = this field &middot; orange line = known asteroid's track</div>
+        <div id="skyNote" class="small"></div>
+        <label class="chk"><input type="checkbox" id="showKnown" checked><span>Show known objects on the image<span class="small">Untick to hunt blind first.</span></span></label>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-planetx" hidden>
+      <div class="card" id="orCard" hidden>
+        <div class="lbl">Solar system <span class="small mono" id="orDate"></span></div>
+        <canvas id="orrery"></canvas>
+        <input id="orT" type="range" min="0" max="1" step="0.01" value="0" aria-label="Date">
+        <div class="row"><button id="orPlay" class="ghost">Play</button><button id="orSync" class="ghost" title="Jump to the date of the frame you are viewing">Sync to frame</button>
+          <select id="orSpeed"><option value="2">2 days/s</option><option value="10" selected>10 days/s</option><option value="40">40 days/s</option></select></div>
+        <table id="orTable" class="small"></table>
+        <div class="small">Top-down view, square-root distance scale. The purple dashed line is the direction of this field from Earth: a distant Planet X would lie somewhere along it.</div>
+      </div>
+      <div class="card" id="mvCard" hidden>
+        <div class="lbl">Planet X lab</div>
+        <div class="small">What would a distant planet look like here? Earth's own motion makes it drift slowly.</div>
+        <label class="slider"><span class="small">Distance <b id="pxDistVal">500 AU</b></span><input id="pxDist" type="range" min="30" max="1000" step="10" value="500"></label>
+        <label class="chk"><input type="checkbox" id="pxDraw" checked> Draw its track on the sky</label>
+        <div id="pxOut" class="small"></div>
+        <div class="lbl sub">Measure a mover</div>
+        <div class="row"><button id="markA" class="ghost" disabled>Mark A</button><button id="markB" class="ghost" disabled>Mark B</button><button id="clearMk" class="ghost">Clear</button></div>
+        <div id="mvOut" class="small"></div>
+      </div>
+    </div>
+
+    <footer id="credits">
+      <div>SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC. Reference images and planet photos are credited in-app and in the README.</div>
+      <div id="imgCredits"></div>
+    </footer>
   </aside>
 </main>
-<footer>SPHEREx data via NASA/IPAC IRSA. See README for the official acknowledgement.</footer>
+
+<dialog id="help">
+  <h2>How this works</h2>
+  <p>SPHEREx scans the whole sky in 102 infrared colours. Every field is seen on several dates, so a world that moves between visits is easy to catch: this is the blink technique that found Pluto in 1930.</p>
+  <ol>
+    <li><b>Pick a band</b> and drag the time bar. Stars stay put; movers jump.</li>
+    <li>Press <kbd>Space</kbd> to <b>blink</b> two frames. Use <b>Set B</b> to choose the second frame.</li>
+    <li><b>Click</b> a mover to read its position and brightness, then flag it.</li>
+    <li>Open <b>Context</b> to see this field against optical, infrared and Hubble views, and on the whole sky.</li>
+    <li>Open <b>Planet X</b> to see what a distant planet would do here, and to measure a mover's rate.</li>
+  </ol>
+  <form method="dialog"><button class="primary">Got it</button></form>
+</dialog>
 
 <script src="js/config.js"></script>
 <script src="js/wcs.js"></script>
@@ -108,5 +147,6 @@
 <script src="js/motion.js"></script>
 <script src="js/reference.js"></script>
 <script src="js/orrery.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

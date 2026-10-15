@@ -32,6 +32,19 @@ python fetch_reference.py --region m101 --skip-hips --hubble-fits raw/hubble/fil
 
 The big Hubble FITS stays on your disk (`raw/` is git-ignored); only the 1024x1024 JPEG ships with the site.
 
+## Real images (planets, Milky Way)
+
+```bash
+cd data-prep
+pip install -r requirements.txt
+python fetch_planets.py          # needs internet; writes web/assets/planets/*.png, web/assets/milkyway.jpg, credits.json
+```
+
+NASA/ESA/ESO photos (via Wikimedia Commons) are cropped to transparent sprites for the Solar system view, and the
+ESO Milky Way panorama is re-projected into the all-sky map. Until the files exist the app draws shaded spheres and a
+vector Milky Way, so nothing breaks. If a download fails, save any photo as `raw/planets/<name>.jpg` and re-run:
+local files win. Commit `web/assets/` (about 4 MB) so the deployed site has it. Credits are shown in the app footer.
+
 ## Run the website locally
 
 The page loads tiles and JSON with `fetch()`, which browsers block on `file://` URLs, so it
