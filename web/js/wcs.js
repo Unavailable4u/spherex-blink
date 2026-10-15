@@ -27,6 +27,19 @@ const WCS = (() => {
   }
   const hms = (ra) => { const h = ra / 15, m = (h % 1) * 60; return `${String(Math.floor(h)).padStart(2, "0")}h ${String(Math.floor(m)).padStart(2, "0")}m ${((m % 1) * 60).toFixed(1).padStart(4, "0")}s`; };
   const dms = (dec) => { const s = dec < 0 ? "-" : "+", a = Math.abs(dec), m = (a % 1) * 60; return `${s}${String(Math.floor(a)).padStart(2, "0")}° ${String(Math.floor(m)).padStart(2, "0")}′ ${((m % 1) * 60).toFixed(1).padStart(4, "0")}″`; };
-  return { make, hms, dms };
+  // J2000 equatorial -> galactic (l, b) and ecliptic latitude/longitude, degrees
+  const GM = [[-0.0548755604, -0.8734370902, -0.4838350155], [0.4941094279, -0.4448296300, 0.7469822445], [-0.8676661490, -0.1980763734, 0.4559837762]];
+  const unitVec = (ra, dec) => [Math.cos(dec * D) * Math.cos(ra * D), Math.cos(dec * D) * Math.sin(ra * D), Math.sin(dec * D)];
+  function galactic(ra, dec) {
+    const v = unitVec(ra, dec), g = GM.map((r) => r[0] * v[0] + r[1] * v[1] + r[2] * v[2]);
+    return { l: ((Math.atan2(g[1], g[0]) / D) % 360 + 360) % 360, b: Math.asin(Math.max(-1, Math.min(1, g[2]))) / D };
+  }
+  function ecliptic(ra, dec) {
+    const e = 23.4392911 * D, v = unitVec(ra, dec), y = v[1] * Math.cos(e) + v[2] * Math.sin(e), z = -v[1] * Math.sin(e) + v[2] * Math.cos(e);
+    return { lon: ((Math.atan2(y, v[0]) / D) % 360 + 360) % 360, lat: Math.asin(Math.max(-1, Math.min(1, z))) / D };
+  }
+  // small-field offset of (ra2,dec2) from (ra1,dec1) in arcsec: {e, n}
+  const offset = (ra1, dec1, ra2, dec2) => ({ e: (ra2 - ra1) * Math.cos((dec1 + dec2) / 2 * D) * 3600, n: (dec2 - dec1) * 3600 });
+  return { make, hms, dms, galactic, ecliptic, offset };
 })();
 if (typeof module !== "undefined") module.exports = WCS;

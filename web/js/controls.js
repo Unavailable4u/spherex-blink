@@ -4,8 +4,11 @@
   const NS = "http://www.w3.org/2000/svg";
   const S = { man: null, wcs: null, band: null, frames: [], imgs: [], idx: 0, ref: 0, sel: null, flags: [], region: null };
   const view = { s: 1, tx: 0, ty: 0 };
+  window.App = { S, view };
+  const emit = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
   const cv = $("sky"), svg = $("overlay"), stage = $("stage"), viewer = $("viewer");
   Renderer.init(cv);
+  SkyMap.init($("skymap"));
 
   const fmtTime = (f) => f.utc.replace("T", " ").slice(0, 16) + " UTC";
   const say = (id, t) => { $(id).textContent = t; };
@@ -13,7 +16,7 @@
 
   // ---------------------------------------------------------------- region / band
   async function loadRegion(id) {
-    S.region = id; Renderer.stopBlink(); $("blink").classList.remove("on");
+    S.region = id; emit("sx:region", { id }); Renderer.stopBlink(); $("blink").classList.remove("on");
     try {
       [S.man, S.wcs] = [await getJSON(`tiles/${id}/manifest.json`), null];
       S.wcs = WCS.make(await getJSON(`tiles/${id}/wcs.json`));
@@ -53,7 +56,7 @@
     say("frameLabel", `${fmtTime(f)}  (${i + 1}/${S.frames.length})`);
     if (img && !Renderer.blinking()) fade ? Renderer.fadeTo(img) : Renderer.draw(img);
     else if (!img) say("flagStatus", "Tile missing for this frame.");
-    blinkInfo(); Flagging.render(svg, S.flags, f.id, S.wcs); showMeta();
+    blinkInfo(); Flagging.render(svg, S.flags, f.id, S.wcs); showMeta(); emit("sx:frame", { id: f.id });
   }
   const blinkInfo = () => say("blinkInfo", S.frames.length > 1 ? `A (time bar): ${fmtTime(S.frames[S.idx])}   ⇄   B: ${fmtTime(S.frames[S.ref])}` : "");
 
@@ -77,8 +80,10 @@
       flux = v === 0 ? "no data / at floor" : (st.lo + (st.hi - st.lo) * st.a * Math.sinh(y * Math.asinh(1 / st.a)) + f.bkg).toPrecision(3) + " " + (f.unit || "MJy/sr");
     }
     if (f.wavelength_plane) { const p = f.wavelength_plane; lam = p.c0 + p.per_col * col + p.per_row * row; }
+    const gl = WCS.galactic(ra, dec), ec = WCS.ecliptic(ra, dec);
     const rows = [["RA", `${ra.toFixed(5)}°  ${WCS.hms(ra)}`], ["Dec", `${dec.toFixed(5)}°  ${WCS.dms(dec)}`],
-      ["Pixel", `${col.toFixed(0)}, ${row.toFixed(0)}`], ["Band", `${S.band}${lam ? "  ·  " + (+lam).toFixed(3) + " µm" : ""}`],
+      ["Pixel", `${col.toFixed(0)}, ${row.toFixed(0)}`],
+      ["Galactic", `l ${gl.l.toFixed(2)}°  b ${gl.b.toFixed(2)}°`], ["Ecliptic", `λ ${ec.lon.toFixed(2)}°  β ${ec.lat.toFixed(2)}°`], ["Band", `${S.band}${lam ? "  ·  " + (+lam).toFixed(3) + " µm" : ""}`],
       ["Epoch", `${f.epoch}  ·  ${fmtTime(f)}`], ["Intensity", flux]];
     m.innerHTML = rows.map(([k, v2]) => `<dt>${k}</dt><dd>${v2}</dd>`).join("");
   }
@@ -92,14 +97,14 @@
     g.innerHTML = `<line x1="${col}" y1="0" x2="${col}" y2="${row - 10}" ${st}/><line x1="${col}" y1="${row + 10}" x2="${col}" y2="${h}" ${st}/>` +
       `<line x1="0" y1="${row}" x2="${col - 10}" y2="${row}" ${st}/><line x1="${col + 10}" y1="${row}" x2="${w}" y2="${row}" ${st}/>` +
       `<circle cx="${col}" cy="${row}" r="10" fill="none" ${st}/>`;
-    svg.appendChild(g); showMeta(); $("submitFlag").disabled = false;
+    svg.appendChild(g); showMeta(); $("submitFlag").disabled = false; emit("sx:select");
   }
 
   // ---------------------------------------------------------------- zoom / pan
   function applyView() {
     const W = viewer.clientWidth, H = viewer.clientHeight;
     view.tx = Math.min(0, Math.max(W - W * view.s, view.tx)); view.ty = Math.min(0, Math.max(H - H * view.s, view.ty));
-    stage.style.transform = `translate(${view.tx}px,${view.ty}px) scale(${view.s})`;
+    stage.style.transform = `translate(${view.tx}px,${view.ty}px) scale(${view.s})`; emit("sx:zoom");
   }
   function resetView() { view.s = 1; view.tx = view.ty = 0; applyView(); }
   viewer.addEventListener("wheel", (e) => {

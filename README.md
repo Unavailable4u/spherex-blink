@@ -8,9 +8,29 @@ anything that moves jumps out - the same technique Clyde Tombaugh used to find P
 
 | Part | State |
 |---|---|
-| Data pipeline (`data-prep/`) | Done and tested on synthetic data. **Not yet run on real IRSA data.** |
-| Web viewer (`web/`) | Placeholder page only: canvas, blink, bands, click-to-inspect and flagging still to build |
+| Data pipeline (`data-prep/`) | Done; run on real Pallas data from IRSA |
+| Web viewer (`web/`) | Canvas, crossfade + blink, bands, zoom/pan, click-to-inspect (RA/Dec, galactic, ecliptic, flux), flagging |
+| Sky map, known objects, Planet X lab, reference blend | Added (see below) |
 | Deploy, demo video, pitch | Not started |
+
+## Planet X features
+
+* **Where are we looking?** All-sky map with the Sun, planets, Milky Way, ecliptic and this field.
+* **Known objects layer** labels the catalogued asteroid and any planet in the field. Untick it to hunt blind.
+* **Planet X lab.** Earth's orbital motion makes a distant body drift slowly. Pick a distance and see how many
+  pixels it would move over your frames, drawn as a track on the sky. **Measure a mover** (Mark A / Mark B) gives
+  its rate and a distance estimate, and says whether it is a nearby asteroid or a distant candidate.
+  The drift comes from `reflex` in `sky.json` (Earth's velocity projected on the sky, per AU).
+* **Compare with other eyes** blends DSS2 / 2MASS / WISE / Hubble over the SPHEREx tile when `tiles/<region>/ref/` exists.
+
+```bash
+cd data-prep
+python solar_system.py --region pallas --target-name "(2) Pallas"     # -> web/tiles/pallas/sky.json
+python fetch_reference.py --region pallas                              # DSS2, 2MASS, WISE (needs internet)
+python fetch_reference.py --region m101 --skip-hips --hubble-fits raw/hubble/file_drz.fits --hubble-credit "NASA, ESA, STScI"
+```
+
+The big Hubble FITS stays on your disk (`raw/` is git-ignored); only the 1024x1024 JPEG ships with the site.
 
 ## Run the website locally
 
@@ -107,6 +127,8 @@ This is also what the front-end developers should build against until real tiles
 
 ```
 data-prep/
+  solar_system.py      planets, Sun, known target, Earth-reflex drift -> sky.json
+  fetch_reference.py   DSS2 / 2MASS / WISE / Hubble on the tile grid -> ref/
   find_target.py       step 1: find asteroid + SPHEREx images that contain it
   download_cutouts.py  fetch FITS cutouts from IRSA
   fits_to_png.py       step 2: reproject, stretch, write tiles + wcs.json + manifest.json
