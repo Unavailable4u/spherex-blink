@@ -32,7 +32,7 @@ const SkyMap = (() => {
   }
   function dot(ra, dec, r, color, label) {
     const [x, y] = proj(ra, dec); ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fillStyle = color; ctx.fill();
-    if (label) { ctx.fillStyle = "#cfd5e3"; const w = ctx.measureText(label).width; let lx = x + 6; if (lx + w > W - 3) lx = x - w - 6; if (lx < 3) lx = 3; ctx.fillText(label, lx, y - 5); }
+    if (label) { ctx.fillStyle = "#ece6d5"; const w = ctx.measureText(label).width; let lx = x + 6; if (lx + w > W - 3) lx = x - w - 6; if (lx < 3) lx = 3; ctx.fillText(label, lx, y - 5); }
   }
 
 
@@ -80,7 +80,7 @@ const SkyMap = (() => {
   function update(frameId) {
     last = frameId; if (!data || !ctx) return;
     const fr = data.frames[frameId] || Object.values(data.frames)[0]; if (!fr) return;
-    ctx.clearRect(0, 0, W, H); ctx.font = "500 9px Inter,system-ui,sans-serif";
+    ctx.clearRect(0, 0, W, H); ctx.font = 'italic 400 11px "CMU Serif","Latin Modern Roman",Georgia,serif';
     ctx.beginPath(); ctx.ellipse(W / 2, H / 2, W / 2 - 1, H / 2 - 1, 0, 0, 7); ctx.fillStyle = "#06080d"; ctx.fill();
     ctx.save(); ctx.clip();
     for (let d = -60; d <= 60; d += 30) line(Array.from({ length: 73 }, (_, i) => [i * 5, d]), mw ? "rgba(255,255,255,.10)" : "#1b2233", 0.6);
@@ -102,8 +102,9 @@ const SkyMap = (() => {
     const inf = fr.in_field.length ? "In this field right now: " + fr.in_field.map(NAME).join(", ") + "." : `No planets in this field, so anything that moves here is a small body, here ${data.target_name || "an asteroid"}.`;
     $("skyNote").textContent = `This field is ${fr.elong.toFixed(0)}\u00b0 from the Sun, ecliptic latitude ${data.field.ecl_lat >= 0 ? "+" : ""}${data.field.ecl_lat.toFixed(0)}\u00b0. ${inf}`;
   }
-  return { init, update, setRegion, data: () => data };
+  return { init, update, setRegion, data: () => data, redraw: () => update(last) };
 })();
 
 document.addEventListener("sx:region", (e) => SkyMap.setRegion(e.detail.id));
+document.addEventListener("sx:fonts", () => SkyMap.redraw());
 document.addEventListener("sx:frame", (e) => SkyMap.update(e.detail.id));

@@ -3,56 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#05060a">
 <title>SPHEREx Blink Comparator</title>
 <meta name="description" content="Blink comparator for SPHEREx all-sky infrared images: flip between observations and anything that moves jumps out.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2305060a'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' transform='rotate(-24 16 16)' fill='none' stroke='%23ece6d5' stroke-width='1.4'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ece6d5'/%3E%3Ccircle cx='25' cy='11.6' r='2' fill='%23f2a244'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/cmu-serif-500-roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/cmu-serif-500-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header id="top">
   <div class="brand">
-    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-24 16 16)" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="16" r="3.2" fill="currentColor"/><circle cx="27.4" cy="10.5" r="1.9" fill="var(--accent)"/></svg>
-    <div><div class="name">SPHEREx <span>Blink Comparator</span></div><div class="tag">Hunting for moving worlds &middot; NASA Space Apps 2026</div></div>
+    <svg class="logo" viewBox="0 0 38 38" aria-hidden="true">
+      <circle cx="19" cy="19" r="17.5" fill="none" stroke="currentColor" stroke-opacity=".28"/>
+      <ellipse cx="19" cy="19" rx="14.5" ry="5.6" transform="rotate(-24 19 19)" fill="none" stroke="currentColor" stroke-width="1.3"/>
+      <ellipse cx="19" cy="19" rx="14.5" ry="5.6" transform="rotate(36 19 19)" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="1"/>
+      <circle cx="19" cy="19" r="3.3" fill="currentColor"/>
+      <circle cx="30.8" cy="13.6" r="2.3" fill="var(--ir)"/>
+    </svg>
+    <div>
+      <div class="overline">NASA Space Apps 2026 &middot; Planet X and SPHEREx</div>
+      <h1>SPHEREx <em>Blink Comparator</em></h1>
+    </div>
   </div>
   <div class="hdr-right">
+    <span class="tag">Hunting for moving worlds in the infrared sky</span>
     <label class="field"><span>Field</span><select id="region"></select></label>
     <button id="helpBtn" class="ghost round" aria-label="How it works" title="How it works">?</button>
   </div>
 </header>
 
 <main>
-  <section id="work">
-    <div id="viewer">
-      <div id="stage">
-        <canvas id="sky"></canvas>
-        <img id="ref" alt="" draggable="false">
-        <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
-      </div>
-      <canvas id="orBig"></canvas>
-      <div id="viewtabs" class="seg glass" hidden><button id="viewSky" class="on">Sky</button><button id="viewSolar">Solar system</button></div>
-      <div id="bigDate" hidden></div>
-      <div id="loading" class="glass" hidden>Loading frames&hellip;</div>
-      <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; scroll to zoom &middot; click to inspect</div>
-      <div id="viewtools"><button id="zoomReset" class="glass">Reset view</button></div>
-    </div>
-
-    <div id="dock">
-      <div class="dock-top">
-        <div id="bands" class="seg"></div>
-        <div class="when"><span class="lbl">Frame</span> <span id="frameLabel"></span></div>
-      </div>
-      <div class="scrub">
-        <button id="prev" class="ghost icon" title="Previous (&larr;)" aria-label="Previous frame">&larr;</button>
-        <input id="time" type="range" min="0" max="0" value="0" step="1" aria-label="Time">
-        <button id="next" class="ghost icon" title="Next (&rarr;)" aria-label="Next frame">&rarr;</button>
-      </div>
+  <aside id="rail" aria-label="Instrument controls">
+    <section class="sec">
+      <h2 class="lbl">Spectral band</h2>
+      <div id="bands" class="seg"></div>
+    </section>
+    <section class="sec">
+      <h2 class="lbl">Blink</h2>
       <div class="blinkrow">
-        <button id="blink" class="primary" title="Space">Blink</button>
-        <button id="setRef" class="ghost" title="Use the current frame as the frame to blink against">Set B = current</button>
-        <div id="blinkInfo"></div>
+        <button id="blink" class="primary" title="Space">Blink A &#8644; B</button>
+        <button id="setRef" class="ghost" title="Use the current frame as the frame to blink against">Set B = current frame</button>
       </div>
+      <div id="blinkInfo"></div>
+    </section>
+    <section class="sec keys" aria-label="Keyboard shortcuts">
+      <h2 class="lbl">Keys</h2>
+      <div><span>blink</span><kbd>Space</kbd></div>
+      <div><span>step through time</span><span><kbd>&larr;</kbd><kbd>&rarr;</kbd></span></div>
+      <div><span>zoom</span><span class="tt">scroll</span></div>
+      <div><span>inspect a point</span><span class="tt">click</span></div>
+    </section>
+  </aside>
+
+  <section id="work">
+    <figure id="figure">
+      <div id="fig-grid">
+        <div class="corner" aria-hidden="true"><span>&delta;&thinsp;/&thinsp;&alpha;</span></div>
+        <svg id="axTop" class="ax" aria-hidden="true"></svg>
+        <svg id="axLeft" class="ax" aria-hidden="true"></svg>
+        <div id="viewer">
+          <div id="stage">
+            <canvas id="sky"></canvas>
+            <img id="ref" alt="" draggable="false">
+            <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+          <canvas id="orBig"></canvas>
+          <div id="viewtabs" class="seg glass" hidden><button id="viewSky" class="on">Sky</button><button id="viewSolar">Solar system</button></div>
+          <div id="plate" class="glass" aria-hidden="true">
+            <svg id="compass" viewBox="0 0 34 34"></svg>
+            <div id="scale"></div>
+          </div>
+          <div id="bigDate" hidden></div>
+          <div id="loading" class="glass" hidden>Loading frames&hellip;</div>
+          <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; scroll to zoom &middot; click to inspect</div>
+          <div id="viewtools"><button id="zoomReset" class="glass">Reset view</button></div>
+        </div>
+      </div>
+      <figcaption id="caption"><b>Figure 1.</b> <span id="capText">Loading the field&hellip;</span></figcaption>
+    </figure>
+
+    <div id="timeline">
+      <div class="scrub">
+        <button id="prev" class="ghost icon" title="Previous (&larr;)" aria-label="Previous frame"><svg viewBox="0 0 16 16"><path d="M10.5 2.5 5 8l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+        <div class="track">
+          <input id="time" class="fill" type="range" min="0" max="0" value="0" step="1" aria-label="Time">
+          <div id="ftick" aria-hidden="true"></div>
+        </div>
+        <button id="next" class="ghost icon" title="Next (&rarr;)" aria-label="Next frame"><svg viewBox="0 0 16 16"><path d="M5.5 2.5 11 8l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+      </div>
+      <div class="when"><span>Frame</span><span id="frameLabel"></span></div>
     </div>
   </section>
 
@@ -65,11 +105,11 @@
 
     <div class="pane" id="pane-inspect">
       <div class="card">
-        <div class="lbl">Selected point</div>
+        <h2 class="lbl">Selected point</h2>
         <dl id="meta"><dt class="empty">Click anywhere on the sky to read its position, band and brightness.</dt></dl>
       </div>
       <div class="card">
-        <div class="lbl">Flag a mover <span id="flagCount" class="small"></span></div>
+        <h2 class="lbl">Flag a mover <span id="flagCount" class="small"></span></h2>
         <div class="row">
           <select id="category"><option>asteroid</option><option>comet</option><option>other</option></select>
           <input id="note" type="text" placeholder="note (optional)" maxlength="200">
@@ -81,13 +121,13 @@
 
     <div class="pane" id="pane-context" hidden>
       <div class="card" id="refCard" hidden>
-        <div class="lbl">Compare with other eyes</div>
+        <h2 class="lbl">Compare with other eyes</h2>
         <select id="refSel"></select>
-        <label class="slider"><span class="small">Blend</span><input id="refMix" type="range" min="0" max="100" value="60"></label>
+        <label class="slider"><span class="small"><span>Blend</span></span><input id="refMix" class="fill" type="range" min="0" max="100" value="60"></label>
         <div id="refCredit" class="small"></div>
       </div>
       <div class="card" id="skyCard" hidden>
-        <div class="lbl">Where are we looking?</div>
+        <h2 class="lbl">Where are we looking?</h2>
         <canvas id="skymap"></canvas>
         <div class="legend small">Sun and planets on this frame's date &middot; Milky Way &middot; ecliptic (orange) &middot; dotted ring = 90&deg; from the Sun &middot; white box = this field &middot; orange line = known asteroid's track</div>
         <div id="skyNote" class="small"></div>
@@ -97,28 +137,28 @@
 
     <div class="pane" id="pane-planetx" hidden>
       <div class="card" id="orCard" hidden>
-        <div class="lbl">Solar system <span class="small mono" id="orDate"></span></div>
+        <h2 class="lbl">Solar system <span class="small tt" id="orDate"></span></h2>
         <canvas id="orrery"></canvas>
         <input id="orT" type="range" min="0" max="1" step="0.01" value="0" aria-label="Date">
         <div class="row"><button id="orPlay" class="ghost">Play</button><button id="orSync" class="ghost" title="Jump to the date of the frame you are viewing">Sync to frame</button>
           <select id="orSpeed"><option value="2">2 days/s</option><option value="10" selected>10 days/s</option><option value="40">40 days/s</option></select></div>
-        <table id="orTable" class="small"></table>
-        <div class="small">Top-down view, square-root distance scale. The purple dashed line is the direction of this field from Earth: a distant Planet X would lie somewhere along it.</div>
+        <table id="orTable"></table>
+        <div class="small">Top-down view, square-root distance scale. The violet dashed line is the direction of this field from Earth: a distant Planet X would lie somewhere along it.</div>
       </div>
       <div class="card" id="mvCard" hidden>
-        <div class="lbl">Planet X lab</div>
+        <h2 class="lbl">Planet X lab</h2>
         <div class="small">What would a distant planet look like here? Earth's own motion makes it drift slowly.</div>
-        <label class="slider"><span class="small">Distance <b id="pxDistVal">500 AU</b></span><input id="pxDist" type="range" min="30" max="1000" step="10" value="500"></label>
-        <label class="chk"><input type="checkbox" id="pxDraw" checked> Draw its track on the sky</label>
-        <div id="pxOut" class="small"></div>
-        <div class="lbl sub">Measure a mover</div>
+        <label class="slider"><span class="small"><span>Distance</span><b id="pxDistVal">500 AU</b></span><input id="pxDist" class="fill" type="range" min="30" max="1000" step="10" value="500"></label>
+        <label class="chk"><input type="checkbox" id="pxDraw" checked><span>Draw its track on the sky</span></label>
+        <div id="pxOut"></div>
+        <h3 class="lbl sub">Measure a mover</h3>
         <div class="row"><button id="markA" class="ghost" disabled>Mark A</button><button id="markB" class="ghost" disabled>Mark B</button><button id="clearMk" class="ghost">Clear</button></div>
-        <div id="mvOut" class="small"></div>
+        <div id="mvOut"></div>
       </div>
     </div>
 
     <footer id="credits">
-      <div>SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC. Reference images and planet photos are credited in-app and in the README.</div>
+      <div>SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC. Set in Computer Modern. Reference images and planet photos are credited in-app and in the README.</div>
       <div id="imgCredits"></div>
     </footer>
   </aside>
@@ -126,7 +166,7 @@
 
 <dialog id="help">
   <h2>How this works</h2>
-  <p>SPHEREx scans the whole sky in 102 infrared colours. Every field is seen on several dates, so a world that moves between visits is easy to catch: this is the blink technique that found Pluto in 1930.</p>
+  <p><b><i>Abstract.</i></b> SPHEREx scans the whole sky in 102 infrared colours. Every field is seen on several dates, so a world that moves between visits is easy to catch: this is the blink technique that found Pluto in 1930.</p>
   <ol>
     <li><b>Pick a band</b> and drag the time bar. Stars stay put; movers jump.</li>
     <li>Press <kbd>Space</kbd> to <b>blink</b> two frames. Use <b>Set B</b> to choose the second frame.</li>
@@ -148,5 +188,6 @@
 <script src="js/reference.js"></script>
 <script src="js/orrery.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/axes.js"></script>
 </body>
 </html>

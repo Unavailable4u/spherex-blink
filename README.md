@@ -158,3 +158,7 @@ web/
 here, and cite the DOI of the release you used. The exact wording is on IRSA's
 [SPHEREx Quick Release overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_qr.html)
 page (it lists the DOIs for QR2 and QR3 as well).
+
+## Design notes
+
+The interface is set in Computer Modern (the TeX typeface, SIL OFL, self-hosted in `web/assets/fonts`). It is laid out like a figure in a paper: RA/Dec rulers, a compass and scale bar on the image, a live caption, numbered sections and booktabs-style tables. Palette: ink-black sky, ivory text, one infrared amber, teal for known bodies, vermilion for flags. All of it is in `web/css/style.css`; `web/js/axes.js` draws the rulers, caption and timeline ticks.

@@ -21,12 +21,12 @@
     for (const p of track) h += `<circle cx="${p.col}" cy="${p.row}" r="${2.2 * k}" fill="#ffb347" fill-opacity="${p.id === cur ? 1 : 0.45}"/>`;
     const here = track.find((p) => p.id === cur);
     if (here) h += `<circle cx="${here.col}" cy="${here.row}" r="${11 * k}" fill="none" stroke="#ffb347" stroke-width="1.8" vector-effect="non-scaling-stroke"/>` +
-      `<text x="${here.col + 15 * k}" y="${here.row - 12 * k}" font-size="${12 * k}" fill="#ffd9a0" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${sky.target_name || "known object"} (known asteroid)</text>`;
+      `<text x="${here.col + 15 * k}" y="${here.row - 12 * k}" font-size="${14.5 * k}" fill="#ffd9a0" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${sky.target_name || "known object"} (known asteroid)</text>`;
     const fr = sky.frames[cur];
     if (fr) for (const b of fr.in_field) {
       const p = S.wcs.toPix(...fr.pos[b]);
       h += `<circle cx="${p.col}" cy="${p.row}" r="${9 * k}" fill="none" stroke="#7fd8e6" stroke-width="1.8" vector-effect="non-scaling-stroke"/>` +
-        `<text x="${p.col + 13 * k}" y="${p.row - 10 * k}" font-size="${12 * k}" fill="#bff3fb" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${NAME(b)}</text>`;
+        `<text x="${p.col + 13 * k}" y="${p.row - 10 * k}" font-size="${14.5 * k}" fill="#bff3fb" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${NAME(b)}</text>`;
     }
     g.innerHTML = h; svg.appendChild(g);
   }

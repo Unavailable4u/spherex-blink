@@ -53,12 +53,12 @@
   function goto(i, fade = true) {
     i = Math.max(0, Math.min(S.frames.length - 1, i)); S.idx = i; $("time").value = i;
     const f = S.frames[i], img = S.imgs[i];
-    say("frameLabel", `${fmtTime(f)}  (${i + 1}/${S.frames.length})`);
+    $("frameLabel").innerHTML = `<i>${i + 1}</i> of ${S.frames.length} &middot; ${fmtTime(f)}`;
     if (img && !Renderer.blinking()) fade ? Renderer.fadeTo(img) : Renderer.draw(img);
     else if (!img) say("flagStatus", "Tile missing for this frame.");
     blinkInfo(); Flagging.render(svg, S.flags, f.id, S.wcs); showMeta(); emit("sx:frame", { id: f.id });
   }
-  const blinkInfo = () => say("blinkInfo", S.frames.length > 1 ? `A (time bar): ${fmtTime(S.frames[S.idx])}   ⇄   B: ${fmtTime(S.frames[S.ref])}` : "");
+  const blinkInfo = () => { $("blinkInfo").innerHTML = S.frames.length > 1 ? `<span><b>A</b>${fmtTime(S.frames[S.idx])}</span><span><b>B</b>${fmtTime(S.frames[S.ref])}</span>` : ""; };
 
   function toggleBlink() {
     if (Renderer.blinking()) { Renderer.stopBlink(); $("blink").classList.remove("on"); goto(S.idx, false); return; }

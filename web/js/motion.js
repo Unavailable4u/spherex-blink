@@ -40,7 +40,7 @@
     let h = `<polyline points="${pts.map((p) => p.col + "," + p.row).join(" ")}" fill="none" stroke="#d36bff" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
     list.forEach((f, i) => { h += `<circle cx="${pts[i].col}" cy="${pts[i].row}" r="${(f.id === cur ? 4 : 2) * k}" fill="#d36bff" fill-opacity="${f.id === cur ? 1 : 0.5}"/>`; });
     const cp = pts[list.findIndex((f) => f.id === cur)] || pts[0];
-    h += `<text x="${cp.col + 10 * k}" y="${cp.row - 10 * k}" font-size="${12 * k}" fill="#ecc9ff" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">Planet X @ ${d} AU (simulated)</text>`;
+    h += `<text x="${cp.col + 10 * k}" y="${cp.row - 10 * k}" font-size="${14.5 * k}" fill="#ecc9ff" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">Planet X @ ${d} AU (simulated)</text>`;
     g.innerHTML = h; svg().appendChild(g);
   }
   const svg = () => $("overlay");

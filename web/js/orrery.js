@@ -50,7 +50,7 @@
     SZ = size; R = size / 2 - size * 0.05; K = size / 316;
     c.clearRect(0, 0, SZ, SZ);
     for (const [u, v, a] of stars) { c.fillStyle = `rgba(255,255,255,${a})`; c.fillRect(u * SZ, v * SZ, K > 1.5 ? 1.5 : 1, K > 1.5 ? 1.5 : 1); }
-    c.font = `500 ${Math.max(10, SZ / 46)}px Inter,system-ui,sans-serif`; c.textBaseline = "alphabetic";
+    c.font = `italic 400 ${Math.max(13, SZ / 33)}px "CMU Serif","Latin Modern Roman",Georgia,serif`; c.textBaseline = "alphabetic";
     for (const n of Object.keys(data.bodies)) {
       c.beginPath(); data.bodies[n].orbit.forEach(([x, y], i) => { const p = xy(x, y); i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]); });
       c.strokeStyle = n === "earth" ? "rgba(122,167,255,.5)" : "rgba(255,255,255,.09)"; c.lineWidth = 1; c.stroke();
@@ -66,7 +66,7 @@
     for (const [n, p] of order) {                          // far planets first so near ones sit on top
       const q = xy(p[0], p[1]), s = body(c, n, q[0], q[1]);
       if (n === "earth") { c.beginPath(); c.arc(q[0], q[1], s / 2 + 3 * K, 0, 7); c.strokeStyle = "rgba(122,167,255,.55)"; c.lineWidth = 1; c.stroke(); }
-      c.fillStyle = "rgba(220,226,238,.92)";
+      c.fillStyle = "rgba(236,230,213,.94)";
       const tw = c.measureText(NAME(n)).width, right = q[0] + s / 2 + 5 * K + tw < SZ - 4;
       c.fillText(NAME(n), right ? q[0] + s / 2 + 5 * K : q[0] - s / 2 - 5 * K - tw, q[1] + 4 * K);
     }
@@ -102,7 +102,7 @@
   }
   function show(on) {
     big = on; bcv.style.display = on ? "block" : "none"; $("bigDate").hidden = !on;
-    $("viewSky").classList.toggle("on", !on); $("viewSolar").classList.toggle("on", on);
+    document.body.classList.toggle("view-solar", on); $("viewSky").classList.toggle("on", !on); $("viewSolar").classList.toggle("on", on);
     if (on) { sizeBig(); table(); }
   }
 
@@ -121,5 +121,6 @@
   }
   document.addEventListener("sx:frame", () => { if (!playing) syncToFrame(); });
   document.addEventListener("sx:skyready", () => { const s = SkyMap.data(); if (s) { lon = WCS.ecliptic(s.field.ra, s.field.dec).lon; draw(); } });
+  document.addEventListener("sx:fonts", () => draw());
   init();
 })();
