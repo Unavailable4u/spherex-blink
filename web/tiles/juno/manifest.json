@@ -1,0 +1,320 @@
+{
+  "region": "juno",
+  "center": {
+    "ra": 228.010393,
+    "dec": -1.8071
+  },
+  "size_deg": 0.1,
+  "tile": {
+    "width": 234,
+    "height": 234
+  },
+  "mode": "candidates",
+  "epochs": [
+    1
+  ],
+  "bands": {
+    "D3": {
+      "frames": [
+        "2025-07-02_1705",
+        "2025-07-02_1707",
+        "2025-07-02_1709",
+        "2025-07-02_1712",
+        "2025-07-02_1845",
+        "2025-07-02_1847"
+      ],
+      "stretch": {
+        "lo": -0.02852281928062439,
+        "hi": 6.478796300887988,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    },
+    "D6": {
+      "frames": [
+        "2025-07-02_1705",
+        "2025-07-02_1707",
+        "2025-07-02_1709",
+        "2025-07-02_1712",
+        "2025-07-02_1845",
+        "2025-07-02_1847"
+      ],
+      "stretch": {
+        "lo": -0.10946083068847656,
+        "hi": 63.82160568237462,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    }
+  },
+  "frames": [
+    {
+      "id": "2025-07-02_1705",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 1,
+      "mjd": 60858.71224,
+      "utc": "2025-07-02T17:05:37Z",
+      "path": "D3/2025-07-02_1705.png",
+      "bkg": 0.186784,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 1.9667,
+      "bandwidth_um": 0.0476,
+      "wavelength_plane": {
+        "c0": 1.9820445228968944,
+        "per_col": -4.1154726107864284e-05,
+        "per_row": -8.935458344928917e-05,
+        "rms_um": 9.427907457491585e-05,
+        "units": "um"
+      },
+      "source": "D3_20250702T1705.fits"
+    },
+    {
+      "id": "2025-07-02_1707",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 1,
+      "mjd": 60858.71374,
+      "utc": "2025-07-02T17:07:46Z",
+      "path": "D3/2025-07-02_1707.png",
+      "bkg": 0.184487,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 2.0126,
+      "bandwidth_um": 0.0494,
+      "wavelength_plane": {
+        "c0": 2.0282210626276127,
+        "per_col": -4.218569252798094e-05,
+        "per_row": -9.15492743887449e-05,
+        "rms_um": 2.6475846459626275e-06,
+        "units": "um"
+      },
+      "source": "D3_20250702T1707.fits"
+    },
+    {
+      "id": "2025-07-02_1709",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 1,
+      "mjd": 60858.71523,
+      "utc": "2025-07-02T17:09:55Z",
+      "path": "D3/2025-07-02_1709.png",
+      "bkg": 0.181241,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 2.0586,
+      "bandwidth_um": 0.0512,
+      "wavelength_plane": {
+        "c0": 2.0746117235888413,
+        "per_col": -4.3183480640344836e-05,
+        "per_row": -9.336795812393807e-05,
+        "rms_um": 0.00010483886691936172,
+        "units": "um"
+      },
+      "source": "D3_20250702T1709.fits"
+    },
+    {
+      "id": "2025-07-02_1712",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 1,
+      "mjd": 60858.71672,
+      "utc": "2025-07-02T17:12:04Z",
+      "path": "D3/2025-07-02_1712.png",
+      "bkg": 0.17342,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 2.1069,
+      "bandwidth_um": 0.0524,
+      "wavelength_plane": {
+        "c0": 2.1233660473852756,
+        "per_col": -4.4401808594523014e-05,
+        "per_row": -9.676984206810396e-05,
+        "rms_um": 1.014657875470901e-06,
+        "units": "um"
+      },
+      "source": "D3_20250702T1712.fits"
+    },
+    {
+      "id": "2025-07-02_1845",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 1,
+      "mjd": 60858.78133,
+      "utc": "2025-07-02T18:45:07Z",
+      "path": "D3/2025-07-02_1845.png",
+      "bkg": 0.157373,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 2.2884,
+      "bandwidth_um": 0.0573,
+      "wavelength_plane": {
+        "c0": 2.305292633654437,
+        "per_col": -3.698480698811847e-05,
+        "per_row": -0.00010765843438026938,
+        "rms_um": 3.1915587690096066e-05,
+        "units": "um"
+      },
+      "source": "D3_20250702T1845.fits"
+    },
+    {
+      "id": "2025-07-02_1847",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 1,
+      "mjd": 60858.78282,
+      "utc": "2025-07-02T18:47:15Z",
+      "path": "D3/2025-07-02_1847.png",
+      "bkg": 0.150596,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 2.3408,
+      "bandwidth_um": 0.0585,
+      "wavelength_plane": {
+        "c0": 2.3576414036385036,
+        "per_col": -3.688179376615949e-05,
+        "per_row": -0.00010772159801918157,
+        "rms_um": 3.649533403890336e-05,
+        "units": "um"
+      },
+      "source": "D3_20250702T1847.fits"
+    },
+    {
+      "id": "2025-07-02_1705",
+      "band": "D6",
+      "detector": 6,
+      "epoch": 1,
+      "mjd": 60858.71224,
+      "utc": "2025-07-02T17:05:37Z",
+      "path": "D6/2025-07-02_1705.png",
+      "bkg": 0.37577,
+      "unit": "MJy / sr",
+      "coverage": 0.999,
+      "wavelength_um": 4.6797,
+      "bandwidth_um": 0.0364,
+      "wavelength_plane": {
+        "c0": 4.691319320296997,
+        "per_col": -3.149004846882273e-05,
+        "per_row": -6.792737927766425e-05,
+        "rms_um": 3.8906887635939385e-06,
+        "units": "um"
+      },
+      "source": "D6_20250702T1705.fits"
+    },
+    {
+      "id": "2025-07-02_1707",
+      "band": "D6",
+      "detector": 6,
+      "epoch": 1,
+      "mjd": 60858.71374,
+      "utc": "2025-07-02T17:07:46Z",
+      "path": "D6/2025-07-02_1707.png",
+      "bkg": 0.392163,
+      "unit": "MJy / sr",
+      "coverage": 0.999,
+      "wavelength_um": 4.7139,
+      "bandwidth_um": 0.0365,
+      "wavelength_plane": {
+        "c0": 4.725437613393214,
+        "per_col": -3.144630360162055e-05,
+        "per_row": -6.790566531651097e-05,
+        "rms_um": 4.3554272997329265e-06,
+        "units": "um"
+      },
+      "source": "D6_20250702T1707.fits"
+    },
+    {
+      "id": "2025-07-02_1709",
+      "band": "D6",
+      "detector": 6,
+      "epoch": 1,
+      "mjd": 60858.71523,
+      "utc": "2025-07-02T17:09:55Z",
+      "path": "D6/2025-07-02_1709.png",
+      "bkg": 0.408318,
+      "unit": "MJy / sr",
+      "coverage": 0.999,
+      "wavelength_um": 4.748,
+      "bandwidth_um": 0.0367,
+      "wavelength_plane": {
+        "c0": 4.759504023077842,
+        "per_col": -3.1062387218765524e-05,
+        "per_row": -6.805868709947251e-05,
+        "rms_um": 4.3641610891839335e-06,
+        "units": "um"
+      },
+      "source": "D6_20250702T1709.fits"
+    },
+    {
+      "id": "2025-07-02_1712",
+      "band": "D6",
+      "detector": 6,
+      "epoch": 1,
+      "mjd": 60858.71672,
+      "utc": "2025-07-02T17:12:04Z",
+      "path": "D6/2025-07-02_1712.png",
+      "bkg": 0.423114,
+      "unit": "MJy / sr",
+      "coverage": 0.999,
+      "wavelength_um": 4.7821,
+      "bandwidth_um": 0.0369,
+      "wavelength_plane": {
+        "c0": 4.793769909354345,
+        "per_col": -3.1038196234552476e-05,
+        "per_row": -6.882342042682113e-05,
+        "rms_um": 2.0821030201417326e-06,
+        "units": "um"
+      },
+      "source": "D6_20250702T1712.fits"
+    },
+    {
+      "id": "2025-07-02_1845",
+      "band": "D6",
+      "detector": 6,
+      "epoch": 1,
+      "mjd": 60858.78133,
+      "utc": "2025-07-02T18:45:07Z",
+      "path": "D6/2025-07-02_1845.png",
+      "bkg": 0.489233,
+      "unit": "MJy / sr",
+      "coverage": 0.998,
+      "wavelength_um": 4.9092,
+      "bandwidth_um": 0.0368,
+      "wavelength_plane": {
+        "c0": 4.920660990610738,
+        "per_col": -2.485878231110904e-05,
+        "per_row": -7.36567826186841e-05,
+        "rms_um": 2.8130716630049204e-05,
+        "units": "um"
+      },
+      "source": "D6_20250702T1845.fits"
+    },
+    {
+      "id": "2025-07-02_1847",
+      "band": "D6",
+      "detector": 6,
+      "epoch": 1,
+      "mjd": 60858.78282,
+      "utc": "2025-07-02T18:47:15Z",
+      "path": "D6/2025-07-02_1847.png",
+      "bkg": 0.527571,
+      "unit": "MJy / sr",
+      "coverage": 0.994,
+      "wavelength_um": 4.945,
+      "bandwidth_um": 0.0362,
+      "wavelength_plane": {
+        "c0": 4.956429186205882,
+        "per_col": -2.4438398637033213e-05,
+        "per_row": -7.387553063472886e-05,
+        "rms_um": 3.8318437684111896e-05,
+        "units": "um"
+      },
+      "source": "D6_20250702T1847.fits"
+    }
+  ],
+  "intensity_note": "pixel/255 = y ; flux above frame background = lo + (hi-lo) * a*sinh(y*asinh(1/a)) ; add frame 'bkg' for the level that was subtracted. Values are only approximate (8-bit).",
+  "credit": "SPHEREx data via NASA/IPAC IRSA. Official acknowledgement text: see README."
+}

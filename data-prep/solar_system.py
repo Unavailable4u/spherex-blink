@@ -43,7 +43,7 @@ def main():
     obj = {}
     rp = os.path.join(a.raw_root, a.region, "region.json")
     if os.path.exists(rp):
-        obj = {os.path.basename(f["file"]): (f["obj_ra"], f["obj_dec"]) for f in json.load(open(rp))["files"]}
+        obj = {os.path.basename(f["file"]): (f["obj_ra"], f["obj_dec"]) for f in json.load(open(rp))["files"] if "obj_ra" in f}
 
     # unit vectors toward the field centre: line of sight, east, north
     al, de = np.radians(ra0), np.radians(dec0)

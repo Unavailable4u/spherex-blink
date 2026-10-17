@@ -1,0 +1,88 @@
+{
+ "region": "hygiea",
+ "summary": {
+  "target": "(10) Hygiea",
+  "frames_checked": 4,
+  "frames_detected": 4,
+  "median_offset_px": 1.04,
+  "rms_offset_px": 1.05,
+  "max_offset_px": 1.24,
+  "pixscale_arcsec": 1.5384615384615385,
+  "rms_offset_arcsec": 1.6,
+  "movers_confirmed": 0
+ },
+ "frames": {
+  "2025-09-19_1807": {
+   "band": "D4",
+   "pred": [
+    117.31,
+    116.44
+   ],
+   "in_tile": true,
+   "centroid": [
+    117.42,
+    117.27
+   ],
+   "offset_px": 0.84,
+   "peak": 239.0,
+   "median": 5.0,
+   "snr": 78.9,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-09-19_1809": {
+   "band": "D4",
+   "pred": [
+    116.88,
+    116.44
+   ],
+   "in_tile": true,
+   "centroid": [
+    116.74,
+    117.47
+   ],
+   "offset_px": 1.04,
+   "peak": 254.0,
+   "median": 5.0,
+   "snr": 84.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-09-19_1811": {
+   "band": "D4",
+   "pred": [
+    116.25,
+    116.44
+   ],
+   "in_tile": true,
+   "centroid": [
+    115.87,
+    117.4
+   ],
+   "offset_px": 1.03,
+   "peak": 230.0,
+   "median": 5.0,
+   "snr": 75.9,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-09-19_1814": {
+   "band": "D4",
+   "pred": [
+    115.61,
+    116.44
+   ],
+   "in_tile": true,
+   "centroid": [
+    114.83,
+    117.4
+   ],
+   "offset_px": 1.24,
+   "peak": 248.0,
+   "median": 4.0,
+   "snr": 82.3,
+   "detected": true,
+   "absent_elsewhere": null
+  }
+ }
+}

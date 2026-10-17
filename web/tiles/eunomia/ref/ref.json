@@ -1,0 +1,22 @@
+{
+ "layers": [
+  {
+   "id": "dss2",
+   "label": "DSS2 optical",
+   "file": "dss2.jpg",
+   "credit": "Digitized Sky Survey, STScI/NASA, via CDS hips2fits"
+  },
+  {
+   "id": "2mass",
+   "label": "2MASS near-infrared",
+   "file": "2mass.jpg",
+   "credit": "2MASS, UMass / IPAC-Caltech / NASA / NSF, via CDS hips2fits"
+  },
+  {
+   "id": "wise",
+   "label": "WISE mid-infrared",
+   "file": "wise.jpg",
+   "credit": "WISE, NASA / JPL-Caltech, via CDS hips2fits"
+  }
+ ]
+}

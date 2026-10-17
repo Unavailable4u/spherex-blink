@@ -1,0 +1,32 @@
+{
+  "defaults": {
+    "collection": "spherex_qr2",
+    "window_days": 8,
+    "range": ["2025-06-01", "2026-01-31"],
+    "min_frames": 6,
+    "max_size_deg": 2.0,
+    "max_frames": 14
+  },
+  "fields": [
+    {
+      "region": "pallas-6mo",
+      "ra": 303.443371, "dec": 2.665365, "size": 1.749,
+      "title": "Pallas patch, six months apart",
+      "blurb": "The same patch of sky in two survey passes six months apart. Stars stay put; a distant body would shift by parallax."
+    },
+    {"region": "vesta",   "target": "4",  "target_name": "(4) Vesta",   "title": "Vesta field",
+     "blurb": "The second most massive asteroid, caught drifting between SPHEREx visits."},
+    {"region": "ceres",   "target": "1",  "target_name": "(1) Ceres",   "title": "Ceres field",
+     "blurb": "The largest object in the asteroid belt, moving against the background stars."},
+    {"region": "juno",    "target": "3",  "target_name": "(3) Juno",    "title": "Juno field",
+     "blurb": "A bright main-belt asteroid caught in several SPHEREx frames."},
+    {"region": "iris",    "target": "7",  "target_name": "(7) Iris",    "title": "Iris field",
+     "blurb": "A bright main-belt asteroid caught in several SPHEREx frames."},
+    {"region": "hygiea",  "target": "10", "target_name": "(10) Hygiea", "title": "Hygiea field",
+     "blurb": "The fourth largest asteroid, drifting across the field."},
+    {"region": "eunomia", "target": "15", "target_name": "(15) Eunomia","title": "Eunomia field",
+     "blurb": "The largest stony asteroid, caught moving between frames."},
+    {"region": "psyche",  "target": "16", "target_name": "(16) Psyche", "title": "Psyche field",
+     "blurb": "A metal-rich asteroid and NASA mission target, caught moving between frames."}
+  ]
+}

@@ -1,0 +1,124 @@
+{
+ "region": "juno",
+ "summary": {
+  "target": "(3) Juno",
+  "frames_checked": 6,
+  "frames_detected": 6,
+  "median_offset_px": 1.38,
+  "rms_offset_px": 1.45,
+  "max_offset_px": 1.78,
+  "pixscale_arcsec": 1.5384615384615385,
+  "rms_offset_arcsec": 2.2,
+  "movers_confirmed": 0
+ },
+ "frames": {
+  "2025-07-02_1705": {
+   "band": "D6",
+   "pred": [
+    113.21,
+    114.16
+   ],
+   "in_tile": true,
+   "centroid": [
+    111.96,
+    114.4
+   ],
+   "offset_px": 1.27,
+   "peak": 198.0,
+   "median": 3.0,
+   "snr": 131.5,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-07-02_1707": {
+   "band": "D6",
+   "pred": [
+    113.44,
+    114.39
+   ],
+   "in_tile": true,
+   "centroid": [
+    112.36,
+    114.81
+   ],
+   "offset_px": 1.16,
+   "peak": 180.0,
+   "median": 3.0,
+   "snr": 119.4,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-07-02_1709": {
+   "band": "D6",
+   "pred": [
+    113.68,
+    114.39
+   ],
+   "in_tile": true,
+   "centroid": [
+    112.05,
+    114.64
+   ],
+   "offset_px": 1.64,
+   "peak": 207.0,
+   "median": 3.0,
+   "snr": 137.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-07-02_1712": {
+   "band": "D6",
+   "pred": [
+    113.91,
+    114.63
+   ],
+   "in_tile": true,
+   "centroid": [
+    112.24,
+    114.0
+   ],
+   "offset_px": 1.78,
+   "peak": 205.0,
+   "median": 3.0,
+   "snr": 136.2,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-07-02_1845": {
+   "band": "D6",
+   "pred": [
+    122.33,
+    120.71
+   ],
+   "in_tile": true,
+   "centroid": [
+    120.99,
+    120.7
+   ],
+   "offset_px": 1.34,
+   "peak": 192.0,
+   "median": 3.0,
+   "snr": 127.5,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-07-02_1847": {
+   "band": "D6",
+   "pred": [
+    122.56,
+    120.71
+   ],
+   "in_tile": true,
+   "centroid": [
+    121.15,
+    120.9
+   ],
+   "offset_px": 1.43,
+   "peak": 230.0,
+   "median": 3.0,
+   "snr": 153.1,
+   "detected": true,
+   "absent_elsewhere": null
+  }
+ }
+}

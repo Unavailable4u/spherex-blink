@@ -26,12 +26,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TILES = os.path.join(HERE, "..", "web", "tiles")
 
 
-def run(cmd, dry):
+def run(cmd, dry, ok=(0,)):
     print("\n$ " + " ".join(cmd))
     if dry:
         return
     r = subprocess.run(cmd, cwd=HERE)
-    if r.returncode != 0:
+    if r.returncode not in ok:
         sys.exit(f"\nStep failed (exit {r.returncode}): {' '.join(cmd[:3])} ... Fix it and re-run; finished steps are cached.")
 
 
@@ -46,6 +46,7 @@ def main():
     ap.add_argument("--dec", type=float, help="field centre Dec, deg (kind B)")
     ap.add_argument("--size", type=float, help="field size, deg (kind B; kind A takes it from find_target)")
     ap.add_argument("--collection", default="spherex_qr2", help="IRSA SIA collection (QR3 data lives in a newer one)")
+    ap.add_argument("--source", default="s3", choices=["s3", "irsa", "auto"], help="download source passed to download_cutouts.py")
     ap.add_argument("--max-frames", type=int, help="cap the number of frames downloaded (moving-target fields)")
     ap.add_argument("--title", help="name in the Field menu")
     ap.add_argument("--blurb", help="one sentence shown under the menu")
@@ -64,10 +65,10 @@ def main():
     if kind_a:
         run([py, "find_target.py", "--target", a.target, "--start", a.start, "--end", a.end,
              "--region", R, "--collection", a.collection], a.dry_run)
-        dl = [py, "download_cutouts.py", "--region", R, "--mode", "candidates", "--collection", a.collection]
+        dl = [py, "download_cutouts.py", "--region", R, "--mode", "candidates", "--collection", a.collection, "--source", a.source]
     else:
         dl = [py, "download_cutouts.py", "--region", R, "--ra", str(a.ra), "--dec", str(a.dec),
-              "--mode", "best", "--collection", a.collection]
+              "--mode", "best", "--collection", a.collection, "--source", a.source]
         if a.size:
             dl += ["--size", str(a.size)]
     if a.max_frames and kind_a:                       # --max-frames only exists in candidates mode
@@ -79,7 +80,7 @@ def main():
         sky += ["--target-name", a.target_name]
     run(sky, a.dry_run)
     if kind_a:
-        run([py, "verify_target.py", "--region", R], a.dry_run)
+        run([py, "verify_target.py", "--region", R], a.dry_run, ok=(0, 2))   # 2 = some frames not detected: warn, still ship
     if not a.skip_reference:
         run([py, "fetch_reference.py", "--region", R], a.dry_run)
 

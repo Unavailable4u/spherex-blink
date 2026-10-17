@@ -1,0 +1,160 @@
+{
+ "region": "ceres",
+ "summary": {
+  "target": "(1) Ceres",
+  "frames_checked": 8,
+  "frames_detected": 7,
+  "median_offset_px": 0.77,
+  "rms_offset_px": 1.92,
+  "max_offset_px": 6.47,
+  "pixscale_arcsec": 1.5391923990498813,
+  "rms_offset_arcsec": 2.9,
+  "movers_confirmed": 0
+ },
+ "frames": {
+  "2025-06-24_0926": {
+   "band": "D4",
+   "pred": [
+    324.98,
+    231.54
+   ],
+   "in_tile": true,
+   "centroid": [
+    324.0,
+    231.0
+   ],
+   "offset_px": 1.12,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_0929": {
+   "band": "D4",
+   "pred": [
+    324.05,
+    231.54
+   ],
+   "in_tile": true,
+   "centroid": [
+    324.0,
+    232.0
+   ],
+   "offset_px": 0.46,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_0931": {
+   "band": "D4",
+   "pred": [
+    323.35,
+    231.31
+   ],
+   "in_tile": true,
+   "centroid": [
+    323.0,
+    232.0
+   ],
+   "offset_px": 0.77,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_0933": {
+   "band": "D4",
+   "pred": [
+    322.65,
+    231.08
+   ],
+   "in_tile": true,
+   "centroid": [
+    322.0,
+    232.0
+   ],
+   "offset_px": 1.13,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_1914": {
+   "band": "D1",
+   "pred": [
+    111.82,
+    191.55
+   ],
+   "in_tile": true,
+   "centroid": [
+    107.2,
+    187.01
+   ],
+   "offset_px": 6.47,
+   "peak": 255.0,
+   "median": 20.0,
+   "snr": 26.4,
+   "detected": false,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_1916": {
+   "band": "D4",
+   "pred": [
+    111.12,
+    191.31
+   ],
+   "in_tile": true,
+   "centroid": [
+    111.0,
+    192.0
+   ],
+   "offset_px": 0.7,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_1919": {
+   "band": "D4",
+   "pred": [
+    110.19,
+    191.31
+   ],
+   "in_tile": true,
+   "centroid": [
+    110.0,
+    192.0
+   ],
+   "offset_px": 0.71,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-24_1921": {
+   "band": "D4",
+   "pred": [
+    109.49,
+    191.08
+   ],
+   "in_tile": true,
+   "centroid": [
+    109.0,
+    192.0
+   ],
+   "offset_px": 1.04,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  }
+ }
+}
