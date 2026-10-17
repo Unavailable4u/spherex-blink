@@ -1,0 +1,7 @@
+{
+  "name": "spherex-blink-e2e",
+  "private": true,
+  "description": "Browser tests for the blink comparator",
+  "scripts": { "test": "node e2e.js" },
+  "dependencies": { "@sparticuz/chromium": "^138.0.0", "puppeteer-core": "^24.0.0" }
+}

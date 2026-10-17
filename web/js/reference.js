@@ -14,6 +14,7 @@
   document.addEventListener("sx:region", (e) => {
     region = e.detail.id; const my = ++token; layers = [];
     $("refCard").hidden = true; $("ref").style.display = "none";
+    if (e.detail.extras && !e.detail.extras.includes("ref")) return;
     fetch(`tiles/${region}/ref/ref.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null).then((j) => {
       if (my !== token || !j || !j.layers || !j.layers.length) return;
       layers = j.layers;

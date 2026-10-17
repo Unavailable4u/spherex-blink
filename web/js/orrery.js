@@ -110,6 +110,7 @@
     cv = $("orrery"); const r = Math.max(2, window.devicePixelRatio || 1); cv.width = cv.height = SZ * r;
     cv.style.width = "100%"; cv.style.aspectRatio = "1"; ctx = cv.getContext("2d"); ctx.scale(r, r);
     try { const res = await fetch("tiles/orrery.json"); if (!res.ok) return; data = await res.json(); } catch (e) { return; }
+    if (typeof Parallax !== "undefined") { Parallax.setData(data); document.dispatchEvent(new Event("sx:orrery")); }
     bcv = $("orBig"); bctx = bcv.getContext("2d"); $("viewtabs").hidden = false;
     $("viewSky").onclick = () => show(false); $("viewSolar").onclick = () => show(true);
     window.addEventListener("resize", () => big && sizeBig());

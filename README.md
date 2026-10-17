@@ -1,65 +1,70 @@
 # SPHEREx Blink Comparator
 
-A browser-based blink comparator for SPHEREx sky images, built for the NASA Space Apps
-"Planet X and SPHEREx" challenge. Flip between observations of the same patch of sky and
-anything that moves jumps out - the same technique Clyde Tombaugh used to find Pluto.
+An interactive, public-facing web app for the NASA Space Apps 2026 challenge **Planet X and SPHEREx**. It shows real
+SPHEREx infrared images of one patch of sky taken on different dates, so anything that moves jumps out: the blink
+technique Clyde Tombaugh used to find Pluto. Then it helps you decide *what* moved, and how far away it is.
 
-## Status
+**Live site:** `https://<your-github-user>.github.io/spherex-blink/` (see [Deploy](#deploy), two minutes).
+Open it, press **Tour**, and the app walks through the whole idea in about a minute.
 
-| Part | State |
-|---|---|
-| Data pipeline (`data-prep/`) | Done; run on real Pallas data from IRSA |
-| Web viewer (`web/`) | Canvas, crossfade + blink, bands, zoom/pan, click-to-inspect (RA/Dec, galactic, ecliptic, flux), flagging |
-| Sky map, known objects, Planet X lab, reference blend | Added (see below) |
-| Deploy, demo video, pitch | Not started |
+## The four things the challenge asks for
 
-## Planet X features
+| Challenge requirement | What the app does | Where |
+|---|---|---|
+| **Multi-epoch comparison** (blink / time-lapse) | Blink two frames at 1-5 Hz, an amber/cyan **overlay** of both, a time bar with crossfade, a *Best pair* picker that favours frames days apart with similar wavelength and a big shared footprint, and a *pass* switcher for survey passes six months apart | left rail, time bar |
+| **Spectral band navigation** | Band plates D1, D2, D4, D5 with wavelength range and frame count; each frame is labelled with its wavelength; warns when two frames differ too much in colour to compare brightness | left rail |
+| **Interactive data and metadata** | Click a source: it snaps to the centroid, then shows RA/Dec (decimal and sexagesimal), galactic and ecliptic coordinates, pixel, band, wavelength at that pixel, frame time and intensity. A **mover check** tells you whether it stays put in the other frames | Inspect tab |
+| **Crowdsourced anomaly flagging** | Flag as asteroid / comet / planet candidate with a note; the flag is cross-matched against the known object, listed, shown as a pin, and exportable as CSV or JSON. Shared through Firestore when configured (see [shared flags](docs/FLAGS_SETUP.md)); the panel always states whether flags are shared or only in this browser | Inspect tab |
 
-* **Where are we looking?** All-sky map with the Sun, planets, Milky Way, ecliptic and this field.
-* **Known objects layer** labels the catalogued asteroid and any planet in the field. Untick it to hunt blind.
-* **Planet X lab.** Earth's orbital motion makes a distant body drift slowly. Pick a distance and see how many
-  pixels it would move over your frames, drawn as a track on the sky. **Measure a mover** (Mark A / Mark B) gives
-  its rate and a distance estimate, and says whether it is a nearby asteroid or a distant candidate.
-  The drift comes from `reflex` in `sky.json` (Earth's velocity projected on the sky, per AU).
-* **Compare with other eyes** blends DSS2 / 2MASS / WISE / Hubble over the SPHEREx tile when `tiles/<region>/ref/` exists.
+On top of that, for the Planet X theme: an all-sky map of where the field is, a top-down Solar System view, DSS2 / 2MASS / WISE
+comparison layers, and the **Planet X lab**: pick a distance and see how far a body there would appear to shift (from exact
+parallax, not an approximation), measure a mover and get a rate and a distance range with honest error bars, and see how much
+more signal a second pass six months later would add.
 
-```bash
-cd data-prep
-python solar_system.py --region pallas --target-name "(2) Pallas"     # -> web/tiles/pallas/sky.json
-python fetch_reference.py --region pallas                              # DSS2, 2MASS, WISE (needs internet)
-python fetch_reference.py --region m101 --skip-hips --hubble-fits raw/hubble/file_drz.fits --hubble-credit "NASA, ESA, STScI"
-```
+## What is real, what is simulated, what is limited
 
-The big Hubble FITS stays on your disk (`raw/` is git-ignored); only the 1024x1024 JPEG ships with the site.
+* **Real:** the *Pallas field* is 13 SPHEREx Quick Release 2 images (detectors D1, D2, D4, D5) from 6-14 Oct 2025, reprojected onto one sky grid.
+  The asteroid (2) Pallas really moves across it.
+* **Checked, not drawn:** `data-prep/verify_target.py` looks for a real source at Pallas's ephemeris position in every frame.
+  Result: found in **13/13** frames, rms offset **0.57 px (3.5 arcsec)**, and gone from that pixel in the other frames in 13/13.
+  The numbers are shown in the Context tab and set the error bar in the Planet X lab.
+* **Simulated:** the *Practice field* has planted movers and two passes 90 days apart. It is badged **simulated** everywhere (menu, banner, saved images).
+* **Prototype, not a discovery tool:** one field is shipped. The pipeline builds more with one command ([adding fields](docs/ADDING_FIELDS.md)). Nothing here claims a detection:
+  a flag is a candidate for follow-up and the distance fit says *candidate*.
+* **8-bit tiles:** intensity readouts are approximate (saturated cores are marked as lower limits). Frames in one band sit at different wavelengths, so judge movers by position, not brightness.
+* **Cosmic rays:** single-event hits look like crisp little blobs. The mover check says "could be a cosmic ray" instead of calling them movers.
 
-## Real images (planets, Milky Way)
+## Using it
 
-```bash
-cd data-prep
-pip install -r requirements.txt
-python fetch_planets.py          # needs internet; writes web/assets/planets/*.png, web/assets/milkyway.jpg, credits.json
-```
+Space = blink, O = overlay, B = set frame B, X = swap, arrow keys = step through time, scroll / pinch / + - = zoom, double-click = zoom in, click = inspect.
+*Copy link* reopens the exact field, band and frame pair. *Save image* writes a PNG with caption and credits. Untick **Known objects** to hunt blind, then flag what you find.
 
-NASA/ESA/ESO photos (via Wikimedia Commons) are cropped to transparent sprites for the Solar system view, and the
-ESO Milky Way panorama is re-projected into the all-sky map. Until the files exist the app draws shaded spheres and a
-vector Milky Way, so nothing breaks. If a download fails, save any photo as `raw/planets/<name>.jpg` and re-run:
-local files win. Commit `web/assets/` (about 4 MB) so the deployed site has it. Credits are shown in the app footer.
-
-## Run the website locally
-
-The page loads tiles and JSON with `fetch()`, which browsers block on `file://` URLs, so it
-must be served over http. From the repo root:
+## Run locally
 
 ```bash
 cd web
-python -m http.server 8000      # on Windows you can also use:  py -m http.server 8000
+python -m http.server 8000      # Windows: py -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. (Alternative: install the **Live Server** extension in
-VS Code, right-click `web/index.html`, choose *Open with Live Server*.)
+Open <http://localhost:8000>. (It must be served over http: browsers block `fetch()` on `file://`.)
 
-Right now this shows the title and a dark canvas with the words "Canvas works" in the
-top-left corner. That is expected: the real viewer is the next milestone.
+## Tests
+
+```bash
+node tests/run.js                       # unit tests, no browser: WCS vs astropy, parallax vs independent reflex integral, flag export
+cd tests/e2e && npm i && node e2e.js    # 30+ browser checks against a running local server (blink, Space bar, overlay, mover check, flags, Planet X, tour ...)
+python data-prep/verify_target.py --region pallas   # is the known object really in the pixels?
+```
+
+## Deploy
+
+GitHub Pages, no build step: **Settings → Pages → Source: GitHub Actions**, then push to `main`. `.github/workflows/pages.yml` runs the unit tests,
+leaves the `previews/` folders out, and publishes `web/`. (Netlify also works: `netlify.toml` points at `web/`.) All paths are relative, so it runs from a sub-path.
+
+## Shared flags
+
+By default flags live in each visitor's browser and the panel says so. To share them between visitors, create a free Firebase project and fill in `web/js/config.js`;
+the security rules in `firebase/firestore.rules` stop anyone editing or deleting data. Step by step: [docs/FLAGS_SETUP.md](docs/FLAGS_SETUP.md).
 
 ## Data pipeline
 
@@ -76,7 +81,7 @@ python make_synthetic.py                 # raw/synthetic/*.fits  (fake cutouts, 
 python fits_to_png.py --region synthetic # ../web/tiles/synthetic/
 ```
 
-This is also what the front-end developers should build against until real tiles exist.
+The synthetic field has two survey passes 90 days apart, so it is also the way to try the multi-epoch controls. It is labelled *simulated* in the app.
 
 ### Real data
 
@@ -140,25 +145,32 @@ This is also what the front-end developers should build against until real tiles
 
 ```
 data-prep/
-  solar_system.py      planets, Sun, known target, Earth-reflex drift -> sky.json
-  fetch_reference.py   DSS2 / 2MASS / WISE / Hubble on the tile grid -> ref/
-  find_target.py       step 1: find asteroid + SPHEREx images that contain it
+  build_field.py       one command: find -> download -> tiles -> sky context -> validation -> references
+  find_target.py       find an asteroid + the SPHEREx images that contain it
   download_cutouts.py  fetch FITS cutouts from IRSA
-  fits_to_png.py       step 2: reproject, stretch, write tiles + wcs.json + manifest.json
-  make_synthetic.py    fake data for offline development and testing
-  explore*.py, inspect_fits.py, test_one.py   earlier exploration scripts
+  fits_to_png.py       reproject, stretch, write tiles + wcs.json + manifest.json
+  solar_system.py      planets, Sun, known target, Earth-reflex drift -> sky.json
+  verify_target.py     is the known object really in the pixels? -> validation.json
+  fetch_reference.py   DSS2 / 2MASS / WISE / Hubble on the tile grid -> ref/
+  fetch_planets.py     NASA/ESA/ESO images for the Solar System view
+  make_synthetic.py    fake data for offline development (the Practice field)
 web/
-  index.html  css/  js/        the viewer
-  tiles/                       generated; served with the site
+  index.html  css/  js/  assets/  tiles/        the viewer (static files only)
+  js/renderer.js       tiles, no-data masks, blink, overlay, centroiding, mover-check helpers
+  js/parallax.js       exact parallax from Earth's orbit, distance fit
+  js/controls.js       app glue          js/flagging.js  shared / local flags
+tests/                 unit tests (node) and browser tests (tests/e2e)
+docs/                  adding fields, shared flags, pitch and demo script
+firebase/              Firestore security rules
 ```
 
-## Acknowledgement
+## Data and acknowledgement
 
-**TODO before submission:** paste the official SPHEREx data-use acknowledgement statement
-here, and cite the DOI of the release you used. The exact wording is on IRSA's
-[SPHEREx Quick Release overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_qr.html)
-page (it lists the DOIs for QR2 and QR3 as well).
+SPHEREx images come from the NASA/IPAC Infrared Science Archive, Quick Release 2 (DOI 10.26131/IRSA652). The app shows its credit line in the footer and in
+**About**. That text lives in one file, `web/assets/acknowledgement.txt`: it currently holds a faithful paraphrase, so **before you submit, open IRSA's
+[SPHEREx page](https://irsa.ipac.caltech.edu/Missions/spherex.html) and paste the exact required acknowledgement sentence into that file** (the README and the
+app both pick it up). Other data: DSS2, 2MASS and WISE via CDS hips2fits; ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited in the app.
 
 ## Design notes
 
-The interface is set in Computer Modern (the TeX typeface, SIL OFL, self-hosted in `web/assets/fonts`). It is laid out like a figure in a paper: RA/Dec rulers, a compass and scale bar on the image, a live caption, numbered sections and booktabs-style tables. Palette: ink-black sky, ivory text, one infrared amber, teal for known bodies, vermilion for flags. All of it is in `web/css/style.css`; `web/js/axes.js` draws the rulers, caption and timeline ticks.
+The interface is set in Computer Modern (the TeX typeface, SIL OFL, self-hosted in `web/assets/fonts`). It is laid out like a figure in a paper: RA/Dec rulers, a compass and scale bar on the image, a live caption, numbered sections and booktabs-style tables. Palette: ink-black sky, ivory text, one infrared amber, teal for known bodies, vermilion for flags, cyan for the second frame. Frames with no coverage are drawn as a hatch, not black. All styling is in `web/css/style.css`.

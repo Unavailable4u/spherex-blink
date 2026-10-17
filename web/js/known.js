@@ -14,7 +14,7 @@
     if (!A || !A.S.wcs || !sky || !$("showKnown").checked || !A.S.frames.length) return;
     const S = A.S, cur = S.frames[S.idx].id, k = unitsPerPx();
     const track = Object.entries(sky.target || {}).filter((e) => sky.frames[e[0]]).sort((a, b) => sky.frames[a[0]].mjd - sky.frames[b[0]].mjd)
-      .map(([id, [ra, dec]]) => ({ id, ...S.wcs.toPix(ra, dec) }));
+      .map(([id, [ra, dec]]) => { const q = S.wcs.toDraw(ra, dec); return { id, col: q.x, row: q.y }; });
     const g = document.createElementNS(NS, "g"); g.setAttribute("class", "kn");
     let h = "";
     if (track.length > 1) h += `<polyline points="${track.map((p) => p.col + "," + p.row).join(" ")}" fill="none" stroke="#ffb347" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="${5 * k},${4 * k}" vector-effect="non-scaling-stroke"/>`;
@@ -24,7 +24,7 @@
       `<text x="${here.col + 15 * k}" y="${here.row - 12 * k}" font-size="${14.5 * k}" fill="#ffd9a0" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${sky.target_name || "known object"} (known asteroid)</text>`;
     const fr = sky.frames[cur];
     if (fr) for (const b of fr.in_field) {
-      const p = S.wcs.toPix(...fr.pos[b]);
+      const q = S.wcs.toDraw(...fr.pos[b]), p = { col: q.x, row: q.y };
       h += `<circle cx="${p.col}" cy="${p.row}" r="${9 * k}" fill="none" stroke="#7fd8e6" stroke-width="1.8" vector-effect="non-scaling-stroke"/>` +
         `<text x="${p.col + 13 * k}" y="${p.row - 10 * k}" font-size="${14.5 * k}" fill="#bff3fb" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${NAME(b)}</text>`;
     }

@@ -84,6 +84,8 @@ def main():
     if not out["target"] and old.get("target"):
         out["target"] = old["target"]
     json.dump(out, open(sky_path, "w"), separators=(",", ":"))
+    from regions_util import add_extra
+    add_extra(a.tiles_root, a.region, "sky")
     print(f"wrote {sky_path}: {len(out['frames'])} frames, {len(out['target'])} target positions")
     ins = {k: v["in_field"] for k, v in out["frames"].items() if v["in_field"]}
     print("planets inside the field:", ins or "none")

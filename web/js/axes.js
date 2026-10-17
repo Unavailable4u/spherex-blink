@@ -33,7 +33,7 @@
     const r0 = (0 - ty) / s / H * w.height, r1 = (H - ty) / s / H * w.height;
     const th = top.clientHeight || 30, lw = left.clientWidth || 58;
 
-    let ra0 = w.toSky(c0, r0).ra, ra1 = w.toSky(c1, r0).ra;
+    let ra0 = w.toSky(c0 - .5, r0 - .5).ra, ra1 = w.toSky(c1 - .5, r0 - .5).ra;
     if (ra1 - ra0 > 180) ra1 -= 360; else if (ra1 - ra0 < -180) ra1 += 360;
     const tr = ticks(ra0, ra1, W, W / 118);
     let h = `<line class="base" x1="0" x2="${W}" y1="${th - .5}" y2="${th - .5}"/>`;
@@ -44,7 +44,7 @@
     }
     top.setAttribute("viewBox", `0 0 ${W} ${th}`); top.innerHTML = h;
 
-    const d0 = w.toSky(c0, r0).dec, d1 = w.toSky(c0, r1).dec;
+    const d0 = w.toSky(c0 - .5, r0 - .5).dec, d1 = w.toSky(c0 - .5, r1 - .5).dec;
     const tl = ticks(d0, d1, H, H / 100);
     h = `<line class="base" x1="${lw - .5}" x2="${lw - .5}" y1="0" y2="${H}"/>`;
     for (const t of tl.minor) h += `<line class="min" y1="${t.p}" y2="${t.p}" x1="${lw - 4}" x2="${lw}"/>`;
@@ -90,13 +90,13 @@
     const c = m.center ? ` centred on (<i>\u03b1</i>,\u2009<i>\u03b4</i>)\u2009=\u2009(${m.center.ra.toFixed(3)}\u00b0,\u2009${m.center.dec >= 0 ? "+" : "\u2212"}${Math.abs(m.center.dec).toFixed(3)}\u00b0)` : "";
     const sz = m.size_deg ? `, ${m.size_deg.toFixed(2)}\u00b0 on a side` : "";
     el.innerHTML = `${cap(S.region)} field${c}${sz}. SPHEREx band <i>${band}</i>, frame ${S.idx + 1} of ${S.frames.length}, ` +
-      `${f.utc.replace("T", " ").slice(0, 16)}\u2009UTC. Arcsinh stretch; north up, east ${eastSide}.`;
+      `${f.utc.replace("T", " ").slice(0, 16)}\u2009UTC. Arcsinh stretch; north up, east ${eastSide}.${S.mode === "overlay" ? " Overlay: frame A in amber, frame B in cyan, so a source that moved appears as an amber and a cyan dot." : ""}`;
   }
   function frameTicks() {
     const a = A(), el = $("ftick"); if (!a) return;
     const n = a.S.frames.length;
     if (el.children.length !== n) el.innerHTML = "<i></i>".repeat(n);
-    [...el.children].forEach((c, i) => c.classList.toggle("on", i === a.S.idx));
+    [...el.children].forEach((c, i) => { c.classList.toggle("on", i === a.S.idx); c.classList.toggle("e2", (a.S.frames[i] || {}).epoch > 1); });
   }
   const fill = (inp) => { const lo = +inp.min || 0, hi = +inp.max || 1; inp.style.setProperty("--p", ((+inp.value - lo) / ((hi - lo) || 1) * 100) + "%"); };
   document.querySelectorAll("input.fill").forEach((i) => { i.addEventListener("input", () => fill(i)); fill(i); });

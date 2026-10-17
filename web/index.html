@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#05060a">
 <title>SPHEREx Blink Comparator</title>
-<meta name="description" content="Blink comparator for SPHEREx all-sky infrared images: flip between observations and anything that moves jumps out.">
+<meta name="description" content="Blink comparator for SPHEREx all-sky infrared images: flip between observations and anything that moves jumps out. Built for the NASA Space Apps Planet X and SPHEREx challenge.">
+<meta property="og:title" content="SPHEREx Blink Comparator">
+<meta property="og:description" content="Hunt for moving worlds in real SPHEREx infrared images: blink, overlay, measure, flag.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2305060a'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' transform='rotate(-24 16 16)' fill='none' stroke='%23ece6d5' stroke-width='1.4'/%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ece6d5'/%3E%3Ccircle cx='25' cy='11.6' r='2' fill='%23f2a244'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/cmu-serif-500-roman.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/cmu-serif-500-italic.woff2" as="font" type="font/woff2" crossorigin>
@@ -28,7 +30,9 @@
   </div>
   <div class="hdr-right">
     <span class="tag">Hunting for moving worlds in the infrared sky</span>
-    <label class="field"><span>Field</span><select id="region"></select></label>
+    <label class="field"><span>Field</span><select id="region" aria-label="Field"></select></label>
+    <button id="tourBtn" class="ghost" title="A 1-minute guided walk-through">Tour</button>
+    <button id="aboutBtn" class="ghost" title="Data, credits and limits">About</button>
     <button id="helpBtn" class="ghost round" aria-label="How it works" title="How it works">?</button>
   </div>
 </header>
@@ -43,15 +47,33 @@
       <h2 class="lbl">Blink</h2>
       <div class="blinkrow">
         <button id="blink" class="primary" title="Space">Blink A &#8644; B</button>
-        <button id="setRef" class="ghost" title="Use the current frame as the frame to blink against">Set B = current frame</button>
+        <button id="overlayBtn" class="ghost" title="O: paint A amber and B cyan on top of each other">Overlay</button>
+        <select id="rate" aria-label="Blink rate" title="Blink rate"><option value="1">1 Hz</option><option value="2">2 Hz</option><option value="3" selected>3 Hz</option><option value="5">5 Hz</option></select>
       </div>
       <div id="blinkInfo"></div>
+      <div id="pairInfo"></div>
+      <div id="pairWarn"></div>
+      <div id="blinkNote" class="small"></div>
+      <div class="pairbtns">
+        <button id="setRef" class="ghost" title="B: use the frame on screen as frame B">Set B</button>
+        <button id="swapAB" class="ghost" title="X: swap A and B">Swap</button>
+        <button id="bestPair" class="ghost" title="Pick the pair that shows motion best">Best pair</button>
+      </div>
+    </section>
+    <section class="sec">
+      <h2 class="lbl">Layers</h2>
+      <label class="chk"><input type="checkbox" id="showKnown" checked><span>Known objects<span class="small">Untick to hunt blind first.</span></span></label>
+      <label class="chk"><input type="checkbox" id="showMask" checked><span>Blink the shared footprint only<span class="small">Hides areas covered in just one frame.</span></span></label>
+      <label class="chk"><input type="checkbox" id="snapOn" checked><span>Snap clicks to sources<span class="small">Centroids give sharper positions.</span></span></label>
+      <label class="chk"><input type="checkbox" id="showFlags" checked><span>Flags</span></label>
     </section>
     <section class="sec keys" aria-label="Keyboard shortcuts">
       <h2 class="lbl">Keys</h2>
       <div><span>blink</span><kbd>Space</kbd></div>
+      <div><span>overlay</span><kbd>O</kbd></div>
+      <div><span>set B / swap</span><span><kbd>B</kbd><kbd>X</kbd></span></div>
       <div><span>step through time</span><span><kbd>&larr;</kbd><kbd>&rarr;</kbd></span></div>
-      <div><span>zoom</span><span class="tt">scroll</span></div>
+      <div><span>zoom</span><span class="tt">scroll &middot; pinch &middot; + &minus;</span></div>
       <div><span>inspect a point</span><span class="tt">click</span></div>
     </section>
   </aside>
@@ -75,9 +97,11 @@
             <div id="scale"></div>
           </div>
           <div id="bigDate" hidden></div>
+          <div id="simBanner" class="glass" hidden><b>Simulated data.</b> Not from SPHEREx: a practice field.</div>
           <div id="loading" class="glass" hidden>Loading frames&hellip;</div>
-          <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; scroll to zoom &middot; click to inspect</div>
-          <div id="viewtools"><button id="zoomReset" class="glass">Reset view</button></div>
+          <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>O</kbd> overlay &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; click to inspect</div>
+          <div id="viewtools"><button id="copyLink" class="glass" title="Copy a link to this exact view">Copy link</button><button id="saveImg" class="glass" title="Save this view as a PNG with caption">Save image</button><button id="zoomReset" class="glass">Reset view</button></div>
+          <div id="toast" role="status" aria-live="polite"></div>
         </div>
       </div>
       <figcaption id="caption"><b>Figure 1.</b> <span id="capText">Loading the field&hellip;</span></figcaption>
@@ -92,7 +116,7 @@
         </div>
         <button id="next" class="ghost icon" title="Next (&rarr;)" aria-label="Next frame"><svg viewBox="0 0 16 16"><path d="M5.5 2.5 11 8l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
       </div>
-      <div class="when"><span>Frame</span><span id="frameLabel"></span></div>
+      <div class="when"><span>Frame</span><span id="frameLabel"></span><div id="epochSeg" class="seg" hidden></div></div>
     </div>
   </section>
 
@@ -107,19 +131,36 @@
       <div class="card">
         <h2 class="lbl">Selected point</h2>
         <dl id="meta"><dt class="empty">Click anywhere on the sky to read its position, band and brightness.</dt></dl>
+        <div id="moverCheck"></div>
       </div>
       <div class="card">
         <h2 class="lbl">Flag a mover <span id="flagCount" class="small"></span></h2>
         <div class="row">
-          <select id="category"><option>asteroid</option><option>comet</option><option>other</option></select>
-          <input id="note" type="text" placeholder="note (optional)" maxlength="200">
+          <select id="category" aria-label="Category"><option>asteroid</option><option>comet</option><option>planet candidate</option><option>other</option></select>
+          <input id="note" type="text" placeholder="note (optional)" maxlength="200" aria-label="Note">
         </div>
         <button id="submitFlag" class="primary wide" disabled>Flag it</button>
-        <div id="flagStatus" class="small"></div>
+        <div class="flagstate"><span id="flagMode" class="pill local"></span><span id="flagStatus" class="small"></span></div>
+        <div id="flagMatch" class="note"></div>
+      </div>
+      <div class="card">
+        <h2 class="lbl">Flags in this field</h2>
+        <ul id="flagList" class="flaglist"></ul>
+        <div class="row"><button id="exportCsv" class="ghost" disabled>Export CSV</button><button id="exportJson" class="ghost" disabled>Export JSON</button></div>
+        <button id="clearFlags" class="ghost link" hidden>Delete my saved flags for this field</button>
       </div>
     </div>
 
     <div class="pane" id="pane-context" hidden>
+      <div class="card" id="fieldCard">
+        <h2 class="lbl">This field</h2>
+        <div id="fieldInfo"></div>
+        <div id="simHint" class="note warn" hidden>Simulated data: the movers here are planted, so there is no real sky to look up. Use it to practise, then switch to a real field.</div>
+      </div>
+      <div class="card" id="valCard" hidden>
+        <h2 class="lbl">Reality check</h2>
+        <div id="valOut"></div>
+      </div>
       <div class="card" id="refCard" hidden>
         <h2 class="lbl">Compare with other eyes</h2>
         <select id="refSel"></select>
@@ -129,13 +170,23 @@
       <div class="card" id="skyCard" hidden>
         <h2 class="lbl">Where are we looking?</h2>
         <canvas id="skymap"></canvas>
-        <div class="legend small">Sun and planets on this frame's date &middot; Milky Way &middot; ecliptic (orange) &middot; dotted ring = 90&deg; from the Sun &middot; white box = this field &middot; orange line = known asteroid's track</div>
+        <div class="legend small">Sun and planets on this frame's date &middot; Milky Way &middot; ecliptic (orange) &middot; dotted ring = 90&deg; from the Sun &middot; white box = this field &middot; orange line = known asteroid's track. Tick or untick <b>Known objects</b> in the left rail to show or hide the labels on the image.</div>
         <div id="skyNote" class="small"></div>
-        <label class="chk"><input type="checkbox" id="showKnown" checked><span>Show known objects on the image<span class="small">Untick to hunt blind first.</span></span></label>
       </div>
     </div>
 
     <div class="pane" id="pane-planetx" hidden>
+      <div class="card" id="mvCard" hidden>
+        <h2 class="lbl">Planet X lab</h2>
+        <div class="small">What would a distant planet look like here? Earth's own motion makes it drift slowly.</div>
+        <label class="slider"><span class="small"><span>Distance</span><b id="pxDistVal">500 AU</b></span><input id="pxDist" class="fill" type="range" min="30" max="1000" step="10" value="500"></label>
+        <label class="chk"><input type="checkbox" id="pxDraw" checked><span>Draw its track on the sky</span></label>
+        <div id="pxOut"></div>
+        <h3 class="lbl sub">Measure a mover</h3>
+        <div id="mvSel" class="small">Click a source on the sky, then press Mark A or Mark B.</div>
+        <div class="row"><button id="markA" class="ghost" disabled>Mark A</button><button id="markB" class="ghost" disabled>Mark B</button><button id="clearMk" class="ghost">Clear</button></div>
+        <div id="mvOut"></div>
+      </div>
       <div class="card" id="orCard" hidden>
         <h2 class="lbl">Solar system <span class="small tt" id="orDate"></span></h2>
         <canvas id="orrery"></canvas>
@@ -145,20 +196,11 @@
         <table id="orTable"></table>
         <div class="small">Top-down view, square-root distance scale. The violet dashed line is the direction of this field from Earth: a distant Planet X would lie somewhere along it.</div>
       </div>
-      <div class="card" id="mvCard" hidden>
-        <h2 class="lbl">Planet X lab</h2>
-        <div class="small">What would a distant planet look like here? Earth's own motion makes it drift slowly.</div>
-        <label class="slider"><span class="small"><span>Distance</span><b id="pxDistVal">500 AU</b></span><input id="pxDist" class="fill" type="range" min="30" max="1000" step="10" value="500"></label>
-        <label class="chk"><input type="checkbox" id="pxDraw" checked><span>Draw its track on the sky</span></label>
-        <div id="pxOut"></div>
-        <h3 class="lbl sub">Measure a mover</h3>
-        <div class="row"><button id="markA" class="ghost" disabled>Mark A</button><button id="markB" class="ghost" disabled>Mark B</button><button id="clearMk" class="ghost">Clear</button></div>
-        <div id="mvOut"></div>
-      </div>
     </div>
 
     <footer id="credits">
-      <div>SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC. Set in Computer Modern. Reference images and planet photos are credited in-app and in the README.</div>
+      <div id="ackFoot">SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC.</div>
+      <div>Set in Computer Modern. Reference images and planet photos are credited in About and in the README.</div>
       <div id="imgCredits"></div>
     </footer>
   </aside>
@@ -169,13 +211,37 @@
   <p><b><i>Abstract.</i></b> SPHEREx scans the whole sky in 102 infrared colours. Every field is seen on several dates, so a world that moves between visits is easy to catch: this is the blink technique that found Pluto in 1930.</p>
   <ol>
     <li><b>Pick a band</b> and drag the time bar. Stars stay put; movers jump.</li>
-    <li>Press <kbd>Space</kbd> to <b>blink</b> two frames. Use <b>Set B</b> to choose the second frame.</li>
-    <li><b>Click</b> a mover to read its position and brightness, then flag it.</li>
+    <li>Press <kbd>Space</kbd> to <b>blink</b> two frames, or <kbd>O</kbd> to <b>overlay</b> them in amber and cyan. The tool picks a sensible pair; change B with <b>Set B</b>.</li>
+    <li><b>Click</b> a source. It snaps to the centre and checks whether it stays put in the other frames. Then flag it.</li>
     <li>Open <b>Context</b> to see this field against optical, infrared and Hubble views, and on the whole sky.</li>
-    <li>Open <b>Planet X</b> to see what a distant planet would do here, and to measure a mover's rate.</li>
+    <li>Open <b>Planet X</b> to see what a distant planet would do here, and to measure a mover's rate and distance.</li>
   </ol>
-  <form method="dialog"><button class="primary">Got it</button></form>
+  <form method="dialog" class="dlgbtns"><button class="ghost" id="helpTour">Take the 1-minute tour</button><button class="primary">Got it</button></form>
+  <p class="small dlgfoot"><a href="#" id="aboutFromHelp">Data, credits and limits</a></p>
 </dialog>
+
+<dialog id="about">
+  <h2>Data, credits and limits</h2>
+  <h3>Data</h3>
+  <p id="ackText" class="ack">SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC.</p>
+  <p class="small">Other layers: DSS2, 2MASS and WISE views come from CDS hips2fits; ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited below. Set in Computer Modern (SIL OFL).</p>
+  <p class="small" id="imgCreditsAbout"></p>
+  <h3>What this is, honestly</h3>
+  <ul>
+    <li>A working <b>prototype</b> for the Planet X and SPHEREx challenge, built on real QR2 spectral images.</li>
+    <li>It does <b>not</b> claim a discovery. A flag is a candidate for follow-up; the distance estimator says <i>candidate</i>, never <i>found</i>.</li>
+    <li>Tiles are <b>8-bit</b> stretched pictures, so brightness readouts are approximate. Frames in one band sit at different wavelengths, so judge movers by position, not brightness.</li>
+    <li>Some frames show a broad diffuse band of glow. That is large-scale background in the detector images, not a point source.</li>
+    <li>Flags are shared only if the site is wired to a shared store; the panel says which mode is active.</li>
+  </ul>
+  <form method="dialog" class="dlgbtns"><button class="primary">Close</button></form>
+</dialog>
+
+<div id="tour" class="glass" role="dialog" aria-live="polite" hidden>
+  <div class="tour-h"><b id="tourTitle"></b><button id="tourSkip" class="ghost link" aria-label="Skip the tour">Skip</button></div>
+  <p id="tourText"></p>
+  <div class="tour-f"><div id="tourDots"></div><span><button id="tourBack" class="ghost">Back</button><button id="tourNext" class="primary">Next</button></span></div>
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/wcs.js"></script>
@@ -183,11 +249,13 @@
 <script src="js/flagging.js"></script>
 <script src="js/skymap.js"></script>
 <script src="js/controls.js"></script>
+<script src="js/parallax.js"></script>
 <script src="js/known.js"></script>
 <script src="js/motion.js"></script>
 <script src="js/reference.js"></script>
 <script src="js/orrery.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/axes.js"></script>
+<script src="js/tour.js"></script>
 </body>
 </html>

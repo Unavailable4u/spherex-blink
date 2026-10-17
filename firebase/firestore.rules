@@ -1,0 +1,25 @@
+// Firestore security rules for the shared flag store (see docs/FLAGS_SETUP.md).
+// Anyone may read flags and add one; nobody can edit or delete (so a vandal cannot wipe the data),
+// and every field is type- and size-checked so the collection cannot be filled with junk.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /flags/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(
+            ['region','frame','band','epoch','ra','dec','category','note','verdict','created','uid'])
+        && request.resource.data.keys().hasAll(['region','frame','band','ra','dec','category','created','uid'])
+        && request.resource.data.region is string && request.resource.data.region.size() < 60
+        && request.resource.data.frame  is string && request.resource.data.frame.size()  < 60
+        && request.resource.data.band   is string && request.resource.data.band.size()   < 10
+        && request.resource.data.ra  is number && request.resource.data.ra  >= 0   && request.resource.data.ra  <= 360
+        && request.resource.data.dec is number && request.resource.data.dec >= -90 && request.resource.data.dec <= 90
+        && request.resource.data.category in ['asteroid','comet','planet candidate','other']
+        && (!('note' in request.resource.data) || (request.resource.data.note is string && request.resource.data.note.size() <= 200))
+        && (!('verdict' in request.resource.data) || request.resource.data.verdict is string)
+        && request.resource.data.created is number
+        && request.resource.data.uid is string && request.resource.data.uid.size() < 60;
+      allow update, delete: if false;
+    }
+  }
+}

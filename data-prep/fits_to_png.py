@@ -397,8 +397,9 @@ def main(argv=None):
     if os.path.exists(reg_path):
         with open(reg_path) as f:
             regions = json.load(f).get("regions", [])
+    prev = next((r for r in regions if r["id"] == args.region), {})      # keep hand-written title/blurb/kind
     regions = [r for r in regions if r["id"] != args.region]
-    regions.append({"id": args.region, "frames": len(manifest_frames),
+    regions.append({**prev, "id": args.region, "frames": len(manifest_frames),
                     "bands": bands, "epochs": manifest["epochs"]})
     with open(reg_path, "w") as f:
         json.dump({"regions": sorted(regions, key=lambda r: r["id"])}, f, indent=2)

@@ -16,6 +16,8 @@ const WCS = (() => {
         const ra = a0 + Math.atan2(xi * sc, r * cd0 * cc - eta * sd0 * sc);
         return { ra: ((ra / D) % 360 + 360) % 360, dec: dec / D };
       },
+      // SVG/canvas drawing coordinates: pixel edges, so the centre of pixel c sits at c + 0.5
+      toDraw(ra, dec) { const p = this.toPix(ra, dec); return { x: p.col + 0.5, y: p.row + 0.5 }; },
       toPix(ra, dec) {
         const a = ra * D, d = dec * D, da = a - a0;
         const cc = sd0 * Math.sin(d) + cd0 * Math.cos(d) * Math.cos(da);

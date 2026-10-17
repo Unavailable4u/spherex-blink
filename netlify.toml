@@ -1,0 +1,7 @@
+# Alternative to GitHub Pages: drag the repo into Netlify, or `netlify deploy --dir=web --prod`.
+[build]
+  publish = "web"
+[[headers]]
+  for = "/tiles/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

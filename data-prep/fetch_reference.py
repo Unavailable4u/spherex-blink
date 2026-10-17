@@ -79,6 +79,9 @@ def main():
     order = ["hubble", "dss2", "2mass", "wise"]
     json.dump({"layers": [have[k] for k in order if k in have]}, open(rj, "w"), indent=1)
     print("wrote", rj)
+    if have:
+        from regions_util import add_extra
+        add_extra(a.tiles_root, a.region, "ref")
 
 
 if __name__ == "__main__":

@@ -68,8 +68,9 @@ const SkyMap = (() => {
     cv.style.width = "100%"; cv.style.aspectRatio = `${W} / ${H}`; ctx = cv.getContext("2d"); ctx.scale(r, r); loadMilkyWay();
   }
 
-  function setRegion(id) {
+  function setRegion(id, extras) {
     const my = ++token; data = null; $("skyCard").hidden = true;
+    if (extras && !extras.includes("sky")) return;               // this field has no sky context: do not probe for the file
     fetch(`tiles/${id}/sky.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null).then((j) => {
       if (my !== token) return;                  // user switched region meanwhile
       data = j; $("skyCard").hidden = !j;
@@ -105,6 +106,6 @@ const SkyMap = (() => {
   return { init, update, setRegion, data: () => data, redraw: () => update(last) };
 })();
 
-document.addEventListener("sx:region", (e) => SkyMap.setRegion(e.detail.id));
+document.addEventListener("sx:region", (e) => SkyMap.setRegion(e.detail.id, e.detail.extras));
 document.addEventListener("sx:fonts", () => SkyMap.redraw());
 document.addEventListener("sx:frame", (e) => SkyMap.update(e.detail.id));

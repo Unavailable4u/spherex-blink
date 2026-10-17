@@ -1,0 +1,250 @@
+{
+ "region": "pallas",
+ "summary": {
+  "target": "(2) Pallas",
+  "frames_checked": 13,
+  "frames_detected": 13,
+  "median_offset_px": 0.25,
+  "rms_offset_px": 0.57,
+  "max_offset_px": 1.64,
+  "pixscale_arcsec": 6.1488281250000005,
+  "rms_offset_arcsec": 3.5,
+  "movers_confirmed": 13
+ },
+ "frames": {
+  "2025-10-06_0339": {
+   "band": "D5",
+   "pred": [
+    664.34,
+    128.19
+   ],
+   "in_tile": true,
+   "centroid": [
+    664.97,
+    126.68
+   ],
+   "offset_px": 1.64,
+   "peak": 209.0,
+   "median": 3.0,
+   "snr": 138.9,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-06_1813": {
+   "band": "D2",
+   "pred": [
+    644.89,
+    191.55
+   ],
+   "in_tile": true,
+   "centroid": [
+    644.91,
+    191.74
+   ],
+   "offset_px": 0.19,
+   "peak": 255.0,
+   "median": 5.0,
+   "snr": 84.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-06_1817": {
+   "band": "D5",
+   "pred": [
+    644.77,
+    191.84
+   ],
+   "in_tile": true,
+   "centroid": [
+    644.66,
+    191.71
+   ],
+   "offset_px": 0.17,
+   "peak": 209.0,
+   "median": 3.0,
+   "snr": 138.9,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-07_2335": {
+   "band": "D4",
+   "pred": [
+    602.46,
+    318.03
+   ],
+   "in_tile": true,
+   "centroid": [
+    602.38,
+    318.05
+   ],
+   "offset_px": 0.08,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-07_2337": {
+   "band": "D1",
+   "pred": [
+    602.46,
+    318.15
+   ],
+   "in_tile": true,
+   "centroid": [
+    602.38,
+    318.21
+   ],
+   "offset_px": 0.1,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 83.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-09_0809": {
+   "band": "D4",
+   "pred": [
+    550.61,
+    456.27
+   ],
+   "in_tile": true,
+   "centroid": [
+    550.1,
+    456.36
+   ],
+   "offset_px": 0.51,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-09_0811": {
+   "band": "D1",
+   "pred": [
+    550.55,
+    456.38
+   ],
+   "in_tile": true,
+   "centroid": [
+    550.13,
+    456.48
+   ],
+   "offset_px": 0.43,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 83.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-09_0815": {
+   "band": "D4",
+   "pred": [
+    550.43,
+    456.68
+   ],
+   "in_tile": true,
+   "centroid": [
+    549.97,
+    456.54
+   ],
+   "offset_px": 0.48,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-13_1631": {
+   "band": "D2",
+   "pred": [
+    350.16,
+    884.78
+   ],
+   "in_tile": true,
+   "centroid": [
+    350.65,
+    885.15
+   ],
+   "offset_px": 0.62,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 84.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-13_1636": {
+   "band": "D2",
+   "pred": [
+    349.98,
+    885.07
+   ],
+   "in_tile": true,
+   "centroid": [
+    350.46,
+    885.31
+   ],
+   "offset_px": 0.53,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 84.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-14_1028": {
+   "band": "D1",
+   "pred": [
+    310.52,
+    956.21
+   ],
+   "in_tile": true,
+   "centroid": [
+    310.42,
+    956.39
+   ],
+   "offset_px": 0.21,
+   "peak": 255.0,
+   "median": 5.0,
+   "snr": 84.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-14_1033": {
+   "band": "D1",
+   "pred": [
+    310.35,
+    956.51
+   ],
+   "in_tile": true,
+   "centroid": [
+    310.28,
+    956.51
+   ],
+   "offset_px": 0.06,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 85.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-10-14_1035": {
+   "band": "D4",
+   "pred": [
+    310.29,
+    956.68
+   ],
+   "in_tile": true,
+   "centroid": [
+    310.15,
+    956.47
+   ],
+   "offset_px": 0.25,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": true
+  }
+ }
+}

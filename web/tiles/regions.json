@@ -11,6 +11,15 @@
       ],
       "epochs": [
         1
+      ],
+      "title": "Pallas field",
+      "kind": "real",
+      "target": "(2) Pallas",
+      "blurb": "Real SPHEREx frames from 6\u201314 Oct 2025. The asteroid (2) Pallas drifts across the field: blink it, then try to find it blind.",
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
       ]
     },
     {
@@ -23,7 +32,11 @@
       "epochs": [
         1,
         2
-      ]
+      ],
+      "title": "Practice field",
+      "kind": "simulated",
+      "blurb": "Simulated data with a planted mover and two survey passes 90 days apart. Not SPHEREx data: use it to learn the technique.",
+      "extras": []
     }
   ]
 }

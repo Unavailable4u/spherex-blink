@@ -1,0 +1,7 @@
+Option A (git, keeps history):   git am spherex-blink-update.patch      (run in your repo, on a clean working tree)
+Option B (copy files):           unzip over your repo folder, then delete the files listed in DELETE_THESE_FILES.txt
+Then:  node tests/run.js         (unit tests)
+       cd web && python -m http.server 8000     -> http://localhost:8000
+Deploy: repo Settings -> Pages -> Source: GitHub Actions, push to main.
+Read docs/AUDIT_FIXES.md first: it lists the two things only you can do (paste IRSA's exact acknowledgement sentence; enable Pages)
+and the optional Firebase keys for shared flags.

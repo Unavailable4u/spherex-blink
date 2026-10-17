@@ -1,0 +1,2 @@
+web/tiles/pallas/D6/2025-10-05_2104.png
+web/tiles/pallas/previews/contact_D6.png

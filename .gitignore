@@ -5,3 +5,6 @@ __pycache__/
 *.fits
 raw/
 .env
+tests/e2e/out/
+tests/e2e/node_modules/
+node_modules/
