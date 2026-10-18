@@ -1,0 +1,137 @@
+{
+  "region": "north-ecliptic-pole",
+  "center": {
+    "ra": 270.0,
+    "dec": 66.56
+  },
+  "size_deg": 1.5,
+  "tile": {
+    "width": 880,
+    "height": 880
+  },
+  "mode": "best-per-epoch",
+  "epochs": [
+    1,
+    2
+  ],
+  "bands": {
+    "D2": {
+      "frames": [
+        "2025-05-05_0503",
+        "2026-06-05_1419"
+      ],
+      "stretch": {
+        "lo": -0.029436055943369864,
+        "hi": 8.210927324295325,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    },
+    "D5": {
+      "frames": [
+        "2025-05-05_0503",
+        "2026-06-25_1451"
+      ],
+      "stretch": {
+        "lo": -0.06381298825144768,
+        "hi": 60.053491683960004,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    }
+  },
+  "frames": [
+    {
+      "id": "2025-05-05_0503",
+      "band": "D2",
+      "detector": 2,
+      "epoch": 1,
+      "mjd": 60800.21051,
+      "utc": "2025-05-05T05:03:07Z",
+      "path": "D2/2025-05-05_0503.png",
+      "bkg": 0.15963,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 1.298,
+      "bandwidth_um": 0.031,
+      "wavelength_plane": {
+        "c0": 1.2696706152106707,
+        "per_col": -0.00014799657179558176,
+        "per_row": 0.00022017556158546007,
+        "rms_um": 0.0023259507364605738,
+        "units": "um"
+      },
+      "source": "epoch1\\SPHEREx-D2.fits"
+    },
+    {
+      "id": "2026-06-05_1419",
+      "band": "D2",
+      "detector": 2,
+      "epoch": 2,
+      "mjd": 61196.59718,
+      "utc": "2026-06-05T14:19:56Z",
+      "path": "D2/2026-06-05_1419.png",
+      "bkg": 0.150531,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 1.313,
+      "bandwidth_um": 0.0315,
+      "wavelength_plane": {
+        "c0": 1.3732436603668259,
+        "per_col": -0.00024299426881041459,
+        "per_row": 0.00011387105271466212,
+        "rms_um": 0.00238058097582549,
+        "units": "um"
+      },
+      "source": "epoch2\\SPHEREx-D2.fits"
+    },
+    {
+      "id": "2025-05-05_0503",
+      "band": "D5",
+      "detector": 5,
+      "epoch": 1,
+      "mjd": 60800.21051,
+      "utc": "2025-05-05T05:03:07Z",
+      "path": "D5/2025-05-05_0503.png",
+      "bkg": 0.161633,
+      "unit": "MJy / sr",
+      "coverage": 0.998,
+      "wavelength_um": 4.0535,
+      "bandwidth_um": 0.0367,
+      "wavelength_plane": {
+        "c0": 4.01947637786158,
+        "per_col": -0.00017014767112819726,
+        "per_row": 0.00025299710064279903,
+        "rms_um": 0.0016860603067893377,
+        "units": "um"
+      },
+      "source": "epoch1\\SPHEREx-D5.fits"
+    },
+    {
+      "id": "2026-06-25_1451",
+      "band": "D5",
+      "detector": 5,
+      "epoch": 2,
+      "mjd": 61216.619,
+      "utc": "2026-06-25T14:51:21Z",
+      "path": "D5/2026-06-25_1451.png",
+      "bkg": 0.154691,
+      "unit": "MJy / sr",
+      "coverage": 0.998,
+      "wavelength_um": 4.0707,
+      "bandwidth_um": 0.0368,
+      "wavelength_plane": {
+        "c0": 4.2136795331368555,
+        "per_col": -0.00030570440388257095,
+        "per_row": -1.4196121421063915e-05,
+        "rms_um": 0.0015416172934099317,
+        "units": "um"
+      },
+      "source": "epoch2\\SPHEREx-D5.fits"
+    }
+  ],
+  "intensity_note": "pixel/255 = y ; flux above frame background = lo + (hi-lo) * a*sinh(y*asinh(1/a)) ; add frame 'bkg' for the level that was subtracted. Values are only approximate (8-bit).",
+  "credit": "SPHEREx data via NASA/IPAC IRSA. Official acknowledgement text: see README."
+}

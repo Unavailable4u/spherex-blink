@@ -1,6 +1,27 @@
 {
   "regions": [
     {
+      "id": "astraea",
+      "frames": 14,
+      "bands": [
+        "D1",
+        "D3",
+        "D6"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Astraea field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(5) Astraea"
+    },
+    {
       "id": "ceres",
       "frames": 14,
       "bands": [
@@ -19,6 +40,26 @@
       "blurb": "The largest object in the asteroid belt, moving against the background stars.",
       "kind": "real",
       "target": "(1) Ceres"
+    },
+    {
+      "id": "davida",
+      "frames": 9,
+      "bands": [
+        "D1",
+        "D4"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Davida field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(511) Davida"
     },
     {
       "id": "eunomia",
@@ -41,6 +82,66 @@
       "blurb": "The largest stony asteroid, caught moving between frames.",
       "kind": "real",
       "target": "(15) Eunomia"
+    },
+    {
+      "id": "fortuna",
+      "frames": 14,
+      "bands": [
+        "D1",
+        "D4"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Fortuna field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(19) Fortuna"
+    },
+    {
+      "id": "galactic-plane",
+      "frames": 4,
+      "bands": [
+        "D1",
+        "D2",
+        "D3"
+      ],
+      "epochs": [
+        1,
+        2
+      ],
+      "extras": [
+        "ref",
+        "sky"
+      ],
+      "title": "Galactic centre region",
+      "blurb": "A crowded star field toward the Galactic centre, a hard test for spotting anything that moves.",
+      "kind": "real"
+    },
+    {
+      "id": "hebe",
+      "frames": 8,
+      "bands": [
+        "D2",
+        "D5"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Hebe field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(6) Hebe"
     },
     {
       "id": "hygiea",
@@ -105,6 +206,65 @@
       "target": "(3) Juno"
     },
     {
+      "id": "massalia",
+      "frames": 8,
+      "bands": [
+        "D1",
+        "D4"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Massalia field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(20) Massalia"
+    },
+    {
+      "id": "metis",
+      "frames": 14,
+      "bands": [
+        "D3",
+        "D6"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Metis field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(9) Metis"
+    },
+    {
+      "id": "north-ecliptic-pole",
+      "frames": 4,
+      "bands": [
+        "D2",
+        "D5"
+      ],
+      "epochs": [
+        1,
+        2
+      ],
+      "extras": [
+        "ref",
+        "sky"
+      ],
+      "title": "North ecliptic pole",
+      "blurb": "SPHEREx revisits the ecliptic poles far more often than the rest of the sky, so this patch has many epochs.",
+      "kind": "real"
+    },
+    {
       "id": "pallas",
       "frames": 13,
       "bands": [
@@ -151,6 +311,28 @@
       "kind": "real"
     },
     {
+      "id": "parthenope",
+      "frames": 14,
+      "bands": [
+        "D1",
+        "D2",
+        "D4",
+        "D5"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Parthenope field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(11) Parthenope"
+    },
+    {
       "id": "psyche",
       "frames": 14,
       "bands": [
@@ -169,6 +351,25 @@
       "blurb": "A metal-rich asteroid and NASA mission target, caught moving between frames.",
       "kind": "real",
       "target": "(16) Psyche"
+    },
+    {
+      "id": "south-ecliptic-pole",
+      "frames": 2,
+      "bands": [
+        "D2",
+        "D5"
+      ],
+      "epochs": [
+        1,
+        2
+      ],
+      "extras": [
+        "ref",
+        "sky"
+      ],
+      "title": "South ecliptic pole",
+      "blurb": "The southern deep field: the most frequently revisited part of the SPHEREx sky.",
+      "kind": "real"
     },
     {
       "id": "synthetic",
@@ -205,6 +406,26 @@
       "blurb": "The second most massive asteroid, caught drifting between SPHEREx visits.",
       "kind": "real",
       "target": "(4) Vesta"
+    },
+    {
+      "id": "victoria",
+      "frames": 8,
+      "bands": [
+        "D3",
+        "D6"
+      ],
+      "epochs": [
+        1
+      ],
+      "extras": [
+        "ref",
+        "sky",
+        "validation"
+      ],
+      "title": "Victoria field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames.",
+      "kind": "real",
+      "target": "(12) Victoria"
     }
   ]
 }

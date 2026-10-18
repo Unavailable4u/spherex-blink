@@ -1,0 +1,88 @@
+{
+ "region": "victoria",
+ "summary": {
+  "target": "(12) Victoria",
+  "frames_checked": 4,
+  "frames_detected": 4,
+  "median_offset_px": 0.4,
+  "rms_offset_px": 0.38,
+  "max_offset_px": 0.42,
+  "pixscale_arcsec": 3.075682704811444,
+  "rms_offset_arcsec": 1.2,
+  "movers_confirmed": 4
+ },
+ "frames": {
+  "2026-01-12_2253": {
+   "band": "D6",
+   "pred": [
+    496.27,
+    396.72
+   ],
+   "in_tile": true,
+   "centroid": [
+    495.98,
+    397.0
+   ],
+   "offset_px": 0.4,
+   "peak": 255.0,
+   "median": 13.0,
+   "snr": 54.4,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2026-01-12_2255": {
+   "band": "D6",
+   "pred": [
+    495.93,
+    396.72
+   ],
+   "in_tile": true,
+   "centroid": [
+    495.65,
+    396.78
+   ],
+   "offset_px": 0.28,
+   "peak": 255.0,
+   "median": 13.0,
+   "snr": 54.4,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2026-01-12_2258": {
+   "band": "D6",
+   "pred": [
+    495.7,
+    396.72
+   ],
+   "in_tile": true,
+   "centroid": [
+    495.35,
+    396.49
+   ],
+   "offset_px": 0.42,
+   "peak": 255.0,
+   "median": 14.0,
+   "snr": 54.2,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2026-01-15_0446": {
+   "band": "D6",
+   "pred": [
+    48.26,
+    345.51
+   ],
+   "in_tile": true,
+   "centroid": [
+    48.04,
+    345.17
+   ],
+   "offset_px": 0.41,
+   "peak": 255.0,
+   "median": 13.0,
+   "snr": 81.6,
+   "detected": true,
+   "absent_elsewhere": true
+  }
+ }
+}

@@ -1,0 +1,91 @@
+{
+  "region": "south-ecliptic-pole",
+  "center": {
+    "ra": 90.0,
+    "dec": -66.56
+  },
+  "size_deg": 1.5,
+  "tile": {
+    "width": 879,
+    "height": 879
+  },
+  "mode": "best-per-epoch",
+  "epochs": [
+    1,
+    2
+  ],
+  "bands": {
+    "D2": {
+      "frames": [
+        "2025-09-19_1558"
+      ],
+      "stretch": {
+        "lo": -0.050432818531990053,
+        "hi": 12.094683116912783,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    },
+    "D5": {
+      "frames": [
+        "2026-02-15_0553"
+      ],
+      "stretch": {
+        "lo": -0.06820297025144101,
+        "hi": 59.94859355163641,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    }
+  },
+  "frames": [
+    {
+      "id": "2025-09-19_1558",
+      "band": "D2",
+      "detector": 2,
+      "epoch": 1,
+      "mjd": 60937.66572,
+      "utc": "2025-09-19T15:58:38Z",
+      "path": "D2/2025-09-19_1558.png",
+      "bkg": 0.225149,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 1.3448,
+      "bandwidth_um": 0.0325,
+      "wavelength_plane": {
+        "c0": 1.1918073405618772,
+        "per_col": 0.00010110221873312698,
+        "per_row": 0.0002563299434065482,
+        "rms_um": 0.002542322642206263,
+        "units": "um"
+      },
+      "source": "epoch1\\SPHEREx-D2.fits"
+    },
+    {
+      "id": "2026-02-15_0553",
+      "band": "D5",
+      "detector": 5,
+      "epoch": 2,
+      "mjd": 61086.24532,
+      "utc": "2026-02-15T05:53:15Z",
+      "path": "D5/2026-02-15_0553.png",
+      "bkg": 0.174787,
+      "unit": "MJy / sr",
+      "coverage": 0.998,
+      "wavelength_um": 4.0848,
+      "bandwidth_um": 0.0368,
+      "wavelength_plane": {
+        "c0": 4.20660368167237,
+        "per_col": 3.334819851832284e-05,
+        "per_row": -0.0003053618456783731,
+        "rms_um": 0.0015374725505997078,
+        "units": "um"
+      },
+      "source": "epoch1\\SPHEREx-D5.fits"
+    }
+  ],
+  "intensity_note": "pixel/255 = y ; flux above frame background = lo + (hi-lo) * a*sinh(y*asinh(1/a)) ; add frame 'bkg' for the level that was subtracted. Values are only approximate (8-bit).",
+  "credit": "SPHEREx data via NASA/IPAC IRSA. Official acknowledgement text: see README."
+}

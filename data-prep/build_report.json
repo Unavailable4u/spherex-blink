@@ -1,6 +1,116 @@
 [
   {
     "region": "pallas-6mo",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "vesta",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "ceres",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "juno",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "iris",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "hygiea",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "eunomia",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "psyche",
+    "status": "skipped",
+    "note": ""
+  },
+  {
+    "region": "astraea",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "hebe",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "flora",
+    "status": "FAILED",
+    "note": "no usable SPHEREx window found"
+  },
+  {
+    "region": "metis",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "parthenope",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "victoria",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "irene",
+    "status": "FAILED",
+    "note": "no usable SPHEREx window found"
+  },
+  {
+    "region": "melpomene",
+    "status": "FAILED",
+    "note": "no usable SPHEREx window found"
+  },
+  {
+    "region": "fortuna",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "massalia",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "amphitrite",
+    "status": "FAILED",
+    "note": "no usable SPHEREx window found"
+  },
+  {
+    "region": "davida",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "north-ecliptic-pole",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "south-ecliptic-pole",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "region": "galactic-plane",
     "status": "ok",
     "note": ""
   }

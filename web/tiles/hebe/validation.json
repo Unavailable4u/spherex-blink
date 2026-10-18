@@ -1,0 +1,88 @@
+{
+ "region": "hebe",
+ "summary": {
+  "target": "(6) Hebe",
+  "frames_checked": 4,
+  "frames_detected": 4,
+  "median_offset_px": 1.08,
+  "rms_offset_px": 1.21,
+  "max_offset_px": 1.79,
+  "pixscale_arcsec": 1.5319148936170213,
+  "rms_offset_arcsec": 1.9,
+  "movers_confirmed": 0
+ },
+ "frames": {
+  "2025-06-02_0239": {
+   "band": "D5",
+   "pred": [
+    118.36,
+    117.13
+   ],
+   "in_tile": true,
+   "centroid": [
+    118.76,
+    117.21
+   ],
+   "offset_px": 0.41,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-02_0242": {
+   "band": "D5",
+   "pred": [
+    117.42,
+    117.13
+   ],
+   "in_tile": true,
+   "centroid": [
+    117.87,
+    117.79
+   ],
+   "offset_px": 0.8,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-02_0244": {
+   "band": "D5",
+   "pred": [
+    116.49,
+    116.9
+   ],
+   "in_tile": true,
+   "centroid": [
+    116.62,
+    118.26
+   ],
+   "offset_px": 1.37,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-06-02_0246": {
+   "band": "D5",
+   "pred": [
+    115.56,
+    116.9
+   ],
+   "in_tile": true,
+   "centroid": [
+    115.65,
+    118.69
+   ],
+   "offset_px": 1.79,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": null
+  }
+ }
+}

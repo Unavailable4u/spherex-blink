@@ -1,0 +1,268 @@
+{
+ "region": "parthenope",
+ "summary": {
+  "target": "(11) Parthenope",
+  "frames_checked": 14,
+  "frames_detected": 14,
+  "median_offset_px": 0.31,
+  "rms_offset_px": 0.32,
+  "max_offset_px": 0.44,
+  "pixscale_arcsec": 6.14703557312253,
+  "rms_offset_arcsec": 2.0,
+  "movers_confirmed": 14
+ },
+ "frames": {
+  "2025-11-26_1600": {
+   "band": "D4",
+   "pred": [
+    720.85,
+    278.77
+   ],
+   "in_tile": true,
+   "centroid": [
+    720.62,
+    278.9
+   ],
+   "offset_px": 0.26,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-28_0842": {
+   "band": "D4",
+   "pred": [
+    502.33,
+    343.32
+   ],
+   "in_tile": true,
+   "centroid": [
+    502.69,
+    343.07
+   ],
+   "offset_px": 0.44,
+   "peak": 255.0,
+   "median": 3.0,
+   "snr": 170.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-28_0844": {
+   "band": "D4",
+   "pred": [
+    502.1,
+    343.38
+   ],
+   "in_tile": true,
+   "centroid": [
+    502.48,
+    343.41
+   ],
+   "offset_px": 0.38,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-28_1831": {
+   "band": "D4",
+   "pred": [
+    450.45,
+    358.45
+   ],
+   "in_tile": true,
+   "centroid": [
+    450.27,
+    358.56
+   ],
+   "offset_px": 0.21,
+   "peak": 244.0,
+   "median": 3.0,
+   "snr": 162.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-28_1836": {
+   "band": "D1",
+   "pred": [
+    450.04,
+    358.57
+   ],
+   "in_tile": true,
+   "centroid": [
+    449.98,
+    358.88
+   ],
+   "offset_px": 0.32,
+   "peak": 255.0,
+   "median": 15.0,
+   "snr": 40.5,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-29_0556": {
+   "band": "D5",
+   "pred": [
+    390.74,
+    375.8
+   ],
+   "in_tile": true,
+   "centroid": [
+    390.7,
+    376.1
+   ],
+   "offset_px": 0.31,
+   "peak": 179.0,
+   "median": 3.0,
+   "snr": 118.7,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-29_0600": {
+   "band": "D2",
+   "pred": [
+    390.34,
+    375.92
+   ],
+   "in_tile": true,
+   "centroid": [
+    390.12,
+    376.27
+   ],
+   "offset_px": 0.41,
+   "peak": 255.0,
+   "median": 16.0,
+   "snr": 40.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-29_0602": {
+   "band": "D2",
+   "pred": [
+    390.16,
+    375.97
+   ],
+   "in_tile": true,
+   "centroid": [
+    389.94,
+    376.35
+   ],
+   "offset_px": 0.44,
+   "peak": 255.0,
+   "median": 15.0,
+   "snr": 54.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-29_2349": {
+   "band": "D1",
+   "pred": [
+    297.99,
+    402.55
+   ],
+   "in_tile": true,
+   "centroid": [
+    297.82,
+    402.73
+   ],
+   "offset_px": 0.25,
+   "peak": 255.0,
+   "median": 17.0,
+   "snr": 40.1,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-30_0759": {
+   "band": "D5",
+   "pred": [
+    256.14,
+    414.59
+   ],
+   "in_tile": true,
+   "centroid": [
+    256.0,
+    414.61
+   ],
+   "offset_px": 0.14,
+   "peak": 183.0,
+   "median": 3.0,
+   "snr": 121.4,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-30_1112": {
+   "band": "D5",
+   "pred": [
+    239.59,
+    419.33
+   ],
+   "in_tile": true,
+   "centroid": [
+    239.41,
+    419.24
+   ],
+   "offset_px": 0.2,
+   "peak": 173.0,
+   "median": 4.0,
+   "snr": 114.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-30_1248": {
+   "band": "D2",
+   "pred": [
+    231.49,
+    421.6
+   ],
+   "in_tile": true,
+   "centroid": [
+    231.53,
+    421.98
+   ],
+   "offset_px": 0.37,
+   "peak": 255.0,
+   "median": 18.0,
+   "snr": 32.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-30_1250": {
+   "band": "D2",
+   "pred": [
+    231.31,
+    421.66
+   ],
+   "in_tile": true,
+   "centroid": [
+    231.02,
+    421.75
+   ],
+   "offset_px": 0.31,
+   "peak": 255.0,
+   "median": 18.0,
+   "snr": 32.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-30_1255": {
+   "band": "D5",
+   "pred": [
+    230.91,
+    421.78
+   ],
+   "in_tile": true,
+   "centroid": [
+    230.74,
+    421.97
+   ],
+   "offset_px": 0.25,
+   "peak": 184.0,
+   "median": 3.0,
+   "snr": 122.1,
+   "detected": true,
+   "absent_elsewhere": true
+  }
+ }
+}

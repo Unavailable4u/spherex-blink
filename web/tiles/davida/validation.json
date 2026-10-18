@@ -1,0 +1,106 @@
+{
+ "region": "davida",
+ "summary": {
+  "target": "(511) Davida",
+  "frames_checked": 5,
+  "frames_detected": 5,
+  "median_offset_px": 0.28,
+  "rms_offset_px": 0.59,
+  "max_offset_px": 1.13,
+  "pixscale_arcsec": 6.150508474576272,
+  "rms_offset_arcsec": 3.7,
+  "movers_confirmed": 5
+ },
+ "frames": {
+  "2025-11-21_1034": {
+   "band": "D4",
+   "pred": [
+    566.08,
+    294.08
+   ],
+   "in_tile": true,
+   "centroid": [
+    565.34,
+    294.93
+   ],
+   "offset_px": 1.13,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 83.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-23_1752": {
+   "band": "D4",
+   "pred": [
+    217.21,
+    294.5
+   ],
+   "in_tile": true,
+   "centroid": [
+    216.94,
+    294.43
+   ],
+   "offset_px": 0.28,
+   "peak": 255.0,
+   "median": 6.0,
+   "snr": 84.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-23_1755": {
+   "band": "D4",
+   "pred": [
+    216.99,
+    294.5
+   ],
+   "in_tile": true,
+   "centroid": [
+    216.72,
+    294.51
+   ],
+   "offset_px": 0.27,
+   "peak": 255.0,
+   "median": 6.0,
+   "snr": 84.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-23_1757": {
+   "band": "D4",
+   "pred": [
+    216.76,
+    294.5
+   ],
+   "in_tile": true,
+   "centroid": [
+    216.51,
+    294.47
+   ],
+   "offset_px": 0.25,
+   "peak": 255.0,
+   "median": 5.0,
+   "snr": 84.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-11-23_1759": {
+   "band": "D1",
+   "pred": [
+    216.54,
+    294.5
+   ],
+   "in_tile": true,
+   "centroid": [
+    216.18,
+    294.8
+   ],
+   "offset_px": 0.47,
+   "peak": 255.0,
+   "median": 21.0,
+   "snr": 26.3,
+   "detected": true,
+   "absent_elsewhere": true
+  }
+ }
+}

@@ -1,0 +1,232 @@
+{
+ "region": "metis",
+ "summary": {
+  "target": "(9) Metis",
+  "frames_checked": 12,
+  "frames_detected": 12,
+  "median_offset_px": 1.73,
+  "rms_offset_px": 1.74,
+  "max_offset_px": 2.19,
+  "pixscale_arcsec": 1.5388781431334624,
+  "rms_offset_arcsec": 2.7,
+  "movers_confirmed": 12
+ },
+ "frames": {
+  "2025-06-28_0355": {
+   "band": "D6",
+   "pred": [
+    235.65,
+    94.11
+   ],
+   "in_tile": true,
+   "centroid": [
+    233.99,
+    94.79
+   ],
+   "offset_px": 1.79,
+   "peak": 255.0,
+   "median": 5.0,
+   "snr": 168.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-06-28_0357": {
+   "band": "D6",
+   "pred": [
+    235.88,
+    94.11
+   ],
+   "in_tile": true,
+   "centroid": [
+    233.76,
+    94.64
+   ],
+   "offset_px": 2.19,
+   "peak": 255.0,
+   "median": 5.0,
+   "snr": 168.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-06-28_0359": {
+   "band": "D6",
+   "pred": [
+    235.88,
+    94.34
+   ],
+   "in_tile": true,
+   "centroid": [
+    234.21,
+    94.19
+   ],
+   "offset_px": 1.68,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-06-28_0401": {
+   "band": "D3",
+   "pred": [
+    235.88,
+    94.34
+   ],
+   "in_tile": true,
+   "centroid": [
+    234.0,
+    94.0
+   ],
+   "offset_px": 1.91,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 55.5,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-06-30_1752": {
+   "band": "D6",
+   "pred": [
+    273.8,
+    301.14
+   ],
+   "in_tile": true,
+   "centroid": [
+    272.18,
+    302.23
+   ],
+   "offset_px": 1.96,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-06-30_1755": {
+   "band": "D6",
+   "pred": [
+    273.8,
+    301.37
+   ],
+   "in_tile": true,
+   "centroid": [
+    272.35,
+    301.72
+   ],
+   "offset_px": 1.5,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-06-30_1757": {
+   "band": "D6",
+   "pred": [
+    273.8,
+    301.61
+   ],
+   "in_tile": true,
+   "centroid": [
+    272.12,
+    301.22
+   ],
+   "offset_px": 1.73,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-01_0205": {
+   "band": "D6",
+   "pred": [
+    271.31,
+    330.62
+   ],
+   "in_tile": true,
+   "centroid": [
+    269.73,
+    330.65
+   ],
+   "offset_px": 1.58,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-01_0207": {
+   "band": "D6",
+   "pred": [
+    271.31,
+    330.85
+   ],
+   "in_tile": true,
+   "centroid": [
+    269.85,
+    330.57
+   ],
+   "offset_px": 1.48,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-01_1642": {
+   "band": "D6",
+   "pred": [
+    262.91,
+    384.42
+   ],
+   "in_tile": true,
+   "centroid": [
+    261.3,
+    385.06
+   ],
+   "offset_px": 1.73,
+   "peak": 255.0,
+   "median": 4.0,
+   "snr": 169.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-01_1644": {
+   "band": "D3",
+   "pred": [
+    262.91,
+    384.42
+   ],
+   "in_tile": true,
+   "centroid": [
+    261.0,
+    385.0
+   ],
+   "offset_px": 1.99,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 55.5,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-01_1646": {
+   "band": "D3",
+   "pred": [
+    262.91,
+    384.66
+   ],
+   "in_tile": true,
+   "centroid": [
+    262.0,
+    384.0
+   ],
+   "offset_px": 1.12,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 55.5,
+   "detected": true,
+   "absent_elsewhere": true
+  }
+ }
+}

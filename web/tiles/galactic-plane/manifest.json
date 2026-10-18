@@ -1,0 +1,148 @@
+{
+  "region": "galactic-plane",
+  "center": {
+    "ra": 266.4,
+    "dec": -29.0
+  },
+  "size_deg": 1.5,
+  "tile": {
+    "width": 879,
+    "height": 879
+  },
+  "mode": "best-per-epoch",
+  "epochs": [
+    1,
+    2
+  ],
+  "bands": {
+    "D1": {
+      "frames": [
+        "2025-08-30_0634"
+      ],
+      "stretch": {
+        "lo": -0.44515875339508054,
+        "hi": 50.4758070068368,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    },
+    "D2": {
+      "frames": [
+        "2025-08-29_1416",
+        "2026-03-24_1424"
+      ],
+      "stretch": {
+        "lo": -6.318675804138183,
+        "hi": 149.77622949218772,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    },
+    "D3": {
+      "frames": [
+        "2026-03-26_1338"
+      ],
+      "stretch": {
+        "lo": -16.293203353881836,
+        "hi": 237.48103332519895,
+        "a": 0.05,
+        "kind": "asinh",
+        "unit": "MJy / sr"
+      }
+    }
+  },
+  "frames": [
+    {
+      "id": "2025-08-30_0634",
+      "band": "D1",
+      "detector": 1,
+      "epoch": 1,
+      "mjd": 60917.27402,
+      "utc": "2025-08-30T06:34:35Z",
+      "path": "D1/2025-08-30_0634.png",
+      "bkg": 1.037315,
+      "unit": "MJy / sr",
+      "coverage": 1.0,
+      "wavelength_um": 0.925,
+      "bandwidth_um": 0.0237,
+      "wavelength_plane": {
+        "c0": 1.015937871958587,
+        "per_col": -1.2842601883370478e-05,
+        "per_row": -0.0001888536066206368,
+        "rms_um": 0.0016575949093323267,
+        "units": "um"
+      },
+      "source": "epoch1\\SPHEREx-D1.fits"
+    },
+    {
+      "id": "2025-08-29_1416",
+      "band": "D2",
+      "detector": 2,
+      "epoch": 1,
+      "mjd": 60916.59482,
+      "utc": "2025-08-29T14:16:32Z",
+      "path": "D2/2025-08-29_1416.png",
+      "bkg": 8.572552,
+      "unit": "MJy / sr",
+      "coverage": 0.482,
+      "wavelength_um": 1.6556,
+      "bandwidth_um": 0.0397,
+      "wavelength_plane": {
+        "c0": 1.8070167823454697,
+        "per_col": -1.566939440591277e-05,
+        "per_row": -0.00032672803162262713,
+        "rms_um": 0.0014052210530587793,
+        "units": "um"
+      },
+      "source": "epoch1\\SPHEREx-D2.fits"
+    },
+    {
+      "id": "2026-03-24_1424",
+      "band": "D2",
+      "detector": 2,
+      "epoch": 2,
+      "mjd": 61123.60065,
+      "utc": "2026-03-24T14:24:56Z",
+      "path": "D2/2026-03-24_1424.png",
+      "bkg": 6.363935,
+      "unit": "MJy / sr",
+      "coverage": 0.999,
+      "wavelength_um": 1.4802,
+      "bandwidth_um": 0.0364,
+      "wavelength_plane": {
+        "c0": 1.3465718239553062,
+        "per_col": 7.323291283768994e-06,
+        "per_row": 0.00030677443590287364,
+        "rms_um": 0.002814993279479895,
+        "units": "um"
+      },
+      "source": "epoch2\\SPHEREx-D2.fits"
+    },
+    {
+      "id": "2026-03-26_1338",
+      "band": "D3",
+      "detector": 3,
+      "epoch": 2,
+      "mjd": 61125.56844,
+      "utc": "2026-03-26T13:38:32Z",
+      "path": "D3/2026-03-26_1338.png",
+      "bkg": 20.290791,
+      "unit": "MJy / sr",
+      "coverage": 0.999,
+      "wavelength_um": 2.1019,
+      "bandwidth_um": 0.0526,
+      "wavelength_plane": {
+        "c0": 1.9194010696951613,
+        "per_col": 8.70772136494797e-06,
+        "per_row": 0.0004190201733344928,
+        "rms_um": 0.0035069565106180646,
+        "units": "um"
+      },
+      "source": "epoch2\\SPHEREx-D3.fits"
+    }
+  ],
+  "intensity_note": "pixel/255 = y ; flux above frame background = lo + (hi-lo) * a*sinh(y*asinh(1/a)) ; add frame 'bkg' for the level that was subtracted. Values are only approximate (8-bit).",
+  "credit": "SPHEREx data via NASA/IPAC IRSA. Official acknowledgement text: see README."
+}

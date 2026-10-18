@@ -1,0 +1,88 @@
+{
+ "region": "massalia",
+ "summary": {
+  "target": "(20) Massalia",
+  "frames_checked": 4,
+  "frames_detected": 4,
+  "median_offset_px": 0.95,
+  "rms_offset_px": 1.04,
+  "max_offset_px": 1.45,
+  "pixscale_arcsec": 1.5384615384615385,
+  "rms_offset_arcsec": 1.6,
+  "movers_confirmed": 0
+ },
+ "frames": {
+  "2025-12-09_1155": {
+   "band": "D4",
+   "pred": [
+    118.24,
+    115.69
+   ],
+   "in_tile": true,
+   "centroid": [
+    117.46,
+    115.41
+   ],
+   "offset_px": 0.83,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-12-09_1157": {
+   "band": "D4",
+   "pred": [
+    117.07,
+    116.16
+   ],
+   "in_tile": true,
+   "centroid": [
+    116.72,
+    116.62
+   ],
+   "offset_px": 0.58,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-12-09_1159": {
+   "band": "D4",
+   "pred": [
+    115.9,
+    116.63
+   ],
+   "in_tile": true,
+   "centroid": [
+    115.48,
+    117.62
+   ],
+   "offset_px": 1.08,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-12-09_1202": {
+   "band": "D4",
+   "pred": [
+    114.73,
+    117.33
+   ],
+   "in_tile": true,
+   "centroid": [
+    113.62,
+    118.27
+   ],
+   "offset_px": 1.45,
+   "peak": 255.0,
+   "median": 2.0,
+   "snr": 170.6,
+   "detected": true,
+   "absent_elsewhere": null
+  }
+ }
+}

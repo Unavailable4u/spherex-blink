@@ -1,0 +1,250 @@
+{
+ "region": "astraea",
+ "summary": {
+  "target": "(5) Astraea",
+  "frames_checked": 13,
+  "frames_detected": 13,
+  "median_offset_px": 1.62,
+  "rms_offset_px": 1.73,
+  "max_offset_px": 2.45,
+  "pixscale_arcsec": 1.5367164179104476,
+  "rms_offset_arcsec": 2.7,
+  "movers_confirmed": 10
+ },
+ "frames": {
+  "2025-07-28_2227": {
+   "band": "D6",
+   "pred": [
+    423.51,
+    109.58
+   ],
+   "in_tile": true,
+   "centroid": [
+    421.8,
+    111.33
+   ],
+   "offset_px": 2.45,
+   "peak": 255.0,
+   "median": 9.0,
+   "snr": 83.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-28_2229": {
+   "band": "D3",
+   "pred": [
+    423.51,
+    109.81
+   ],
+   "in_tile": true,
+   "centroid": [
+    422.06,
+    109.55
+   ],
+   "offset_px": 1.48,
+   "peak": 255.0,
+   "median": 7.0,
+   "snr": 41.8,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-30_0526": {
+   "band": "D3",
+   "pred": [
+    375.97,
+    258.1
+   ],
+   "in_tile": true,
+   "centroid": [
+    374.55,
+    258.7
+   ],
+   "offset_px": 1.55,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 55.5,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-30_0528": {
+   "band": "D3",
+   "pred": [
+    375.97,
+    258.33
+   ],
+   "in_tile": true,
+   "centroid": [
+    374.0,
+    259.0
+   ],
+   "offset_px": 2.08,
+   "peak": 255.0,
+   "median": 8.0,
+   "snr": 41.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-30_0530": {
+   "band": "D6",
+   "pred": [
+    375.97,
+    258.57
+   ],
+   "in_tile": true,
+   "centroid": [
+    374.29,
+    258.5
+   ],
+   "offset_px": 1.69,
+   "peak": 255.0,
+   "median": 9.0,
+   "snr": 83.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-30_0532": {
+   "band": "D3",
+   "pred": [
+    375.75,
+    258.8
+   ],
+   "in_tile": true,
+   "centroid": [
+    374.14,
+    257.74
+   ],
+   "offset_px": 1.93,
+   "peak": 255.0,
+   "median": 7.0,
+   "snr": 55.8,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-31_0237": {
+   "band": "D6",
+   "pred": [
+    330.04,
+    361.41
+   ],
+   "in_tile": true,
+   "centroid": [
+    328.52,
+    362.4
+   ],
+   "offset_px": 1.82,
+   "peak": 232.0,
+   "median": 9.0,
+   "snr": 50.1,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-31_0240": {
+   "band": "D3",
+   "pred": [
+    330.04,
+    361.64
+   ],
+   "in_tile": true,
+   "centroid": [
+    328.85,
+    361.93
+   ],
+   "offset_px": 1.22,
+   "peak": 255.0,
+   "median": 7.0,
+   "snr": 83.6,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-31_0242": {
+   "band": "D6",
+   "pred": [
+    329.82,
+    361.88
+   ],
+   "in_tile": true,
+   "centroid": [
+    328.38,
+    361.63
+   ],
+   "offset_px": 1.46,
+   "peak": 255.0,
+   "median": 9.0,
+   "snr": 55.3,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-07-31_0244": {
+   "band": "D3",
+   "pred": [
+    329.82,
+    361.88
+   ],
+   "in_tile": true,
+   "centroid": [
+    328.48,
+    361.64
+   ],
+   "offset_px": 1.35,
+   "peak": 255.0,
+   "median": 6.0,
+   "snr": 84.0,
+   "detected": true,
+   "absent_elsewhere": true
+  },
+  "2025-08-01_1610": {
+   "band": "D1",
+   "pred": [
+    222.26,
+    547.43
+   ],
+   "in_tile": true,
+   "centroid": [
+    220.0,
+    547.0
+   ],
+   "offset_px": 2.3,
+   "peak": 255.0,
+   "median": 104.0,
+   "snr": 50.9,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-08-01_1612": {
+   "band": "D1",
+   "pred": [
+    222.26,
+    547.66
+   ],
+   "in_tile": true,
+   "centroid": [
+    221.0,
+    547.0
+   ],
+   "offset_px": 1.42,
+   "peak": 255.0,
+   "median": 103.0,
+   "snr": 51.3,
+   "detected": true,
+   "absent_elsewhere": null
+  },
+  "2025-08-01_1614": {
+   "band": "D1",
+   "pred": [
+    222.03,
+    547.9
+   ],
+   "in_tile": true,
+   "centroid": [
+    221.0,
+    548.0
+   ],
+   "offset_px": 1.04,
+   "peak": 255.0,
+   "median": 19.0,
+   "snr": 15.9,
+   "detected": true,
+   "absent_elsewhere": null
+  }
+ }
+}

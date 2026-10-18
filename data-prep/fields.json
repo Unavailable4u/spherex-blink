@@ -10,23 +10,168 @@
   "fields": [
     {
       "region": "pallas-6mo",
-      "ra": 303.443371, "dec": 2.665365, "size": 1.749,
+      "ra": 303.443371,
+      "dec": 2.665365,
+      "size": 1.749,
       "title": "Pallas patch, six months apart",
       "blurb": "The same patch of sky in two survey passes six months apart. Stars stay put; a distant body would shift by parallax."
     },
-    {"region": "vesta",   "target": "4",  "target_name": "(4) Vesta",   "title": "Vesta field",
-     "blurb": "The second most massive asteroid, caught drifting between SPHEREx visits."},
-    {"region": "ceres",   "target": "1",  "target_name": "(1) Ceres",   "title": "Ceres field",
-     "blurb": "The largest object in the asteroid belt, moving against the background stars."},
-    {"region": "juno",    "target": "3",  "target_name": "(3) Juno",    "title": "Juno field",
-     "blurb": "A bright main-belt asteroid caught in several SPHEREx frames."},
-    {"region": "iris",    "target": "7",  "target_name": "(7) Iris",    "title": "Iris field",
-     "blurb": "A bright main-belt asteroid caught in several SPHEREx frames."},
-    {"region": "hygiea",  "target": "10", "target_name": "(10) Hygiea", "title": "Hygiea field",
-     "blurb": "The fourth largest asteroid, drifting across the field."},
-    {"region": "eunomia", "target": "15", "target_name": "(15) Eunomia","title": "Eunomia field",
-     "blurb": "The largest stony asteroid, caught moving between frames."},
-    {"region": "psyche",  "target": "16", "target_name": "(16) Psyche", "title": "Psyche field",
-     "blurb": "A metal-rich asteroid and NASA mission target, caught moving between frames."}
+    {
+      "region": "vesta",
+      "target": "4",
+      "target_name": "(4) Vesta",
+      "title": "Vesta field",
+      "blurb": "The second most massive asteroid, caught drifting between SPHEREx visits."
+    },
+    {
+      "region": "ceres",
+      "target": "1",
+      "target_name": "(1) Ceres",
+      "title": "Ceres field",
+      "blurb": "The largest object in the asteroid belt, moving against the background stars."
+    },
+    {
+      "region": "juno",
+      "target": "3",
+      "target_name": "(3) Juno",
+      "title": "Juno field",
+      "blurb": "A bright main-belt asteroid caught in several SPHEREx frames."
+    },
+    {
+      "region": "iris",
+      "target": "7",
+      "target_name": "(7) Iris",
+      "title": "Iris field",
+      "blurb": "A bright main-belt asteroid caught in several SPHEREx frames."
+    },
+    {
+      "region": "hygiea",
+      "target": "10",
+      "target_name": "(10) Hygiea",
+      "title": "Hygiea field",
+      "blurb": "The fourth largest asteroid, drifting across the field."
+    },
+    {
+      "region": "eunomia",
+      "target": "15",
+      "target_name": "(15) Eunomia",
+      "title": "Eunomia field",
+      "blurb": "The largest stony asteroid, caught moving between frames."
+    },
+    {
+      "region": "psyche",
+      "target": "16",
+      "target_name": "(16) Psyche",
+      "title": "Psyche field",
+      "blurb": "A metal-rich asteroid and NASA mission target, caught moving between frames."
+    },
+    {
+      "region": "astraea",
+      "target": "5",
+      "target_name": "(5) Astraea",
+      "title": "Astraea field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "hebe",
+      "target": "6",
+      "target_name": "(6) Hebe",
+      "title": "Hebe field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "flora",
+      "target": "8",
+      "target_name": "(8) Flora",
+      "title": "Flora field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "metis",
+      "target": "9",
+      "target_name": "(9) Metis",
+      "title": "Metis field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "parthenope",
+      "target": "11",
+      "target_name": "(11) Parthenope",
+      "title": "Parthenope field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "victoria",
+      "target": "12",
+      "target_name": "(12) Victoria",
+      "title": "Victoria field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "irene",
+      "target": "14",
+      "target_name": "(14) Irene",
+      "title": "Irene field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "melpomene",
+      "target": "18",
+      "target_name": "(18) Melpomene",
+      "title": "Melpomene field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "fortuna",
+      "target": "19",
+      "target_name": "(19) Fortuna",
+      "title": "Fortuna field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "massalia",
+      "target": "20",
+      "target_name": "(20) Massalia",
+      "title": "Massalia field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "amphitrite",
+      "target": "29",
+      "target_name": "(29) Amphitrite",
+      "title": "Amphitrite field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "davida",
+      "target": "511",
+      "target_name": "(511) Davida",
+      "title": "Davida field",
+      "blurb": "A main-belt asteroid caught moving against the background stars in several SPHEREx frames."
+    },
+    {
+      "region": "north-ecliptic-pole",
+      "ra": 270.0,
+      "dec": 66.56,
+      "size": 1.5,
+      "title": "North ecliptic pole",
+      "blurb": "SPHEREx revisits the ecliptic poles far more often than the rest of the sky, so this patch has many epochs."
+    },
+    {
+      "region": "south-ecliptic-pole",
+      "ra": 90.0,
+      "dec": -66.56,
+      "size": 1.5,
+      "title": "South ecliptic pole",
+      "blurb": "The southern deep field: the most frequently revisited part of the SPHEREx sky."
+    },
+    {
+      "region": "galactic-plane",
+      "ra": 266.4,
+      "dec": -29.0,
+      "size": 1.5,
+      "title": "Galactic centre region",
+      "blurb": "A crowded star field toward the Galactic centre, a hard test for spotting anything that moves."
+    }
   ]
 }
