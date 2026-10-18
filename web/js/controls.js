@@ -19,7 +19,7 @@
   const dur = (days) => { const h = days * 24; return h < 1 ? `${Math.round(h * 60)} min` : h < 48 ? `${h.toFixed(h < 10 ? 1 : 0)} h` : days < 60 ? `${days.toFixed(days < 10 ? 1 : 0)} d` : `${(days / 30.44).toFixed(1)} months`; };
 
   let toastTimer = 0;
-  function toast(msg, ms = 4200) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), ms); }
+  function toast(msg, ms = 4200) { const t = $("toast"); t.textContent = msg; t.style.bottom = ($("hud-bottom").offsetHeight + 24) + "px"; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), ms); }
   function problem(msg) { const l = $("loading"); l.hidden = false; l.classList.add("err"); l.textContent = msg; }
   function busy(msg) { const l = $("loading"); l.classList.remove("err"); if (msg) { l.hidden = false; l.textContent = msg; } else l.hidden = true; }
 
@@ -289,7 +289,8 @@
     const ns = Math.max(1, Math.min(14, view.s * factor));
     view.tx = mx - (mx - view.tx) * (ns / view.s); view.ty = my - (my - view.ty) * (ns / view.s); view.s = ns; applyView();
   }
-  viewer.addEventListener("wheel", (e) => { e.preventDefault(); const r = viewer.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.25 : 0.8); }, { passive: false });
+  const inSolar = () => document.body.classList.contains("view-solar");        // the solar-system view covers the sky: sky zoom keys do nothing there
+  viewer.addEventListener("wheel", (e) => { if (inSolar()) return; e.preventDefault(); const r = viewer.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.25 : 0.8); }, { passive: false });
 
   const ptrs = new Map(); let down = null, pinch = null;
   const centre = () => { const a = [...ptrs.values()]; return { x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2, d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) }; };
@@ -389,10 +390,12 @@
       }
       const f = S.frames[S.idx], B = S.frames[S.ref];
       x.fillStyle = "#ece6d5"; x.font = "italic 22px 'CMU Serif', Georgia, serif";
-      const head = `${(S.meta && S.meta.title) || S.region} \u00b7 SPHEREx ${S.band} ${lamTxt(f)} \u00b7 ${fmtTime(f)}` + (S.mode === "overlay" && B ? `  +  ${fmtTime(B)} (overlay: A amber, B cyan)` : "");
+      const head = solar ? `Solar system on ${$("bdDate").textContent || $("orDate").textContent} \u00b7 top-down, square-root distance scale`
+        : `${(S.meta && S.meta.title) || S.region} \u00b7 SPHEREx ${S.band} ${lamTxt(f)} \u00b7 ${fmtTime(f)}` + (S.mode === "overlay" && B ? `  +  ${fmtTime(B)} (overlay: A amber, B cyan)` : "");
       x.fillText(head, 14, H + 27); x.fillStyle = "#8e8a7c"; x.font = "italic 16px 'CMU Serif', Georgia, serif";
-      x.fillText((S.meta && S.meta.kind === "simulated" ? "SIMULATED DATA. " : "") + "Data: NASA/JPL-Caltech SPHEREx via IRSA/IPAC. Made with the SPHEREx Blink Comparator.", 14, H + 52);
-      c.toBlob((b) => { const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `spherex-${S.region}-${S.band}-${f.id}.png`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }, "image/png");
+      x.fillText(solar ? "Planet positions: JPL Horizons. Made with the SPHEREx Blink Comparator."
+        : (S.meta && S.meta.kind === "simulated" ? "SIMULATED DATA. " : "") + "Data: NASA/JPL-Caltech SPHEREx via IRSA/IPAC. Made with the SPHEREx Blink Comparator.", 14, H + 52);
+      c.toBlob((b) => { const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = solar ? `spherex-solar-system-${($("bdDate").textContent || "view")}.png` : `spherex-${S.region}-${S.band}-${f.id}.png`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }, "image/png");
     } catch (e) { toast("Could not save the image: " + e.message); }
   }
   async function copyLink() {
@@ -429,6 +432,7 @@
     else if (k === "b" || k === "B") $("setRef").click();
     else if (k === "o" || k === "O") toggleOverlay();
     else if (k === "x" || k === "X") $("swapAB").click();
+    else if ((k === "+" || k === "=" || k === "-" || k === "_" || k === "0") && inSolar()) return;
     else if (k === "+" || k === "=") zoomAt(viewer.clientWidth / 2, viewer.clientHeight / 2, 1.4);
     else if (k === "-" || k === "_") zoomAt(viewer.clientWidth / 2, viewer.clientHeight / 2, 1 / 1.4);
     else if (k === "0") resetView();

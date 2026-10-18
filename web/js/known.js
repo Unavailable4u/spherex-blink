@@ -29,6 +29,23 @@
         `<text x="${p.col + 13 * k}" y="${p.row - 10 * k}" font-size="${14.5 * k}" fill="#bff3fb" stroke="#000" stroke-width="${3 * k}" paint-order="stroke">${NAME(b)}</text>`;
     }
     g.innerHTML = h; svg.appendChild(g);
+    keepLabelsInside(g, S, k);
+  }
+
+  // A name sits to the upper right of its ring. Near the right or top edge that would clip it (or push it under the
+  // top-right buttons), so flip it to the left of the ring, or under it. Measured from the real text, not guessed.
+  function keepLabelsInside(g, S, k) {
+    const A = window.App, w = S.wcs.width, h = S.wcs.height, s = A.view.s, W = $("viewer").clientWidth, H = $("viewer").clientHeight;
+    const left = -A.view.tx / s / W * w, right = (W - A.view.tx) / s / W * w, top = -A.view.ty / s / H * h, bottom = (H - A.view.ty) / s / H * h, m = 8 * k;
+    g.querySelectorAll("text").forEach((t) => {
+      let b; try { b = t.getBBox(); } catch (e) { return; }
+      const x = +t.getAttribute("x"), y = +t.getAttribute("y");
+      if (b.x + b.width > right - m) { t.setAttribute("text-anchor", "end"); t.setAttribute("x", x - 30 * k); }
+      if (b.y < top + m) t.setAttribute("y", y + 34 * k);
+      if (b.y + b.height > bottom - m) t.setAttribute("y", y - 8 * k);
+      const c = t.getBBox();
+      if (c.x < left + m) { t.setAttribute("text-anchor", "start"); t.setAttribute("x", left + m); }
+    });
   }
 
   document.addEventListener("sx:frame", render);

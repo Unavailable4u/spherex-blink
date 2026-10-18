@@ -57,13 +57,14 @@
     scaleBar(w, W, s);
   }
 
-  // scale bar: pick the longest round angle that fits in ~130 screen px
+  // scale bar: pick the longest round angle that fits in ~130 screen px (less on a small picture)
   function scaleBar(w, W, s) {
     const cx = w.width / 2, cy = w.height / 2, p0 = w.toSky(cx, cy), p1 = w.toSky(cx + 1, cy);
     const o = WCS.offset(p0.ra, p0.dec, p1.ra, p1.dec), asPerTile = Math.hypot(o.e, o.n), pxPerTile = W / w.width * s;
     const steps = [1, 2, 5, 10, 20, 30, 60, 120, 300, 600, 1200, 1800, 3600, 7200];
     let best = steps[0];
-    for (const v of steps) if (v / asPerTile * pxPerTile <= 130) best = v;
+    const maxPx = Math.max(64, Math.min(130, viewer.clientWidth * 0.26));       // a quarter of a small picture at most
+    for (const v of steps) if (v / asPerTile * pxPerTile <= maxPx) best = v;
     const label = best >= 3600 ? `${best / 3600}\u00b0` : best >= 60 ? `${best / 60}\u2032` : `${best}\u2033`;
     $("scale").innerHTML = `<i style="width:${best / asPerTile * pxPerTile}px"></i><span>${label}</span>`;
   }

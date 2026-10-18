@@ -10,15 +10,15 @@
     { t: "A patch of real sky", x: "These are real SPHEREx images of one patch of sky, taken on different days. Almost everything in them is a star, and stars do not move. One thing does.",
       go: async () => { await ensure(); window.openPane("inspect"); App().setMode("blink"); } },
     { t: "Blink it", x: "The tool flips between two frames. Stars stay put; one dot jumps. That is the trick Clyde Tombaugh used to find Pluto in 1930.",
-      go: async () => { await ensure(); if (!App().S.frames.length) return; if (!isBlinking()) App().toggleBlink(); } },
+      keep: ["blink"], go: async () => { await ensure(); if (!App().S.frames.length) return; if (!isBlinking()) App().toggleBlink(); } },
     { t: "See both positions at once", x: "Overlay paints the earlier frame amber and the later one cyan. A star is white, a mover splits into an amber dot and a cyan dot.",
-      go: async () => { await ensure(); if (isBlinking()) App().toggleBlink(); App().setMode("overlay"); } },
+      keep: ["overlayBtn"], go: async () => { await ensure(); if (isBlinking()) App().toggleBlink(); App().setMode("overlay"); } },
     { t: "Click the mover", x: "Clicking snaps to the source and runs a mover check: is it at the same spot in the other frames? This one is gone from the others, so it moves. It is the asteroid (2) Pallas.",
       go: async () => { await ensure(); App().setMode("blink"); selectTarget(); window.openPane("inspect"); } },
     { t: "What would Planet X do?", x: "A distant planet moves only by parallax, as the Earth moves. Over these days that is a few pixels; over six months it is more than a hundred. Measure a mover and the tool tells you which kind it is.",
       go: async () => { await ensure(); window.openPane("planetx"); } },
     { t: "Your turn", x: "Open the Context tab and untick Known objects to hunt blind. Flag what you find, then export your flags.",
-      go: async () => { await ensure(); window.openPane("inspect"); } },
+      keep: ["showKnown", "tabs"], go: async () => { await ensure(); window.openPane("inspect"); } },
   ];
   const isBlinking = () => Renderer.blinking();
 
@@ -39,7 +39,16 @@
     const s = STEPS[i]; $("tourTitle").textContent = s.t; $("tourText").textContent = s.x;
     $("tourDots").innerHTML = STEPS.map((_, k) => `<i class="${k === i ? "on" : k < i ? "done" : ""}"></i>`).join("");
     $("tourBack").disabled = i === 0; $("tourNext").textContent = i === STEPS.length - 1 ? "Finish" : "Next";
+    place(s.keep);
     try { await s.go(); } catch (e) { /* the tour must never break the app */ }
+    place(s.keep);
+  }
+  // The card sits bottom-left. On a short screen that can land on the very control the step is talking about,
+  // so if it would cover one of the step's `keep` controls it moves to the top-left instead (the other corner of the rail).
+  function place(keep = []) {
+    card.classList.remove("up");
+    const c = card.getBoundingClientRect(), covers = () => { const k = card.getBoundingClientRect(); return keep.some((id) => { const e = $(id); if (!e) return false; const r = e.getBoundingClientRect(); return r.width && r.left < k.right && r.right > k.left && r.top < k.bottom && r.bottom > k.top; }); };
+    if (c.width && covers()) { card.classList.add("up"); if (covers()) card.classList.remove("up"); }
   }
   function end() { running = false; step = -1; card.hidden = true; document.body.classList.remove("touring"); if (isBlinking()) App().toggleBlink(); }
 

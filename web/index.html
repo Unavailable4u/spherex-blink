@@ -91,16 +91,31 @@
             <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
           <canvas id="orBig"></canvas>
-          <div id="viewtabs" class="seg glass" hidden><button id="viewSky" class="on">Sky</button><button id="viewSolar">Solar system</button></div>
-          <div id="plate" class="glass" aria-hidden="true">
-            <svg id="compass" viewBox="0 0 34 34"></svg>
-            <div id="scale"></div>
+          <!-- HUD: two flex bars (top, bottom). Everything that floats over the picture lives in one of them,
+               so the pieces share the row instead of competing for the same pixels. -->
+          <div id="hud-top">
+            <div class="hud-l">
+              <div id="loading" class="glass" hidden>Loading frames&hellip;</div>
+              <div id="simBanner" class="glass" hidden><b>Simulated data.</b> Not from SPHEREx: a practice field.</div>
+              <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>O</kbd> overlay &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; click to inspect</div>
+            </div>
+            <div class="hud-r">
+              <div id="viewtabs" class="seg glass" hidden><button id="viewSky" class="on">Sky</button><button id="viewSolar">Solar system</button></div>
+              <div id="abKey" class="glass" aria-hidden="true"><i class="a"></i>A amber <i class="b"></i>B cyan</div>
+            </div>
           </div>
-          <div id="bigDate" hidden></div>
-          <div id="simBanner" class="glass" hidden><b>Simulated data.</b> Not from SPHEREx: a practice field.</div>
-          <div id="loading" class="glass" hidden>Loading frames&hellip;</div>
-          <div id="coach" class="glass"><kbd>Space</kbd> blink &middot; <kbd>O</kbd> overlay &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; click to inspect</div>
-          <div id="viewtools"><button id="copyLink" class="glass" title="Copy a link to this exact view">Copy link</button><button id="saveImg" class="glass" title="Save this view as a PNG with caption">Save image</button><button id="zoomReset" class="glass">Reset view</button></div>
+          <div id="hud-bottom">
+            <div id="plate" class="glass" aria-hidden="true">
+              <svg id="compass" viewBox="0 0 34 34"></svg>
+              <div id="scale"></div>
+            </div>
+            <div id="bigDate" class="glass" hidden><span id="bdDate"></span><span id="bdSub">top-down view &middot; square-root distance scale</span></div>
+            <div id="viewtools" role="toolbar" aria-label="View tools">
+              <button id="copyLink" class="glass tool" title="Copy a link to this exact view" aria-label="Copy link"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.7 9.3a2.7 2.7 0 0 0 3.8 0l2.3-2.3a2.7 2.7 0 0 0-3.8-3.8l-.8.8"/><path d="M9.3 6.7a2.7 2.7 0 0 0-3.8 0L3.2 9a2.7 2.7 0 0 0 3.8 3.8l.8-.8"/></svg><span>Copy link</span></button>
+              <button id="saveImg" class="glass tool" title="Save this view as a PNG with caption" aria-label="Save image"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.2v7.4M4.8 6.7 8 9.9l3.2-3.2M2.8 12.8h10.4"/></svg><span>Save image</span></button>
+              <button id="zoomReset" class="glass tool" title="Zoom back out to the whole field (0)" aria-label="Reset view"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 5.8V2.5h3.3M10.2 2.5h3.3v3.3M13.5 10.2v3.3h-3.3M5.8 13.5H2.5v-3.3"/></svg><span>Reset view</span></button>
+            </div>
+          </div>
           <div id="toast" role="status" aria-live="polite"></div>
         </div>
       </div>
