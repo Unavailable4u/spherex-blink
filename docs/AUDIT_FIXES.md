@@ -6,7 +6,7 @@
 |---|---|---|
 | 1 | Not deployed | **Ready, needs one click from you.** `.github/workflows/pages.yml` deploys `web/` (11 MB, previews excluded) after unit tests. Enable *Settings → Pages → Source: GitHub Actions*, push to `main`. Tested serving from a sub-path with zero failing requests. |
 | 2 | Acknowledgement TODO | **Credit line and DOI (10.26131/IRSA652) are in the app footer, About dialog and README**, from one file `web/assets/acknowledgement.txt`. It holds a faithful paraphrase: **paste IRSA's exact required sentence into that file before submitting.** |
-| 3 | Only one field | **Everything except the data is done.** `build_field.py` builds a field in one command, and the app is genuinely multi-epoch (pass switcher, cross-pass best pair, exact parallax for any baseline). Needs internet to IRSA: see `docs/ADDING_FIELDS.md` (first step: a second pass for the Pallas patch, six months apart). |
+| 3 | Only one field | **Since fixed:** 20 real fields now ship, including a three-pass six-month patch (see README). Original note: everything except the data was done. `build_field.py` builds a field in one command, and the app is genuinely multi-epoch (pass switcher, cross-pass best pair, exact parallax for any baseline). Needs internet to IRSA: see `docs/ADDING_FIELDS.md` (first step: a second pass for the Pallas patch, six months apart). |
 | 4 | Pallas overlay might not land on a mover | **False alarm, now proven.** `verify_target.py`: found in 13/13 frames, rms offset 0.57 px (3.5″), gone from that pixel in the other frames 13/13. Shown in the Context tab. The streak the audit saw is something else. |
 | 5 | Frames in a band at different wavelengths | **Fixed.** Every frame shows its wavelength; a warning appears above 8% difference; *Best pair* favours similar wavelength. The D4 frame with no header wavelength gets an estimate from its fitted plane, shown with ≈. |
 | 6 | Patchy coverage, orphan D6 | **Fixed.** Blink uses the shared footprint only (toggle), no-data is a hatch instead of black wedges, and the overlap % is shown. Orphan `D6` tile removed. D5 still has only two frames: that is the data. |
@@ -30,6 +30,11 @@
 * **Console noise:** optional files are no longer probed on fields that lack them (no 404s).
 * **Extras:** shareable URL (field, band, frame pair), Save image (PNG with caption and credits), blink rate, amber/cyan overlay, pass switcher, guided tour, unit tests (WCS vs astropy, parallax), browser tests (31 checks).
 
-## Not done (needs access I do not have from here)
+## Still open (as of the final data build)
 
-IRSA / JPL / CDS were not reachable from the build sandbox, so no new SPHEREx data was downloaded and `build_field.py` has been dry-run and flag-checked but not run live. The app has not been tested on iOS Safari or Firefox (it was tested in headless Chromium at 390, 820, 1024, 1100, 1280, 1440 and 1920 px wide).
+* Enable GitHub Pages (Settings -> Pages -> Source: GitHub Actions) and confirm the live link.
+* Paste IRSA's exact SPHEREx acknowledgement sentence into `web/assets/acknowledgement.txt` (`node tests/run.js` warns until it is there).
+* Fill `web/js/config.js` with Firebase keys for shared flags.
+* Not tested on iOS Safari or Firefox (headless Chromium only).
+* Ceres validates 7/8 detected but 0/8 "gone elsewhere" despite moving ~219 px; not yet explained.
+* QR3 data (September 2026) is not used yet.

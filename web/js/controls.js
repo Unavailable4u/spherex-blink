@@ -93,6 +93,7 @@
     c.hidden = false;
     $("valOut").innerHTML = `<p>The ephemeris position of <b>${esc(v.target)}</b> was searched for a real source in every frame, so the orange overlay is checked against the pixels, not just drawn.</p>` +
       `<div class="valnum"><div><b>${v.frames_detected}/${v.frames_checked}</b><span>frames with a source on the predicted spot</span></div><div><b>${(+v.rms_offset_px).toFixed(2)} px</b><span>rms offset, about ${Math.round(v.rms_offset_arcsec)}\u2033</span></div><div><b>${v.movers_confirmed}/${v.frames_checked}</b><span>frames where it is gone from that pixel in the other frames</span></div></div>` +
+      (v.movers_confirmed < v.frames_detected ? `<p class="small">Not every frame can show it gone from that pixel: the check needs the asteroid to have moved clear of its other positions, which short windows and crowded fields may not allow. The detections above are the stronger evidence.</p>` : "") +
       `<span class="small">Repeat it with <span class="tt">data-prep/verify_target.py</span>. This scatter is also the error bar used in the Planet X lab.</span>`;
   }
 

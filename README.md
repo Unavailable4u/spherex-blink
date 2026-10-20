@@ -12,7 +12,7 @@ Open it, press **Tour**, and the app walks through the whole idea in about a min
 | Challenge requirement | What the app does | Where |
 |---|---|---|
 | **Multi-epoch comparison** (blink / time-lapse) | Blink two frames at 1-5 Hz, an amber/cyan **overlay** of both, a time bar with crossfade, a *Best pair* picker that favours frames days apart with similar wavelength and a big shared footprint, and a *pass* switcher for survey passes six months apart | left rail, time bar |
-| **Spectral band navigation** | Band plates D1, D2, D4, D5 with wavelength range and frame count; each frame is labelled with its wavelength; warns when two frames differ too much in colour to compare brightness | left rail |
+| **Spectral band navigation** | Band plates for the detectors each field carries (D1-D6, 2 to 6 per field) with wavelength range and frame count; each frame is labelled with its wavelength; warns when two frames differ too much in colour to compare brightness | left rail |
 | **Interactive data and metadata** | Click a source: it snaps to the centroid, then shows RA/Dec (decimal and sexagesimal), galactic and ecliptic coordinates, pixel, band, wavelength at that pixel, frame time and intensity. A **mover check** tells you whether it stays put in the other frames | Inspect tab |
 | **Crowdsourced anomaly flagging** | Flag as asteroid / comet / planet candidate with a note; the flag is cross-matched against the known object, listed, shown as a pin, and exportable as CSV or JSON. Shared through Firestore when configured (see [shared flags](docs/FLAGS_SETUP.md)); the panel always states whether flags are shared or only in this browser | Inspect tab |
 
@@ -23,14 +23,18 @@ more signal a second pass six months later would add.
 
 ## What is real, what is simulated, what is limited
 
-* **Real:** the *Pallas field* is 13 SPHEREx Quick Release 2 images (detectors D1, D2, D4, D5) from 6-14 Oct 2025, reprojected onto one sky grid.
-  The asteroid (2) Pallas really moves across it.
-* **Checked, not drawn:** `data-prep/verify_target.py` looks for a real source at Pallas's ephemeris position in every frame.
-  Result: found in **13/13** frames, rms offset **0.57 px (3.5 arcsec)**, and gone from that pixel in the other frames in 13/13.
-  The numbers are shown in the Context tab and set the error bar in the Planet X lab.
+* **Real:** 20 fields built from SPHEREx Quick Release 2 (QR2) spectral images, 219 frames in all, each reprojected onto one sky grid per field:
+  16 asteroid fields (Pallas, Vesta, Ceres, Juno, Iris, Hygiea, Eunomia, Psyche, Astraea, Hebe, Metis, Parthenope, Victoria, Fortuna, Massalia, Davida),
+  the *Pallas patch, six months apart* (three survey passes: Apr 2025, Oct 2025, Apr 2026), the north and south ecliptic poles and a Galactic centre patch.
+  The original *Pallas field* (13 frames, 6-14 Oct 2025) is the cleanest demo: the asteroid really moves across it.
+* **Checked, not drawn:** `data-prep/verify_target.py` looks for a real source at each target's ephemeris position in every frame.
+  Across the 16 asteroid fields it finds the object in **148 of 150** frames. For Pallas it is **13/13**, rms offset **0.57 px (3.5 arcsec)**, and gone from that pixel in the other frames in 13/13.
+  The stricter "also gone from that pixel elsewhere" check passes in 107 of 150 frames overall: Juno, Hebe, Hygiea and Massalia move only about 2 to 11 pixels in their windows, so they cannot pass it, and Ceres passes 0/8 despite moving far (not yet explained).
+  The numbers are shown in the Context tab; Pallas sets the error bar in the Planet X lab.
 * **Simulated:** the *Practice field* has planted movers and two passes 90 days apart. It is badged **simulated** everywhere (menu, banner, saved images).
-* **Prototype, not a discovery tool:** one field is shipped. The pipeline builds more with one command ([adding fields](docs/ADDING_FIELDS.md)). Nothing here claims a detection:
+* **Prototype, not a discovery tool:** 21 fields are shipped (20 real, 1 simulated), a sample of the sky rather than the survey. Only the Pallas patch has a real six-month baseline over three passes; the ecliptic poles and Galactic centre have two passes but few frames (2 to 4); the asteroid fields span a few days to two weeks. The pipeline builds more with one command ([adding fields](docs/ADDING_FIELDS.md)); newer Quick Release 3 data (September 2026) is not used yet. Nothing here claims a detection:
   a flag is a candidate for follow-up and the distance fit says *candidate*.
+* **Few colours per field:** each field keeps 2 to 6 of the detectors D1-D6, and each frame samples part of a detector, so you see a handful of SPHEREx's 102 channels.
 * **8-bit tiles:** intensity readouts are approximate (saturated cores are marked as lower limits). Frames in one band sit at different wavelengths, so judge movers by position, not brightness.
 * **Cosmic rays:** single-event hits look like crisp little blobs. The mover check says "could be a cosmic ray" instead of calling them movers.
 
@@ -166,10 +170,10 @@ firebase/              Firestore security rules
 
 ## Data and acknowledgement
 
-SPHEREx images come from the NASA/IPAC Infrared Science Archive, Quick Release 2 (DOI 10.26131/IRSA652). The app shows its credit line in the footer and in
+SPHEREx images come from the NASA/IPAC Infrared Science Archive (IRSA), Quick Release 2 (DOI 10.26131/IRSA652). The app shows its credit line in the footer and in
 **About**. That text lives in one file, `web/assets/acknowledgement.txt`: it currently holds a faithful paraphrase, so **before you submit, open IRSA's
 [SPHEREx page](https://irsa.ipac.caltech.edu/Missions/spherex.html) and paste the exact required acknowledgement sentence into that file** (the README and the
-app both pick it up). Other data: DSS2, 2MASS and WISE via CDS hips2fits; ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited in the app.
+app both pick it up). Other data: DSS2 (STScI, mirrored at IRSA), 2MASS (UMass and IPAC/Caltech, funded by NASA and NSF) and WISE (UCLA and JPL/Caltech, funded by NASA) via CDS hips2fits; exact wording for 2MASS and WISE is on their IRSA pages ([2MASS](https://irsa.ipac.caltech.edu/Missions/2mass.html), [WISE](https://irsa.ipac.caltech.edu/Missions/wise.html)); ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited in the app.
 
 ## Design notes
 

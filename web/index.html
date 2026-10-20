@@ -239,12 +239,14 @@
   <h2>Data, credits and limits</h2>
   <h3>Data</h3>
   <p id="ackText" class="ack">SPHEREx data: NASA/JPL-Caltech via IRSA/IPAC.</p>
-  <p class="small">Other layers: DSS2, 2MASS and WISE views come from CDS hips2fits; ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited below. Set in Computer Modern (SIL OFL).</p>
+  <p class="small">Other layers: the DSS2, 2MASS and WISE comparison views are served by CDS hips2fits. DSS is the Digitized Sky Survey (STScI, mirrored at IRSA). 2MASS is a joint project of the University of Massachusetts and IPAC/Caltech, funded by NASA and the NSF. WISE is a joint project of UCLA and JPL/Caltech, funded by NASA. Exact wording is on IRSA's <a href="https://irsa.ipac.caltech.edu/Missions/2mass.html" target="_blank" rel="noopener">2MASS</a> and <a href="https://irsa.ipac.caltech.edu/Missions/wise.html" target="_blank" rel="noopener">WISE</a> pages. Ephemerides come from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited below. Set in Computer Modern (SIL OFL).</p>
   <p class="small" id="imgCreditsAbout"></p>
   <h3>What this is, honestly</h3>
   <ul>
-    <li>A working <b>prototype</b> for the Planet X and SPHEREx challenge, built on real QR2 spectral images.</li>
+    <li>A working <b>prototype</b> for the Planet X and SPHEREx challenge, built on real SPHEREx Quick Release 2 (QR2) spectral images: 20 real fields and 219 frames, plus one simulated practice field. It is a sample of the sky, not the whole survey.</li>
     <li>It does <b>not</b> claim a discovery. A flag is a candidate for follow-up; the distance estimator says <i>candidate</i>, never <i>found</i>.</li>
+    <li>Each field keeps only 2 to 6 of the six SPHEREx detectors (D1-D6), and each frame samples part of a detector, so you see a handful of the 102 colours, not all of them. Only the <i>Pallas patch, six months apart</i> field spans three survey passes with a real six-month baseline; the ecliptic poles and Galactic centre have two, and the asteroid fields are a few days to two weeks long.</li>
+    <li>The known asteroid was found on its predicted spot in 148 of 150 checked frames. The stricter check, that it is also gone from that pixel in the other frames, passed in 107 of 150. In four fields (Juno, Hebe, Hygiea, Massalia) the asteroid moves only about 2 to 11 pixels in the window, so it cannot pass; Pallas passes in all 13.</li>
     <li>Tiles are <b>8-bit</b> stretched pictures, so brightness readouts are approximate. Frames in one band sit at different wavelengths, so judge movers by position, not brightness.</li>
     <li>Some frames show a broad diffuse band of glow. That is large-scale background in the detector images, not a point source.</li>
     <li>Flags are shared only if the site is wired to a shared store; the panel says which mode is active.</li>

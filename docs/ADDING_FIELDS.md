@@ -1,10 +1,10 @@
 # Adding fields (the single biggest upgrade)
 
-The app ships one real field. The challenge is about the whole sky and about images **six months apart**, so more fields,
-and above all a second survey pass, are the best use of an hour. The viewer already handles both; you only need data.
+The app ships 20 real fields (the `pallas-6mo` patch already spans three survey passes). The challenge is about the whole sky and about images **six months apart**, so more fields,
+and more survey passes (QR3, from September 2026), are the best use of an hour. The viewer already handles both; you only need data.
 Everything below needs internet access to IRSA, JPL Horizons and CDS, and `pip install -r data-prep/requirements.txt`.
 
-## 1. A second survey pass for the Pallas patch (six-month baseline) - do this first
+## 1. More survey passes (six-month baseline). `pallas-6mo` is already built; this is the recipe
 
 SPHEREx sees each patch of sky about every six months, and the second all-sky pass finished in spring 2026, so the sky
 around the Pallas field was almost certainly observed again around April to May 2026. Build it as a fixed patch:
