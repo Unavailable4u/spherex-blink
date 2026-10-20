@@ -4,7 +4,7 @@ An interactive, public-facing web app for the NASA Space Apps 2026 challenge **P
 SPHEREx infrared images of one patch of sky taken on different dates, so anything that moves jumps out: the blink
 technique Clyde Tombaugh used to find Pluto. Then it helps you decide *what* moved, and how far away it is.
 
-**Live site:** `https://<your-github-user>.github.io/spherex-blink/` (see [Deploy](#deploy), two minutes).
+**Live site:** <https://unavailable4u.github.io/spherex-blink/> (hosted on GitHub Pages, see [Deploy](#deploy)).
 Open it, press **Tour**, and the app walks through the whole idea in about a minute.
 
 ## The four things the challenge asks for
@@ -135,9 +135,9 @@ The synthetic field has two survey passes 90 days apart, so it is also the way t
 
 * **A "band" is a detector (D1-D6), not one wavelength.** Wavelength changes across each
   detector, so the manifest stores a small plane fit per frame (`wavelength_plane`) to give
-  the wavelength at any clicked pixel. Wavelength extraction follows the documented
-  alternate-WCS layout but has not been run on a real file yet; if it fails the frame is
-  still built and `wavelength_um` is `null`.
+  the wavelength at any clicked pixel. Wavelength is read from the documented
+  alternate-WCS layout of each file; if that fails the frame is still built and
+  `wavelength_um` is `null`, and the app shows an estimate from the fitted plane, marked with ≈.
 * **Brightness is stretched per band with one shared range**, so blinking between frames
   does not flicker. To convert a clicked pixel back to approximate flux, see
   `intensity_note` in `manifest.json`.
@@ -170,10 +170,7 @@ firebase/              Firestore security rules
 
 ## Data and acknowledgement
 
-SPHEREx images come from the NASA/IPAC Infrared Science Archive (IRSA), Quick Release 2 (DOI 10.26131/IRSA652). The app shows its credit line in the footer and in
-**About**. That text lives in one file, `web/assets/acknowledgement.txt`: it currently holds a faithful paraphrase, so **before you submit, open IRSA's
-[SPHEREx page](https://irsa.ipac.caltech.edu/Missions/spherex.html) and paste the exact required acknowledgement sentence into that file** (the README and the
-app both pick it up). Other data: DSS2 (STScI, mirrored at IRSA), 2MASS (UMass and IPAC/Caltech, funded by NASA and NSF) and WISE (UCLA and JPL/Caltech, funded by NASA) via CDS hips2fits; exact wording for 2MASS and WISE is on their IRSA pages ([2MASS](https://irsa.ipac.caltech.edu/Missions/2mass.html), [WISE](https://irsa.ipac.caltech.edu/Missions/wise.html)); ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited in the app.
+SPHEREx images come from the NASA/IPAC Infrared Science Archive (IRSA), Quick Release 2 (DOI 10.26131/IRSA652), under the acknowledgement IRSA requests for published SPHEREx work. The app shows that text in the footer and in **About**; it is stored in `web/assets/acknowledgement.txt`, and `node tests/run.js` checks it is IRSA's exact wording. Other data: DSS2 (STScI, mirrored at IRSA), 2MASS (UMass and IPAC/Caltech, funded by NASA and NSF) and WISE (UCLA and JPL/Caltech, funded by NASA) via CDS hips2fits; exact wording for 2MASS and WISE is on their IRSA pages ([2MASS](https://irsa.ipac.caltech.edu/Missions/2mass.html), [WISE](https://irsa.ipac.caltech.edu/Missions/wise.html)); ephemerides from JPL Horizons and astropy; planet photos and the Milky Way panorama are credited in the app.
 
 ## Design notes
 

@@ -5,7 +5,7 @@
 | # | Audit finding | Result |
 |---|---|---|
 | 1 | Not deployed | **Ready, needs one click from you.** `.github/workflows/pages.yml` deploys `web/` (11 MB, previews excluded) after unit tests. Enable *Settings → Pages → Source: GitHub Actions*, push to `main`. Tested serving from a sub-path with zero failing requests. |
-| 2 | Acknowledgement TODO | **Credit line and DOI (10.26131/IRSA652) are in the app footer, About dialog and README**, from one file `web/assets/acknowledgement.txt`. It holds a faithful paraphrase: **paste IRSA's exact required sentence into that file before submitting.** |
+| 2 | Acknowledgement TODO | **Fixed.** IRSA's exact SPHEREx acknowledgement and the QR2 DOI (10.26131/IRSA652) are in the app footer, About dialog and README, from one file `web/assets/acknowledgement.txt`; `node tests/run.js` checks the wording. DSS2, 2MASS and WISE are credited in About. |
 | 3 | Only one field | **Since fixed:** 20 real fields now ship, including a three-pass six-month patch (see README). Original note: everything except the data was done. `build_field.py` builds a field in one command, and the app is genuinely multi-epoch (pass switcher, cross-pass best pair, exact parallax for any baseline). Needs internet to IRSA: see `docs/ADDING_FIELDS.md` (first step: a second pass for the Pallas patch, six months apart). |
 | 4 | Pallas overlay might not land on a mover | **False alarm, now proven.** `verify_target.py`: found in 13/13 frames, rms offset 0.57 px (3.5″), gone from that pixel in the other frames 13/13. Shown in the Context tab. The streak the audit saw is something else. |
 | 5 | Frames in a band at different wavelengths | **Fixed.** Every frame shows its wavelength; a warning appears above 8% difference; *Best pair* favours similar wavelength. The D4 frame with no header wavelength gets an estimate from its fitted plane, shown with ≈. |
@@ -33,7 +33,6 @@
 ## Still open (as of the final data build)
 
 * Enable GitHub Pages (Settings -> Pages -> Source: GitHub Actions) and confirm the live link.
-* Paste IRSA's exact SPHEREx acknowledgement sentence into `web/assets/acknowledgement.txt` (`node tests/run.js` warns until it is there).
 * Fill `web/js/config.js` with Firebase keys for shared flags.
 * Not tested on iOS Safari or Firefox (headless Chromium only).
 * Ceres validates 7/8 detected but 0/8 "gone elsewhere" despite moving ~219 px; not yet explained.
